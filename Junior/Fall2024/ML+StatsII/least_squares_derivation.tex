@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\input{preamble}
+
+\begin{document}
+
+\textbf{Least Squares Derivation}\\
+The standard linear model, independent variables $\hat{B}$, depedent variable $\hat{Y}$:
+\[
+  \hat{Y} = \hat{B_0} + \sum_{j=1}^p X_j \hat{B_j}
+.\] 
+The shorthand where we add a column of $\vec{1}$ to $X$ and include $\hat{B_0}$ in the vector of coefficients
+$\hat{B}$ 
+\[
+\hat{Y} = X^T \hat{B}
+.\] 
+
+Denote least-squares (or mean square error in the below form) as $RSS$ loss function:
+\[
+  RSS(B) = \sum_{i=1}^N (y_i - x_i^T B)^2
+.\] 
+
+Recall from optimization that a linear equation is always convex AND concave, so a global minimum must exist. \\
+We can rewrite the Least-Squares Equation in terms of matrices:
+\[
+RSS(B) = (y - XB)^T (y - XB)
+.\] 
+\[
+  = y^Ty - y^T XB - y (XB)^T + (XB)^T (XB) \text{$y^Ty$ is a scalar}
+.\] 
+Differentiating w.r.t. $B$:
+\[
+ \frac{\partial RSS(B)}{\partial B} = 0 + -2X^Ty + 2X^T X B = 0
+.\]
+\[
+X^Ty - X^T X B = 0
+.\] 
+\[
+X^Ty = X^TX B
+.\] 
+\[
+  (X^T X)^{-1} X^T y = B
+.\] 
+$\blacksquare$   
+
+\end{document}

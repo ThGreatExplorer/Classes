@@ -1,0 +1,75 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Matrix Calculus}}
+\author{\huge{Daniel Yu}}
+\date{September 18, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\section{Notational Rules}
+In standard linear algebra notation $\vec{x} = \begin{pmatrix} x_1\\ \vdots\\ x_n \end{pmatrix}$ a column vector. 
+Thus, a row vector is the transpose $\vec{x}^T = \begin{pmatrix} x_1 & \ldots & x_n \end{pmatrix} $
+
+However, it is machine learning convention to write the matrices as:
+\[
+  X = \begin{pmatrix} \vec{x}_1^T\\ \vdots\\ \vec{x}_n^T \end{pmatrix} = \begin{pmatrix} x_{11} & x_{12} & \ldots & x_{1m} \\ \vdots\\ x_{n_1} & x_{n_2} & \ldots & x_{nm} \end{pmatrix}
+.\] 
+with the row vectors because in this case row vectors can be thought of the inputs $\vec{x}^i$ for a datapoint  $\left( \vec{x}^i, y^i \right)$,
+so $X$ is the entire training set of input vectors  $\vec{x}^i$ with each  $\vec{x}^i$ representing one set of inputs.
+
+\section{"Derivative" Matrix Rules}
+\begin{note}{Ax}\\
+  Let $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ and $\vec{x} = \begin{pmatrix} x_1\\ x_2 \end{pmatrix}$,
+  so $Ax = \begin{pmatrix} x_1 + 2x_2 \\  3x_1 + 4x_2 \end{pmatrix}$ with $f_1 = x_1+2x_2$ and $f_2 =3x_1+4x_2$. 
+  \[
+    \frac{d}{d\vec{x}} A\vec{x} = \frac{d}{d \vec{x}} \begin{pmatrix} x_1 + 2x_2 \\  3x_1 + 4x_2 \end{pmatrix} = \begin{pmatrix} \frac{df_1}{x_1} & \frac{df_1}{x_2} \\ \frac{df_2}{x_1} & \frac{df_2}{x_2} \end{pmatrix} 
+    = \begin{pmatrix}  1 & 2 \\ 3 & 4 \end{pmatrix} = A
+  .\]
+ \end{note}
+
+ \begin{remark}
+  Note that we are not taking the derivative of $A$ since  $A$ is a constant matrix. We are taking the derivative
+  of  $A\vec{x}$, i.e. taking derivative of $A$ as a linear transformation upon some vector of variables $\vec{x}$!!!!
+ \end{remark}
+ 
+\begin{definition}
+  \[
+    \frac{d}{d\vec{x}} A \vec{x} = A
+  .\] 
+\end{definition}
+
+\begin{note}{$x^T A x$}\\
+  Let  $\vec{x}^T A \vec{x} = \begin{pmatrix} x_1 & x_2 \end{pmatrix} \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} 
+  \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = a_{11}x_1^2 + a_{12}x_1 x_2 + a_{21}x_1x_2  + a_{22} x_2^2 = f(x_1,x_2)$, so
+
+  \begin{align*}
+    \frac{d}{d\vec{x}} [\vec{x}^T A \vec{x}] &= \frac{d}{d\vec{x}} f(x_1,x_2) \\
+                                             &= \begin{pmatrix} \frac{df}{dx_1}\\ \frac{df}{dx_2} \end{pmatrix} \\
+                                             &= \begin{pmatrix} 2a_{11} x_1 + a_{12} x_2 + a_{21} x_2 \\ a_{12}x_1 + a_{21}x_1 +2 a_{22}x_2 \end{pmatrix} \\
+                                             &= \begin{pmatrix} a_{11}x_1 + a_{12}x_2 \\ a_{21}x_1 + a_{22}x_2 \end{pmatrix} + \begin{pmatrix} a_{11}x_1 + a_{21}x_2 \\ a_{12}x_1 + a_{22}x_2 \end{pmatrix} \\
+                                             &= (A + A^T) \vec{x} 
+  .\end{align*}
+     
+\end{note}
+
+\begin{definition}
+  \[
+    \frac{d}{d\vec{x}} \vec{x}^T A \vec{x} = (A + A^T)\vec{x}
+  .\] 
+\end{definition}
+
+\begin{corollary}
+  When $A$ is symmetric,  $A=A^T$:
+  \[
+    \frac{d}{d\vec{x}} \vec{x}^T A \vec{x} = 2A\vec{x}
+  .\] 
+\end{corollary}
+
+
+
+\end{document}

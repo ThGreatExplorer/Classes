@@ -1,0 +1,207 @@
+\documentclass[a4paper]{article}
+\input{preamble}
+\title{\Huge{Analysis I}}
+\author{\huge{Daniel Yu}}
+\date{September 9, 2024}
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Metric Spaces}
+\begin{definition}
+  Let X be a non-empty set and a function:
+  \[
+  S: X \times X \to \R
+  .\]
+  \[
+    \left( x,y \right) \longmapsto S\left( x,y \right) 
+  .\] such that:
+  \begin{itemize}
+    \item $\forall x,y \in X$,  $S(x,y) \geq 0$ and  $S(x,y) = 0 \iff x =y$
+    \item $S(y,x) = S(x,y)$
+    \item \textbf{Triangle Inequality} $\forall x,y,z \in X$, $S(x,y) \leq S(x,z) + S(z,y)$ \\
+      (imagine x,y,z as corners of a triangle)
+  \end{itemize}
+\end{definition}
+
+\begin{remark}{Example}
+  \begin{enumerate}
+    \item Distance on a number line: \[
+      S(x,y) = |x - y|, x,y \in \R 
+    .\] 
+    \item Let $\left( X,  \mid  \mid \cdot  \mid  \mid  \right) $ be a normed space then \[
+    S(x,y) =  \mid  \mid x - y \mid  \mid 
+  .\]Then $S$ is a distance function on $X$. \textbf{This means all norm spaces are metric spaces}.
+\item A metric space does not have to be a \textbf{Vector Space}, for example a metric space could simply be the 
+  collection of points defining a sphere and the distance would be the distance across the surface of the sphere 
+  of two points!
+  \end{enumerate}
+\end{remark}
+
+\subsection{Balls in Metric Spaces}
+
+\begin{definition}
+ Denote metric space as $\left( X, S \right)$. Then an (open) ball of radius r centered at x:
+\[
+  B_r (x) = \left\{ y \in X | S(y,x) < r \right\}  
+.\]  
+\end{definition}
+
+\begin{remark}
+  Let $X = \R$, $S(x,y) =  |x - y|$:
+  \[
+    B_{.5}(1) = \left\{ .5 < y < 1.5 | y \in R\right\} = \left( .5,1.5 \right)  
+  .\] 
+  
+\end{remark}
+
+\begin{definition}
+  The punctured ball is a ball without the center and is defined as:
+  \[
+  B_r^o(x) = B_r(x) \setminus \left\{ x \right\} 
+  .\] 
+\end{definition}
+
+\begin{note}
+  Balls are a special type of \textbf{neighborhoods} (defined later)
+\end{note}
+
+\subsection{Open and Closed Sets in Metric Space}
+\begin{definition}
+  A subset $U \subseteq X$ is \textbf{open} if $\forall x \in U$ $\exists r > 0$ s.t.:
+  \[
+  B_r(x) \subseteq U
+  .\]
+  
+\end{definition}
+\begin{remark}
+  The analogy is that a closed interval $[0,1) \subseteq \R$  would  \textbf{not be an open set}. For example, then there is no ball centered at
+  $B_r(0)$ because there exist $y < 0 \in \R$ but there are no points to the left of 0 in $[0,1)$ and $r \not\geq 0$.  
+\end{remark}
+
+\begin{remark}
+  However, if X is restricted to $[0,1)$ and we consider $U = [0,1) \subseteq  X$, this is an \textbf{open set} because 
+  there does not existed $y < 0 \in X = [0,1)$ so a ball centered at 0 would be $B_{.5}(0) = [0,.5)$. 
+\end{remark}
+
+\begin{definition}
+  Let $E \subseteq X$. $x \in X$ is a \textbf{limit point} of $E$ if $\forall r > 0$:
+  \[
+    (B_r^o (x) \cap E) \neq \emptyset
+  .\] 
+\end{definition}
+
+\begin{note}
+  We are working with points (and distances) that may be infinitesimially small. For example, if a point is a limit point,
+  then any ball (neighborhood) centered at the limit point contains infinitely many limit points, because we could take $r' < r$.
+\end{note}
+
+\begin{remark}{Example} \\
+  Consider $E = [0,1) \subseteq X = \R$:
+  All the interior points $0 < x < 1$ are limit points. \\
+  $0$ is a limit point \\
+  $1$ is a limit point \\
+  The set of all limit points in E would be $[0,1]$. Note that this is different from open subset definition as 0 is included
+  because the intersection $B_r^o (x) \cap E = (0,r)$, we don't have to restrict the ball (or neighborhood) to be inside $E$!
+\end{remark}
+
+\begin{definition}
+  $E \subseteq X$ is \textbf{closed} if the set of limit points $E' \subseteq E$.
+\end{definition}
+
+\begin{note}
+  Give a metric space $\left( X, S \right)$, $X \subseteq X$ and $X$ is open and closed by definition. Similarly, $\emptyset$ is 
+  both open and closed (vaccously).
+\end{note}
+
+\begin{remark}{Example}\\
+ 
+  \begin{enumerate}
+    \item $X = \R, E = [0,1)$, this set is not closed in in $(\R,S)$ as $1$ is a limit point but is not in $E$. 
+    \item However, for $X=[0,1)$, $E=[.5,1)$, $E$ is closed in $\left( X,S \right)$ since $1$ is not a limit point (in fact it doesn't exist
+      in $X$)
+  \end{enumerate}
+\end{remark}
+
+\begin{prop}
+Complement Rules -- Metric Space is $(X, S)$ 
+  \begin{enumerate}
+    \item $U$ is open $\iff$ $X \setminus U$ is closed
+      \begin{proof}
+        $\to$ Assume $U$ open set, $U \subseteq X$.  Take $x \in U$, by def. since $U$ is open, $\exists r > 0$ such 
+        that $B_r(x) \subseteq U$ and so $B_r^0 (x) \subseteq U$. Then, 
+        $B_r^0 \cap (X \setminus U) = \emptyset$, so x cannot be a limit point in $X \setminus U$.  \\ \\
+        $\leftarrow$ Assume $X \setminus U$ is a closed set, then use forward direction of (2) that the complement of the closed set is open.
+      \end{proof}
+    \item $E$ is closed $\iff$ $X\setminus E$ is open
+      \begin{proof}
+        $\to$ Assume that $E$ is closed. Take a point in $x \in X \setminus E$. By definition, $x$ is not a limit point 
+        of $E$ because all the limit points of $E$ are in $E$ since $E$ is closed. Thus, $\exists r > 0$ such that
+        $B_{r}^0 (x) \cap E = \emptyset$ and $B_{r} (x) \cap E = \emptyset$ (the center $x$ also not in $E$). Then, 
+        the ball $B_r(x) \subseteq X \setminus E$. As this is true for any x, then by def. $U$ is open. \\ \\
+        $\leftarrow$ Assume $X \setminus E$ is open, then use forward direction of (1) that the complement of the open set is closed!  
+      \end{proof}
+  \end{enumerate}
+\end{prop}
+
+\begin{prop}
+  Union Rules -- Metric Space $(X, S)$
+  \begin{enumerate}
+    \item If $U_1 \subseteq X$, $U_2 \subseteq X$ are open, then $U_1 \cup U_2$ and $U_1 \cap U_2$ are open.
+      \begin{proof}
+        Assume $U_1, U_2 \subseteq X$ and are open. Consider $U_1 \cup U_2$, take $x \in U_1 \cup U_2$. Then $x \in
+        U_1$. Since they are open, by definition, $\exists r > 0$ such that $B_r (x) \subseteq U_1$ for example and 
+        $B_r (x) \subseteq U_1 \cup U_2$. The same argument follows for $x \in U_2$. Since this is for any $x$, then $U_1 \cup U_2$ is open. \\ \\
+        Consider $U_1 \cap U_2$, take $x \in U_1 \cap U_2$ so $x \in U_1$ and $x \in U_2$, then by definition $\exists r_1,r_2 > 0$ such that $B_{r_1}(x) \subseteq U_1$
+        and $B_{r_2}(x) \subseteq U_2$. We can simply take the minimum $r = min(r_1,r_2)$ (since $r_1,r_2$ are non-negative),so 
+        $B_r(x) \subseteq U_1 \cap U_2$ and this is true for all $x$, so $U_1 \cap U_2$ is open. 
+      \end{proof}
+    \item If $U_{\alpha}, \alpha \in I$ set of indicies, then $\cup_{\alpha \in I} U_{\alpha}$ is open.
+      \begin{proof}
+        Assume $U_\alpha$ is open for all $\alpha in I$. Take $x \in \cup_{alpha \in I} U_\alpha$ then there exists $\beta \in I$ such that 
+        $x \in U_{\beta}$. Since $U_\beta$ is open $\exists r > 0$ such that $B_r(x) \subseteq U_\beta \subseteq 
+        \cup_{\alpha \in I} U_\alpha$ and this is true for any $x$, then $\cup_{\alpha \in I}$ is an open set in $X$.
+      \end{proof}
+  \end{enumerate}
+\end{prop}
+
+\begin{remark}
+  Is infinite intersection $\cap_{\alpha}^\infty U_{\alpha}$ also open?
+  \begin{proof}{Counterexample}\\
+    Take $X = \R$, $S(x,y) = \| x -y\|$. Then define $U_n =\left( - \frac{1}{n} -1 , 1 + \frac{1}{n} \right)$ which
+    is clearly open. As we take $n = 1,2,3,\ldots$, $\cap_{n \geq 1} U_n = [-1,1]$ which is closed, a counterexample.
+  \end{proof}
+  This doesn't contradict the above (one could argue that you could repeatedly take $U_1 \cap U_2$ which we proved is open)
+  because the above is for finitely many sets!
+\end{remark}
+
+\begin{note}
+  $\text{normed spaces} \subseteq \text{metric space} \subseteq \text{topological space}$
+\end{note}
+
+\begin{definition}
+  \textbf{Topological Space}. \\
+  Let $X$ be a set. A \textbf{topology on X} is a set of subsets that are called 
+  "open" (not all possible sets -- Ex: $\tau = \{u_1,v_1,\ldots\}$) and satisfy the following properties.  
+  \begin{enumerate}
+    \item $X, \emptyset$ are open
+    \item $U_1, U_2$ are open $\to$ $U_1 \cup U_2$ and $U_1 \cap U_2$ are open.
+    \item If $U_\alpha, \alpha \in I$ are open $\to U_{\alpha \in I} U_\alpha$ is open.
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  A metric space is a a topological space with open sets following the definition given above. 
+\end{remark}
+
+\begin{note}{Example}\\
+  $X = \{a, b\}$. Then let $\tau = \{\emptyset, \{a\}, X \}$. Property (1) is clearly satisfied. Property (2) is
+  satisfied $\emptyset \cup \{a\} = \{a\} \in \tau$ so it is open. The same follows for all other unions. Then 
+  checking intersections: $X \cap \{a\} = \{a\} \in \tau$ so it is open. Property (3) follows quickly from (2).  
+\end{note}
+
+\end{document}

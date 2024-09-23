@@ -1,0 +1,145 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Machine Learning and Statistical Theory II}\\ Generalized Linear Models}
+\author{\huge{Daniel Yu}}
+\date{September 18,2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+\section{Generalized Linear Models}
+Note: Generalized Linear Models and Splines can be grouped and used together
+
+\subsection{Regression}
+Recall 2 forms of regression:
+\begin{enumerate}
+  \item Linear Regression: ($y \in \R$) $Y = \vec{B}^T \vec{X} + \epsilon$ where  $\epsilon \sim Normal\left( 0, \sigma^2 \right) $
+  \item Logistic Regresion:($y \in \{0,1\} $) $\log \frac{P(Y=1 | X)}{1-P(Y=1| X)} = \vec{B}^T \vec{X}$
+\end{enumerate}
+
+\begin{definition}
+  A \textbf{transformation (link} is defined as follows. There exists a $g(u)$, the link, where $u = E(Y | \vec{X})$ such that
+  while the expected value may not be linear, some function of it is linear, i.e.:
+   \[
+     g(E[Y| \vec{X}]) = g(\vec{X}) = \vec{B}^T X 
+  .\] 
+  We need the link function to be invertible
+\end{definition}
+
+\begin{remark}
+  This can be thought of as analogous to having \textbf{basis} elements which could be anything but still form a 
+  vector space where the outputs are linear in regards to these potentially non-linear basis elements. 
+  For example, consider the vector space of polynomials of degree $n$. 
+\end{remark}
+
+\begin{note}{Example} \\
+  linear regression
+  \[
+  g(u) = I \cdot u = u
+  .\] 
+  logistic regression:
+  \[
+    g(u) = \log(\frac{u}{1-u}) = \vec{B}^T X 
+  .\] 
+  The above is a linear equation in terms of $B_i, X_i$, even though \textbf{probability p and X are nonlinear} 
+\end{note}
+
+\begin{note}
+  GLM can be viewed as addressing different distributions
+  \begin{enumerate}
+    \item linear regression - Assume $Y | \vec{X} \sim Normal(\mu=\vec{B}^T X, \sigma^2)$ 
+    \item logistic regression - Assume $Y | \vec{X} \sim Ber(p)$
+    \item Poission ???
+  \end{enumerate}
+\end{note}
+
+\begin{definition}{Generalized Linear Models} \\
+GLM is a flexible extension of ordinary linear regression that allows for response variables (dependent variables) 
+that have error distribution models other than a normal distribution. GLMs consist of three components:  
+\begin{enumerate}
+  \item Random Component: $Y | X \sim $ some distribution. (In practice, GLM work particularly well with exponential family of 
+    distributions
+  \item Linear Assumption: Assume there is a linear predictor $\vec{\xi} = \vec{B}^T X$
+  \item Link: Between random and covariates  $\vec{X}$:
+    \[
+  g(u(\vec{X})) = g(E(Y | \vec{X})) = \vec{\xi} = \vec{B}^T X 
+    .\] and we want $g$ to be invertible
+\end{enumerate}
+\end{definition}
+
+\begin{note}{Exponential Family} \\
+  The exponential family of distributions (works best for GLM):
+  \begin{enumerate}
+    \item Gaussian
+    \item Bernoulli
+    \item Binomial 
+    \item Multinomial 
+    \item Possion
+    \item Exponential
+    \item Gamma
+    \item Laplace
+    \item Beta
+    \item etc.
+  \end{enumerate}
+  Stuff like \textbf{student t, mixture, some uniform distributions} are not exponential
+\end{note}
+
+\section{Exponential Family}
+\begin{definition}
+  A pdf of a distribution in d-params with the following form is a d-param exponential family density:
+  \begin{align*}
+     p(\vec{y}; \vec{n}) &= \frac{1}{Z(\vec{n})} h(\vec{y}) \exp [\vec{n} T(\vec{y})] \\
+                        &= h(\vec{y}) \exp [\vec{n} T(y) - A(\vec{n})] 
+  .\end{align*}
+      where $A(\vec{n}) = \log Z(\vec{n})$
+  \begin{enumerate}
+    \item $\vec{n} \in \R^d$ is a natural param of distribution
+    \item $T(\vec{y}) \in \R^d$ is vector of sufficient statistics (usually $T(\vec{y}) = \vec{y}$). 
+      For example, for normal this would be a vector of sample mean and variance
+    \item $h(\vec{y})$ is underlying measure (usually $h(\vec{y}) = 1$) 
+    \item $A(\vec{n}) = \log Z(\vec{n})$ is the log normalizer, exists to make sure integral of pdf = 1
+      \[
+        A(\vec{n}) = \log \int h(y) \exp(\vec{n}^T T(\vec{y})) dy
+      .\] 
+  \end{enumerate}
+\end{definition}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/link_and_exponential.png}
+  \caption{Relationship between Link and Exponential Family Distribution}
+  \label{fig:link_and_exponential}
+\end{figure}
+Note that $\vec{u} = E(Y | X =\vec{x})$. Usually we assume $\xi = \vec{n}$ and  $g = \phi$, the \textbf{canonical link function},
+in this case both sides become symmetric. Note that in this class we will be working with canonical link case. For 
+canonical link:
+\begin{enumerate}
+  \item Normal: $g(\mu) = \mu$
+  \item Binomial:  $g(\mu) = \log \frac{\mu}{1-\mu}$ (binary classification)
+  \item poisson: $g(\mu) = \log(\mu)$
+  \item gamma: $g(\mu) = - \frac{1}{\mu}$ 
+  \item negative binomial: $g(\mu) = \log[\frac{\mu}{k(1+\frac{\mu}{k}}]$
+\end{enumerate}
+
+\begin{note}{Example - Bernoulli} \\
+  Normal pdf: $p(y:u) = Ber(y:\mu) = \mu^y (1-\mu)^{1-y}$ where  $y \in \{0,1\} $ 
+  \begin{align*}
+    p(y:u) &= \mu^y (1-\mu)^{1-y} \\
+           &= \exp(y \log(\mu) + (1-y) \log(1-\mu)) \\
+           &= \exp(y \log(\frac{\mu}{1 - \mu}) + \log(1-\mu))
+  .\end{align*}
+  where $T(y) = y$,  $h(\vec{y}) = 1$,  $n=\log(\frac{\mu}{1-\mu})$, and $A(\vec{n}) = - \log(1-\mu)$. 
+
+  Notice that this gives the link function $\mu = \frac{1}{1+e^{-n}}$ 
+\end{note}
+
+
+TODO Binomial
+
+
+\end{document}

@@ -1,0 +1,90 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Machine Learning and Statistical Learning Theory II}\\ Midterm Proposal}
+\author{\huge{Daniel Yu}}
+\date{September 20, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\section{Team}
+Daniel Yu
+\section{Presentation Proposal}
+\subsection{Topic}
+Reproducing Kernel Hilbert Spaces (RKHS) and Specific Application in Gaussian Processing
+\subsection{Summary}
+The aim of this presentation is to introduce the concept of \textbf{Reproducing Kernel Hilbert Spaces (RKHS)} and explain their significance in mathematical theory, as well as their practical applications in diverse fields such as machine learning, signal processing, statistics, and finance. By the end of the presentation, students will understand:
+\begin{itemize}
+    \item What RKHS is and how it is constructed.
+    \item How the kernel trick simplifies complex problems by working in high-dimensional spaces.
+    \item Application of RKHS to Gaussian Processing with example in option volatility pricing
+\end{itemize}
+
+\section{Outline}
+\subsection*{Part 1: Introduction to Hilbert Spaces and Kernels}
+\begin{itemize}
+    \item \textbf{What is a Hilbert Space?}
+    \begin{itemize}
+        \item Generalization of Euclidean space to infinite dimensions.
+        \item Inner product, norm, and completeness.
+    \end{itemize}
+    \item \textbf{The Role of Kernels}
+    \begin{itemize}
+        \item Defining similarity functions (kernel functions).
+        \item Examples of common kernels (linear, polynomial, Gaussian/RBF).
+    \end{itemize}
+    \item \textbf{Motivation for RKHS}
+    \begin{itemize}
+        \item How kernels can implicitly map data into higher dimensions.
+        \item The idea of non-linear problems being easier to solve in transformed spaces.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Part 2: Reproducing Kernel Hilbert Spaces}
+\begin{itemize}
+    \item \textbf{Defining RKHS}
+    \begin{itemize}
+        \item What makes RKHS special?
+        \item Reproducing property: \( f(x) = \langle f, K_x \rangle \).
+    \end{itemize}
+    \item \textbf{The Kernel Trick}
+    \begin{itemize}
+        \item Explanation of the kernel trick and how it avoids explicit computation of high-dimensional transformations.
+        \item Real-world benefits of using kernel functions.
+    \end{itemize}
+    \item \textbf{Examples of Kernels in RKHS}
+    \begin{itemize}
+        \item Gaussian (RBF), polynomial, and other examples that are widely used in practice.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Part 3: Applications of RKHS}
+\begin{itemize}
+    \item \textbf{Machine Learning: Support Vector Machines (SVM) and Kernel Methods}
+    \begin{itemize}
+        \item How RKHS is used to classify non-linear data in SVMs.
+        \item Benefits of the kernel trick in machine learning.
+    \end{itemize}
+  \item \textbf{Finance: Volatility Modeling}
+    \begin{itemize}
+        \item Using RKHS with Gaussian/RBF kernel and associated Gaussian Process to estimate volatility surfaces for options pricing.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Part 4: Conclusion and Discussion}
+\begin{itemize}
+    \item Summary of the key points from the presentation.
+    \item Q\&A.
+\end{itemize}
+ 
+\section{Resources}
+\begin{itemize}
+  \item \textit{Elements of Statistical Learning} by Hastie
+  \item \textit{Probabilistic Machine Learning} by Murphy
+  \item TODO - Will add papers, other textbooks, and any online resources I find!
+\end{itemize}
+\end{document}

@@ -1,0 +1,217 @@
+\documentclass[a4paper]{article}
+\input{preamble}
+\title{\Huge{Analysis I}}
+\author{\huge{Daniel Yu}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Sets}
+Given two sets $A,B \subseteq X$:
+\begin{itemize}
+  \item The \textbf{union} is $A \cup B = \{x \in X | x \in A \text{ or } x \in B\}$
+  \item The \textbf{intersection} is $A \cap B = \{ x \in X | x \in A \text{and } x \in B\}$ 
+  \item The \textbf{difference}, $A \setminus B = \{x \in X | x \in A \text{ but } x \not\in B\}$ 
+  \item The \textbf{cartesian (or "direct") product} of the two sets is $A \times B = \{(a,b) | a \in A, b \in B\}$. For example, the plane $\mathbb{R}^2 = \mathbb{R} \times \R$.
+\end{itemize}
+
+\begin{definition}
+  A \textbf{countable} set is a set where each element can be mapped to a unique element of $\N$.
+  A \textbf{countably infinite} set is a set that is isomorphic to $\N$.
+  A \textbf{uncountable} set is a set that is not isomorphic to $\N$.
+\end{definition}
+
+\begin{theorem}
+  Let $A_{\alpha} \subseteq X, \alpha \in I$ where I is a set of indicies. Then an element belongs to the intersection of all elements common to $X \ A_{\alpha}$ only when it is not in the union 
+  of all $A_{\alpha}$: 
+   \[
+     X \setminus (\cup_{\alpha \in I} A_{\alpha}) = \cap_{\alpha \in I} (X \setminus A_{\alpha})
+  .\]
+  Similarly, an element is NOT in all the subsets $A_{\alpha}$ but is in $X$ when it is in any of set difference $X \setminus A_{\alpha}$
+  \[
+    X \setminus (\cap_{\alpha \in I} A_{\alpha}) = \cup_{\alpha \in I} (X \setminus A_{\alpha})
+  .\] 
+
+\end{theorem}
+
+\begin{remark}
+  This is similar to the idea of a center of a group in group theory: $Z(G)$ in the sense that elements must have a universal property within the set.
+\end{remark}
+
+\section{Vector Spaces}
+\begin{definition}
+  A (\textbf{real}) vector space $(X, "+", "\cdot")$ is a set $X$ with two operations.
+\begin{enumerate}
+  \item Addition: $+: X \times X \to X$, $(x,y) \implies x + y$.
+  \item Scalar Multiplication: $\cdot: \R \times X \to X$, $(\alpha, x) \to \alpha x$. (generalizes to $F$ a field) 
+\end{enumerate}
+
+that satisfy the following axioms:
+\begin{enumerate}
+  \item $x+y = y+x$
+  \item $(x+y) + z = x + (y + z)$
+  \item $\exists 0, \text{ s.t.} \forall x \in X, x + 0 = x$.
+  \item For any $x \in X, \exists -x, \text{ s.t. } x + (-x) = 0$.
+  \item $\forall \alpha \in \R, \forall x,y, \in X, \text{ then } \alpha(x+y) = \alpha x + \alpha y$
+  \item $\forall \alpha, \beta \in \R, \forall x \in X, (\alpha + \beta)x = \alpha x + \beta x$
+  \item $\forall \alpha, \beta \in \R, \forall x \in X, (\alpha \beta) x = \alpha (\beta x)$
+  \item $1 \cdot x = x (\forall x \in X)$
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+  The above definition of a vector space is only for \textbf{REAL vector spaces} where the scalar $\alpha \in \R$, but \textbf{in
+  general a vector space could have the scalar $\alpha \in F$ where $F$ is any arbitrary field}, such as the complex numbers
+  or otherwise.
+\end{remark}
+
+
+\begin{remark}
+  In this course we will be dealing with real and more generally continuous vector spaces.
+
+\end{remark}
+
+\section{Vector Space $\R^n$}
+$\R^{n} = \{\begin{pmatrix} x_1\\ \vdots\\ x_n \end{pmatrix} | x_1, \ldots, x_n \in \R \}$
+
+Addition: $\vec{x}, \vec{y} \in \R^n, \vec{x} + \vec{y} = \begin{pmatrix} x_1 + y_1 \\ \vdots\\ x_n + y_n \end{pmatrix}$ \\
+Multiplication: $\vec{x} \in \R^n, \alpha \in \R: \alpha x = \begin{pmatrix} \alpha x_1\\ \vdots\\ \alpha x_n \end{pmatrix}$
+
+$R^{n}$ is a vector space (prove axioms easily).
+
+\begin{remark}
+  I may forget the $\vec{x}$ and only write $x$ but I mean the same.
+\end{remark}
+
+\begin{definition}
+  The \textbf{dot} product (aka \textbf{euclidean scalar product} of x,y in $\R^n$ is a map, $\left< , \right>: \R^n \times \R^n \to \R$, defined as:
+  \[
+    \left< x,y \right> = x_1 y_1 + x_2 y_2 + \ldots + x_n y_n = \sum_{k=1}^n x_k y_k 
+  .\] with the following properties:
+  \begin{enumerate}
+    \item \textbf{Linearity} $\forall \alpha, \beta \in \R, \left< \alpha x + \beta y, z \right> = \alpha \left< x,z \right> + \beta \left< y,z \right>$ 
+    \item \textbf{Symmetry} $\left< x,y  \right> = \left< y ,x \right>$
+    \item \textbf{Positive Semi-Definiteness} $\forall x \in \R^{n}, \left< x,x \right> \geq 0$ and $\left<x,x \right> = 0 \iff \vec{x} = 0$.
+  \end{enumerate}
+
+\end{definition}
+
+\begin{remark}
+  This is a special case of the inner product. 
+\end{remark}
+
+\begin{definition}
+  For a general vector space, if 
+  \[
+  \left< , \right>: X \times X \to \R
+  .\] 
+  satisifies the properties of the euclidean scalar product, then it is called a euclidean scalar product in X.
+\end{definition}
+
+\begin{definition}
+  The above vector space with a Euclidean Scalar Product is a vector space with a defined inner product over the real numbers,
+  and is known as a \textbf{Euclidean Vector Space}.
+\end{definition}
+
+\begin{remark}
+  This is different from a \textbf{Euclidean Domain} which is a concept in Number Theory of an Integral Domain equipped with a Euclidean Algorithm.
+\end{remark}
+
+\begin{definition}{Cauchy Shwartz Inequality}
+  $\forall x,y \in \R^n$:
+  \[
+  \left< x,y  \right> \leq |x| |y|
+  .\] 
+  where $|x| = \sqrt{\left< x,x \right>}$. Note this is a special case of a \textbf{norm}.
+\end{definition}
+
+\begin{proof}
+  Take $x,y \in \R^n$. \\
+
+  $\forall \alpha \in \R$,
+  \[
+  \left< \alpha x + y, \alpha x + y \right> \geq 0.
+  .\] 
+  \[
+  = \alpha \left< x , \alpha x + y \right> + \left< y, \alpha x + y \right>
+  .\]
+  \[
+  = \alpha (\alpha \left< x, x \right> + \left< y, x \right>) + \alpha \left<x , y \right> + \left< y, y \right> 
+  .\]
+  \[
+   = \alpha^2 \left< x, x \right> + \alpha \left< y, x \right> + \alpha \left<x , y \right> + \left< y, y \right> 
+  .\] 
+  \[
+  = \alpha^2 |x|^2 + 2 \alpha \left< x, y \right> + |y|^2 \geq 0
+  .\]
+  This is a quadratic, so we can take the discriminant (or use the quadratic formula) to get the inequality. We know the
+  discriminant is non-positive because there is at most 1 root, which is 0 by the quadratic being $\geq 0$. \\
+  Recall that the discrimanant is: $b^2 - 4ac$:
+
+  \[
+    (2 \left< x,y \right>)^2- 4 |x|^2 |y|^2 \leq 0
+  .\] 
+  \[
+  2 \left< x,y \right> \leq 2 |x| |y|
+  .\] 
+  \[
+  \left< x,y \right> \leq |x| |y|
+  .\] 
+\end{proof}
+
+\begin{definition}
+  The \textbf{euclidean norm} in $\R^n$ is defined as $$|x| = \sqrt{\left<x,x \right>} = \sqrt{\sum_{k=1}^n x_k^2}$$ \\
+  The euclidean norm satisfies the cauchy swhartz inequality! \\
+  Properties: 
+  \begin{itemize}
+    \item $\forall x \in \R^n$, $|x| \geq 0$ and  $|x| = 0 \iff x = 0$
+    \item $\forall \alpha \in \R, \forall x \in \R^n$, $|\alpha x|= |\alpha| |x|$
+    \item \textbf{Triangle inequality}:  $\forall x,y \in \R^n$, $|x + y| \leq |x| + |y|$. 
+  \end{itemize}
+\end{definition}
+
+\begin{proof}{Proof of Triangle Inequality}
+  \begin{align*}
+    |x+y|^2 &= \left<x + y, x+y \right> \\ 
+            &= |x|^2 + |y|^2 + 2\left< x , y\right> \\  
+            &\leq |x|^2 + |y|^{2} + 2|x| |y|  \text{  by the cauchy shwartz inequality} \\
+            &\leq (|x| + |y|)^2
+  .\end{align*}
+  Thus, $|x+y| \leq |x| + |y|$
+\end{proof}
+
+\begin{definition}
+  The \textbf{norm} in general is defined as follows. Let $X$ be a real-vector space and let us have a map:
+  \begin{align*}
+       \mid \mid  \cdot  \mid \mid  : X &\longrightarrow \R \\
+    x &\longmapsto  \mid \mid  x  \mid \mid  
+  .\end{align*}
+  which also satisfies the 3 properties of the euclidean norm. Correspondingly, $\left( X,  \mid  \mid \cdot  \mid  \mid  \right)$ 
+  is called a \textbf{normed space}.
+\end{definition}
+
+\begin{remark}{Example}
+\[
+  \text{Let} X = \R^n
+.\] 
+Examples of defined norms include:
+\[
+  \mid  \mid x \mid  \mid _p = \left(\sum_{k=1}^n x_k^p  \right) ^{\frac{n}{p}}
+.\] 
+\[
+\[
+  \mid  \mid x  \mid  \mid_\infty = \max_{1 \leq k \leq n} |x_k| \text{  where x = ($x_1,\ldots,x_n$)}
+.\] 
+\[
+  \mid  \mid x \mid  \mid_1 = \sum_{k=1}^n |x_k|
+.\]  
+
+\end{remark}
+\end{document}
+
+

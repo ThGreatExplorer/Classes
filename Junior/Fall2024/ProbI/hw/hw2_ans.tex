@@ -1,0 +1,100 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Probability I Hw 2}}
+\author{\huge{Daniel Yu}}
+\date{September 23, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{enumerate}
+  \item Are the random variables $T_n,P_n,S_n$ independent? 
+    \begin{proof}{Proof by contradiction}\\
+      Let $\Omega = \{T,P,S\}^n$ the possible combinations of tops, pants, and shoes where $P(T) = \frac{1}{2}, P(P)=\frac{1}{3}, 
+      P(S) = \frac{1}{6}$ for each week. Then the random variables $T_n, P_n, S_n : \Omega \to \{1,2,3,\ldots,n\} \subseteq \R $ represent the number of tops, 
+      pants, and shoes respectively that were bought after $n$ weeks where each week is independent of the previous 
+      weeks. Thus, $T_n, P_n, S_n \sim Binomial(n,p)$. \\
+
+
+      For $T_n, P_n, S_n$ to be independent random variables, they must be pairwise independent and 
+      jointly independent i.e.  $P(T_n = a \cap P_n = b \cap S_n = c) = P(T_n=a) \cdot P(P_n=b) \cdot P(S_n=c)$. We 
+      know that $P(T_n=a) = \begin{pmatrix} n \\ a \end{pmatrix} \left( \frac{1}{2} \right)^a \left( \frac{1}{2} \right)^{n-a}
+      = \begin{pmatrix} n \\ a \end{pmatrix} \left( \frac{1}{2} \right)^n$, 
+      $P(P_n = b) =  \begin{pmatrix} n \\ b \end{pmatrix} \left( \frac{1}{3} \right)^b \left( \frac{2}{3} \right)^{n-b} $, $P(S_n=c) =
+       \begin{pmatrix} n \\ c \end{pmatrix} \left( \frac{1}{6} \right)^c \left( \frac{5}{6} \right)^{n-c} $. However, $P(T_n = a \cap P_n = b \cap S_n = c)
+       = \begin{pmatrix} n\\ a\end{pmatrix} (\frac{1}{2})^a \cdot \begin{pmatrix} n-a \\ b \end{pmatrix} (\frac{1}{3})^b
+       \cdot \begin{pmatrix} n - b - a \\ c \end{pmatrix} \frac{1}{6}^{c}$ with the given constraint that $c =  n - a -b$ else the probability is  $0$. 
+       Clearly, the left hand side and right hand side are not the same. \\ 
+
+       For example, consider the $P(T_n = n)$ i.e. when all the items chosen after $n$ weeks are tops,  $P(T_n=n) = 
+       \text{ no. ways} \cdot \text{ probability} = 1 \cdot \frac{1}{2}^n$. Then $P(T_n = n \cap P_n = b \cap S_n = c) = 0$
+       when $b,c > 0$. However, suppose $b,c=1$,  $ P(T_n=n) \cdot P(P_n=1) \cdot P(S_n=1) = \frac{1}{2}^n \cdot 
+       \begin{pmatrix} n\\1 \end{pmatrix} \frac{1}{3}\frac{1}{3}^{n-1} \cdot \begin{pmatrix} n \\ 1 \end{pmatrix} \frac{1}{6} \frac{5}{6}^{n-1} 
+       \neq 0$! Thus, the three random variables are not independent!
+    \end{proof}
+  \item In the same setup as problem 1, compute $E[T_n - P_n]$ and  $Var(T_n - P_n)$.
+    \begin{proof}
+      The expected value is additive, so $E[T_n - P_n] = E[T_n] - E[P_n]$. We know  $E[T_n] = \frac{n}{2}$ and
+      $E[P_n] = \frac{n}{3}$, so $E[T_n - P_n] = \frac{n}{2} - \frac{n}{3} = \frac{n}{6}$. \\
+
+      Variance is not additive, so we have to consider the random variable $D_n = T_n - P_n$. We know that 
+      $P(D_1 = 1) = P(T_n = a \cap P_n = a -1) = \begin{pmatrix} n \\ a \end{pmatrix}\left( \frac{1}{2} \right)^{a} \cdot 
+      \begin{pmatrix} n-a \\ a-1 \end{pmatrix} \left( \frac{1}{3} \right)^{a-1} \cdot \frac{1}{6}^{n-2a+1}$
+       \begin{align*}
+         Var(T_n - P_n) &= E[(T_n - P_n)^2] - E[T_n - P_n]^2 \\
+                        &=
+      .\end{align*}
+    \end{proof}
+  \item Show that $P[R \geq 11] \leq \frac{1}{2}$.
+    \begin{proof}
+      We toss a fair coin 1000 times, so $\Omega = \{H,T\}^{1000}$ where each toss is independent of all others. 
+      The probability that the largest consecutive run is exactly $r$ is bounded by $P[R=r] = $
+
+
+      Why isn't this true???
+      $P[R = r] = 
+      (1000-r+1)! \cdot \frac{1}{2}^{r} \cdot \frac{1}{2}^{1000-r} = (1000-r+1)! \cdot \frac{1}{2}^{1000}$. 
+    \end{proof}
+  \item Party that fits 20 people, 24 people are invited
+    \begin{enumerate}
+      \item What is the expected number of people who will attend and the probability that all attendees fit
+        inside the venue if the probability is $\frac{5}{6}$ that any one person shows up? 
+        \begin{note}
+          Since, each person is indpendent of each other and they each have $\frac{5}{6}$ probability to show up.
+          The number of people who show up $X \sim Binomial(24, \frac{5}{6})$, so $E[X] = \frac{5}{6} \cdot 24 = 20$. \\
+
+          The probability that all attendes will fit inside the venue is $P[X \leq 20] = 1 - P[X \geq 21] = 1 - 
+          (\begin{pmatrix} 24 \\ 21 \end{pmatrix} \frac{5}{6}^{21} \frac{1}{6}^{3} +  \begin{pmatrix} 24 \\ 22 \end{pmatrix} \frac{5}{6}^{22} \frac{1}{6}^{2}
+          +  \begin{pmatrix} 24 \\ 23 \end{pmatrix} \frac{5}{6}^{23} \frac{1}{6}^{1} + \frac{5}{6}^{24}) \approx 0.584$ 
+        \end{note}
+      \item Suppose now that $24$ people come in groups of 6 with probability $\frac{5}{6}$, what is the expected
+        number of people that will arrive and the probability that all attendees fit in the venue.
+        \begin{note}
+          There are now 4 groups of people with 6 people each and each group of people has $\frac{5}{6}$ chance
+          to come. Now, $X$ represents the number of groups and 
+          $E[X] = 0 \cdot \frac{5}{6}^{4} + 6 \cdot \frac{5}{6}^{1} \frac{1}{6}^{3} + 12 \cdot \frac{5}{6}^{2} \frac{1}{6}^{2} 
+          + 18 \cdot \frac{5}{6}^{3} \frac{1}{6}^{1} + 24 \cdot \frac{5}{6}^{4}= 13.56$ \\
+
+          The probability that all the attendees fit inside the venue is now $P[X \leq 3] = \sum_{k=1}^3 \frac{5}{6}
+          ^{k} \cdot \frac{1}{6}^{4-k} = 0.1196$ 
+        \end{note}
+    \end{enumerate}
+  \item Suppose we have $r$ balls to be distributed among  $n$ bins. Each of  $n^{r}$ configurations are equally 
+    likely. For any $k \in \{1,2,\ldots,n\}$, calculate the probability first $k$ bins are empty.
+    \begin{proof}
+      Let $K$ be the random variable denotating the first $k$ bins that are empty. If the configurations 
+      are equally likely, then $P[K=k] = \frac{\text{ no configurations with first k bins empty }}{\text{ total configurations}}
+      P[K = k] = \frac{(n-k)^{r}}{n^r} = \frac{n-k}{n}^{r}$
+
+      Why is this wrong???
+      Let $K$ be the random variable denotating the first $k$ bins that are empty. If the configurations 
+      are equally likely, then $P[K=k] = \frac{\text{ no configurations with first k bins empty }}{\text{ total configurations}}
+      = \frac{\begin{pmatrix} n + r - k - 1 \\ r \end{pmatrix} }{ \begin{pmatrix} n + r - 1 \\ r \end{pmatrix} }$
+    \end{proof}
+\end{enumerate}
+\end{document}

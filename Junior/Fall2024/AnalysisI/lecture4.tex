@@ -1,0 +1,28 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis I}}
+\author{\huge{Daniel Yu}}
+\date{September 23, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+  
+\section{Closure of a Set}
+\begin{definition}
+  Let $(X, \rho)$ be a metric space where  $E \subseteq X$. Denote $\overline{E}$ as the \textbf{closure}.
+  \[
+    \overline{E} = \cap_{E \subseteq F} F \text{ and F is closed}
+  .\]
+  And since, the intersection of any number of (including infinite) closed sets is closed. 
+\end{definition}
+\begin{note}
+  It's obvious that if $E$ is closed, then  $E = \overline{E}$.
+\end{note}
+\end{document}

@@ -1,0 +1,52 @@
+\documentclass[a4paper]{article}
+\input{preamble}
+\title{\Huge{Some Class}}
+\author{\huge{Daniel Yu}}
+\date{}
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Reference}
+https://rajagopalvenkat.com/teaching/resources/AI/ch2.html
+
+Consider search problems. They often fall into several categories based on the algorithm and purpose. The one I'm most familiar with is: 
+\[
+  \text{Optimal Search}
+.\] 
+
+\begin{definition}
+  Searching is the process of navigating and often narrowing the state space to intelligently find a solution.
+\end{definition}
+
+\section{Search}
+\begin{enum}
+  \item Breath First Search
+  \item Depth First Search
+  \item Iterative Deepening
+  \item Uniform Search Cost -- Special case of dijistra's algorithm
+\end{enum}
+
+https://rajagopalvenkat.com/teaching/resources/AI/ch2.html
+
+\section{Informed Search}
+\begin{definition}
+  Informed search relies on heuristics to estimate the cost of the cheapest path from the agent to the goal instead of cumulative cost. This is most useful when
+  heuristics are inexpesive and have constant time lookup.
+\end{definition}
+
+Take the example of the the 8 tile game. One heuristic that could be considered is using the number of 
+tiles out of place to estimate how far the state space is from goal state. However this does have problems, 
+consider the left game where there is only 1 piece out of place but the configuration is unplayable 
+as compared to the right game which has more pieces out of place but completely solvable.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/2024-09-12-09-45-42.png}
+  \caption{8 Tile}
+  \label{fig:2024-09-12-09-45-42}
+\end{figure}
+\end{document}
