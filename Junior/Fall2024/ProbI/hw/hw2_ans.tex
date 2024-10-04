@@ -42,24 +42,71 @@
       The expected value is additive, so $E[T_n - P_n] = E[T_n] - E[P_n]$. We know  $E[T_n] = \frac{n}{2}$ and
       $E[P_n] = \frac{n}{3}$, so $E[T_n - P_n] = \frac{n}{2} - \frac{n}{3} = \frac{n}{6}$. \\
 
-      Variance is not additive, so we have to consider the random variable $D_n = T_n - P_n$. We know that 
-      $P(D_1 = 1) = P(T_n = a \cap P_n = a -1) = \begin{pmatrix} n \\ a \end{pmatrix}\left( \frac{1}{2} \right)^{a} \cdot 
-      \begin{pmatrix} n-a \\ a-1 \end{pmatrix} \left( \frac{1}{3} \right)^{a-1} \cdot \frac{1}{6}^{n-2a+1}$
+      To compute $Var(T_n - P_n)$, let
        \begin{align*}
-         Var(T_n - P_n) &= E[(T_n - P_n)^2] - E[T_n - P_n]^2 \\
-                        &=
+         Var(T_n - P_n) &= E[(T_n - P_n)^2] - E[T_n - P_n]^2 
+      .\end{align*}
+      Consider the random variable $D_n = T_n - P_n$. 
+      We could attempt to map out the probabilities for each outcome for the random variable $D_n$ and $D_n^2$ but that
+      gets extremely complicated. Instead, recognize that each week's outcome is independent from each other
+      weeks outcome by definition, so we can break down the cumulative difference of $T_i - P_i$ for $i = 1,2,\ldots,n$ 
+      weeks as the sum of the individual differences each week, i.e. $D_n = d_1 + d_2 + \ldots + d_n$ where each
+      $d_i$ is the random variable representing the difference between tops and pants for that week (also recall
+      that selecting one item is mutually exclusive with selecting all other items), so 
+      $d_i \in \{-1,0,1\}$ where $d_i=1$ means that there was a top selected and $d_i = 0$ means that there was 
+      a hat selected and  $d_i=-1$ menas that there was a pants selected. Although variance is nonlinear in general
+      , since each $d_i$ is independent, $Var(D_n) = Var(d_1 + d_2 + \ldots + d_n) = Var(d_1) + Var(d_2) + 
+      \ldots + Var(d_n)$ as independent variables $X,Y$ have  $Cov(X,Y) = 0$ (independence > correlation). This 
+      gives:
+      \begin{align*}
+        Var(T_n - P_n) = Var(D_n) &= Var(d_1) + Var(d_2) + \ldots + Var(d_n) \\ 
+                                  &= \sum_{i=1}^n Var(d_i) \\
+                                  &= nVar(d_1) \text{ since each $d_i$ has the same distribution} \\
+                                  &= n (E[d_1^2] + E[d_1]^2) 
+      .\end{align*}
+      The distribution of $d_1$ is  $P(d_1 = 1) = \frac{1}{2}$, $P(d_1 = 0) = \frac{1}{6}$, $P(d_1 = -1) = \frac{1}{3}$. 
+      So,
+      \[
+        E[d_1]^2 = \left( 1 \cdot \frac{1}{2} + 0 \cdot \frac{1}{6} + -1 \cdot \frac{1}{3}\right)^2 = \frac{1}{6}^2 = \frac{1}{36} 
+      .\]
+      and the distribution of $d_1^2$ is  $P(d_1^2 = 1) = P(d_1=1) + P(d_1=-1) = \frac{1}{2} + \frac{1}{3} = \frac{5}{6}$ and 
+      $P(d_1^2 = 0) = P(d_1=0) = \frac{1}{6}$
+      \[
+        E[d_1^2] = \frac{5}{6} + 0 = \frac{5}{6} 
+      .\]
+      The answer is then:
+      \begin{align*}
+        n (E[d_1^2] + E[d_1]^2) &= n (\frac{5}{6} - \frac{1}{36})\\
+                                &= n(\frac{29}{36})
       .\end{align*}
     \end{proof}
   \item Show that $P[R \geq 11] \leq \frac{1}{2}$.
     \begin{proof}
       We toss a fair coin 1000 times, so $\Omega = \{H,T\}^{1000}$ where each toss is independent of all others. 
-      The probability that the largest consecutive run is exactly $r$ is bounded by $P[R=r] = $
-
-
-      Why isn't this true???
-      $P[R = r] = 
-      (1000-r+1)! \cdot \frac{1}{2}^{r} \cdot \frac{1}{2}^{1000-r} = (1000-r+1)! \cdot \frac{1}{2}^{1000}$. 
-    \end{proof}
+      R is the random variable representing the longest consecutive run of 'Heads'. The $P(R \geq 11) = P(R = 11 \cup
+      R=12 \cup \ldots \cup R=1000) = P(R=11) + P(R=12) + \ldots + P(R=1000) = \sum_{i=11}^{1000} P(R=i)$. However,
+      it is really hard to compute the probability of $P(R=i)$ explicitly. Instead, what we can do is break 
+      $P[R\geq 11]$ into a union of not necessarily disjoint events and compute their sums to provide an
+      upper bound on the probability of $P[R \geq 11]$. Begin our decomposition as follows:
+      \begin{align*}
+        P[R \geq 11] &= P[\{\text{coins 1 to 11 are heads} \cup \text{coins 2 to 12 are heads} \cup \ldots \cup \text{coins 990 to 1000 are heads} \} \\ 
+                     &\leq P[\text{coins 1 to 11 are heads}] + P[\text{coins 2 to 12 are heads}] + \ldots + P[\text{coins 990 to 1000 are heads}] 
+      .\end{align*}
+              
+      Notice that each of the events are not disjoint. For example, consider the event when coins 1 to 13 are heads, this
+      would be counted for coins 1 to 11 are heads and coins 2 to 12 are heads. However, the probabilities of these
+      events are now much easier to compute. Each $\forall i = 1,\ldots,990$:
+       \[
+      P(C_i) = \frac{1}{2}^{11}
+      .\] 
+      Then, we know :
+      \begin{align*}
+        P[R \geq 11] &\leq \sum_{i=1}^{990}\frac{1}{2}^{11} \\
+                     &\leq 990 * \frac{1}{2}^{11} \\
+                     &\leq .483\ldots \\
+                     &\leq .5
+       .\end{align*}
+     \end{proof}
   \item Party that fits 20 people, 24 people are invited
     \begin{enumerate}
       \item What is the expected number of people who will attend and the probability that all attendees fit
@@ -72,16 +119,16 @@
           (\begin{pmatrix} 24 \\ 21 \end{pmatrix} \frac{5}{6}^{21} \frac{1}{6}^{3} +  \begin{pmatrix} 24 \\ 22 \end{pmatrix} \frac{5}{6}^{22} \frac{1}{6}^{2}
           +  \begin{pmatrix} 24 \\ 23 \end{pmatrix} \frac{5}{6}^{23} \frac{1}{6}^{1} + \frac{5}{6}^{24}) \approx 0.584$ 
         \end{note}
-      \item Suppose now that $24$ people come in groups of 6 with probability $\frac{5}{6}$, what is the expected
+      \item Suppose now that $24$ people come in groups of 4 with probability $\frac{5}{6}$, what is the expected
         number of people that will arrive and the probability that all attendees fit in the venue.
         \begin{note}
-          There are now 4 groups of people with 6 people each and each group of people has $\frac{5}{6}$ chance
-          to come. Now, $X$ represents the number of groups and 
-          $E[X] = 0 \cdot \frac{5}{6}^{4} + 6 \cdot \frac{5}{6}^{1} \frac{1}{6}^{3} + 12 \cdot \frac{5}{6}^{2} \frac{1}{6}^{2} 
-          + 18 \cdot \frac{5}{6}^{3} \frac{1}{6}^{1} + 24 \cdot \frac{5}{6}^{4}= 13.56$ \\
-
-          The probability that all the attendees fit inside the venue is now $P[X \leq 3] = \sum_{k=1}^3 \frac{5}{6}
-          ^{k} \cdot \frac{1}{6}^{4-k} = 0.1196$ 
+          There are now 6 groups of people with 4 people each and each group of people has $\frac{5}{6}$ chance
+          to come. Now, $X$ represents the number of people and not groups. We know that $\Omega = \{\left( 0,0,0,0,0,0 \right),
+          \left( 0,1,0,0,0,0 \right), \ldots, \left( 1,1,1,1,1,1 \right) \}$, the attendance pattern of groups coming, 
+          and $X$ maps from  $\Omega$ to  $\R$, so  $X = \{0,4,8,12,16,20,24\}$. If we let $Y$ be the random variabl e
+          denoting the number of groups that came. Then $E[X] = E[4 Y] = 4 E[Y] = 4 \left( \frac{5}{6}  \cdot 6 \right) = 20$
+          The probability that all the attendees fit inside the venue is now $P[X \leq 20] = P[Y \leq 5] = \sum_{k=1}^5 
+          \begin{pmatrix} 6 \\ k \end{pmatrix}\frac{5}{6}^{k} \cdot \frac{1}{6}^{6-k} \approx 0.665$ 
         \end{note}
     \end{enumerate}
   \item Suppose we have $r$ balls to be distributed among  $n$ bins. Each of  $n^{r}$ configurations are equally 
@@ -90,11 +137,10 @@
       Let $K$ be the random variable denotating the first $k$ bins that are empty. If the configurations 
       are equally likely, then $P[K=k] = \frac{\text{ no configurations with first k bins empty }}{\text{ total configurations}}
       P[K = k] = \frac{(n-k)^{r}}{n^r} = \frac{n-k}{n}^{r}$
-
-      Why is this wrong???
+    \end{proof}
+    Question: Doesn't stars and bars apply?
       Let $K$ be the random variable denotating the first $k$ bins that are empty. If the configurations 
       are equally likely, then $P[K=k] = \frac{\text{ no configurations with first k bins empty }}{\text{ total configurations}}
       = \frac{\begin{pmatrix} n + r - k - 1 \\ r \end{pmatrix} }{ \begin{pmatrix} n + r - 1 \\ r \end{pmatrix} }$
-    \end{proof}
 \end{enumerate}
 \end{document}

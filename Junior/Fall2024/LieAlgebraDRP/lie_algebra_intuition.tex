@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Lie Algebra Intuition}}
+\author{\huge{Daniel Yu}}
+\date{October 1, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+
+Lie Algebra: a vector space with multiplication (function from product of vector space to vector space itself). Take $V$ a vector space.
+\begin{align*}
+  V \times V &\longrightarrow  V\\
+  (a,b) &\longmapsto [a,b]   \text{ read as bracket a,b}
+.\end{align*}
+Note, we can use $[ab]$ as shorthand for  $[a,b]$
+\begin{enumerate}
+  \item 
+  \item Multiplication is not associative:
+
+    \begin{note}
+      Why is this natural? Take matrices w det  $\neq$ 0. Take $V=R^{n \times n}$. Consider inverible matrices $[A,B] = AB - BA$. It's a measure of commutativity, if  $AB = BA$ then $[A,B]=0$. This has the property of \textbf{lie bracket} 
+    \end{note}
+\end{enumerate}
+
+
+\begin{remark}
+  Notice that $V$ is a vector space, so it has all the vector space axioms. We are simply imposing additional structure on top of $V$.
+\end{remark}
+
+\begin{note}{Example}\\
+  Consider the $2 \times 2$ matrices with  $tr(A) = 0$ aka  $SL_2 (\C)$. The basis is: 
+  \[
+     h = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, e = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix},
+     f = \begin{pmatrix} 0 & 0 \\ 0 &  1 \end{pmatrix} 
+  .\]  
+\end{note}
+
+
+\end{document}

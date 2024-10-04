@@ -1,9 +1,9 @@
 \documentclass[a4paper]{article}
 \usepackage[a4paper, margin=1in]{geometry}
 \input{preamble}
-\title{\Huge{Some Class}}
+\title{\Huge{Probability I}}
 \author{\huge{Daniel Yu}}
-\date{}
+\date{September 24, 2024}
 
 \pdfsuppresswarningpagegroup=1
 
@@ -105,7 +105,7 @@ $X+Y$? If $X,Y$ are discrete, we need to describe:
   Thus notice that the probability doesn't depend on $k$!, only  $n$. This is due to symmetry!
 \end{note}
 
-\section{Bayesian Thinkin}
+\section{Bayesian Thinking}
 \begin{prop}{Law of Total Probability}\\
   Let  $\{B_i\}_{i=1}^\infty $ be a partition of $\Omega$. Then for any event A,
    \[
@@ -199,10 +199,151 @@ Let $T_n$ = number of boxes you needed to open until you've seen all prizes.
 What is  $E[T_n]$?
 
 \begin{proof}
-  In other words, $T_n = \{\text{ first time # new coupons = n}\}$. We know that the time to collect
-  first new coupon $=1$. 
+  Set $T_n=$ first time that I collect all $n$ coupons. Instead of considering the number of the coupon box (i.e. original
+  ordering, do we see box 3 first or box 5 with a coupon?), we consider whether we have recognized a previously
+  collected coupon. Ex: Coupon number sequence $\to$ new/old sequence
+  \[
+   (3,3,1,2,1,\ldots) \to \left(N, O, N, N, 0, \ldots  \right)
+  .\]. Given such a 
+  sequence, let $R_k =$ increment of the time it takes to collect  $k$th coupon  $= T_k - T_{k-1}$ where $T_k$
+  is the first time k number of coupons have been collected. For the example above:
+  \[
+   \left(N \to T_1, O, N \to T_2, N \to T_3, 0, \ldots  \right)
+  .\]
+  where $R_1 = T_1 - 0 = T_1$, $R_2 = T_2 - T_1$,  \ldots. What is the distribution of $R_i$? (The key is that 
+  the probability $R_i$ is independent of each other i.e. the time it takes to draw a new coupon is independent
+  for each new coupon)
+   \[
+     R_1 = 1 \text{ with probability 1}
+   .\]
+   \[
+     R_2 \sim Geo(\frac{n-1}{n}) \text{ i.e } P[R_2=k]= \frac{n-1}{n} \left( \frac{1}{n} \right)^{k-1} 
+   .\] 
+  \[
+  R_3 \sim Geo(\frac{n-1}{n}) 
+  .\] 
+  etc.
+  \[
+  R_k \sim Geo(\frac{n-k + 1}{n}) 
+  .\] 
+  and each $R_i$ is independent of all others. Note that this does not answer the question of what is the 
+  probability  of the nth toss is new or old (dependent on the previous history since the probabilities change
+  depending on how many coupons have already been seen). What is the expected value of $E[T]$? To find this,
+  consider the $E[Geo(p)]$ in general:
+   \begin{align*}
+     E[Geo(p)] &= \sum_{k=1}^{\infty} k \cdot P[Geo(p) = k] \\ 
+               &= \sum_{k=1}^{\infty} k \cdot p \cdot \left( 1-p \right)^{k-1} \\
+               &= \frac{1}{p}
+  .\end{align*}
+  What about the variance of $Var(Geo(p))$?
+  Insert algebra here for $\sum_{k=1}^{\infty} k^{2} p \cdot (1-p)^{k-1} $
+   \begin{align*}
+     Var(Geo(p)) &= E[Geo(p)^{2}] - E[Geo(p)]^2 \\
+                 &= \sum_{k=1}^{\infty} k^{2} p \cdot (1-p)^{k-1} - \frac{1}{p}^2 \\
+                 &= \frac{2-p}{p^{2}} - \frac{1}{p^2} = \frac{1-p}{p^2} 
+  .\end{align*}
+  \textbf{Answer}\\
+  We know that $T_n = R_1 + R_2 + \ldots R_n$, so 
+  \begin{align*}
+    E[T] &= E[R_1] + E[R_2] + \ldots + E[R_n] \\
+         &= E[Geo(1)] + E[Geo(\frac{n-1}{n})] + \ldots + E[Geo(\frac{1}{n})] \\
+         &= 1 + \frac{n}{n-1} + \frac{n}{n-2} + \ldots + \frac{n}{2} + n \\
+         &= n \cdot \left( \sum_{k=1}^{n} \frac{1}{k} \right) \text{ a divergent series}
+  .\end{align*}
+  Further analysis reveals $\sum_{k=1}^{n} \frac{1}{k} \geq \int_{1}^{n+1} \frac{1}{x} dx = \ln(n+1)$. We
+  know $\sum_{k=1}^{n} \frac{1}{k} - \ln(n-1) = \gamma \approx 0.5772$ (Euler-Masrteroni constant). For 
+  super large n, $E[T] \sim n \ln(n) + \gamma n$, i.e. the expected value of the time to collect $n$ coupons
+  grows supra-linearly! \\
 
-  TODO when I have time.
+  What about $Var(T)$? Since  $R_i$ independent:
+  \begin{align*}
+    Var(T) &= \sum_{k=1}^{n} Var(R_k) \\
+           &= \frac{1-\left( \frac{n-1}{n} \right) }{\frac{n-1}{n}^2} + \frac{1-\left( \frac{n-2}{n} \right)}{
+           \frac{n-2}{n}^{2}} + \ldots + \frac{1-\frac{1}{n}}{\frac{1}{n}^2} \\
+           &= \sum_{k=1}^{n} \frac{1-\left( \frac{k-n}{n} \right) }{\left( \frac{k}{n}^2 \right) } \\
+           &= n^2 \left( \sum_{x=1}^{n} \frac{1}{k^2} - \frac{1}{n} \sum_{n-1}^{n} \frac{1}{k} \right)
+  .\end{align*}
+  Notice that now $\sum_{x=1}^{n} \frac{1}{k^2}$ is a convergent series! So as we take  $n \to \infty$,
+   $Var(T) \approx \frac{n^2 - \pi^2}{6} - n \ln(n) - \gamma n$. This means that the central tendency (i.e.
+   expected value) or mean of the time to collect $n$ coupons is some value and the standard deviation 
+   is much smaller, so the distribution of the time it takes is concentrated within a narrow range!
+ \end{proof}
+ This is all about independence
 
-\end{proof}
+\begin{prop}
+   To find this,
+  consider the $E[Geo(p)]$ in general:
+   \begin{align*}
+     E[Geo(p)] &= \sum_{k=1}^{\infty} k \cdot P[Geo(p) = k] \\ 
+               &= \sum_{k=1}^{\infty} k \cdot p \cdot \left( 1-p \right)^{k-1} \\
+               &= \frac{1}{p}
+  .\end{align*}
+  What about the variance of $Var(Geo(p))$?
+  Insert algebra here for $\sum_{k=1}^{\infty} k^{2} p \cdot (1-p)^{k-1} $
+   \begin{align*}
+     Var(Geo(p)) &= E[Geo(p)^{2}] - E[Geo(p)]^2 \\
+                 &= \sum_{k=1}^{\infty} k^{2} p \cdot (1-p)^{k-1} - \frac{1}{p}^2 \\
+                 &= \frac{2-p}{p^{2}} - \frac{1}{p^2} = \frac{1-p}{p^2} 
+  .\end{align*}
+\end{prop}
+
+\subsection{Secretary Problem}
+We have $n$ candidates, who are ordered uniformly at random (i.e. all  $n!$ options are equally likely). 
+Every time you interview a candidate, you must choose to hire them, or let them go forever. What strategy
+maximizes the probability of hiring the best candidate? \\
+
+For the sake of this problem we will restrict ourselves to a set of strategies where we reject the first
+ $k$ candidates and then hire the next candidate that's better than the $k$ rejected candidates. Let
+ $S_k = \{\text{ this strategy hsa the best candidate}\}$. This is not
+ all possible strategies. It is, however, an optimal one (which will not be proven). 
+
+ \begin{proof}
+   Let's find out which $S_k$ maximizes probability of hiring best candidate. To find this, we use the law of 
+   total probability:  $\{B_i\}_{i=1}^{n}$ is a partition, 
+   \[
+     P[S_x] = \sum_{i=1}^{n} P[S_x | B_i] P[B_i]
+   .\] 
+   We set $B_i = \{ \text{ Best candidate shows up at time i}\}$. Then $P[B_i] = \frac{1}{n}$ (best person
+   equally likely to show up at any time).  
+   \[
+     P[S_k | B_i] = \begin{cases}
+       0 \text{ if i $\leq k$ i.e. the best candidate was eliminated for coming within first k candidates} \\
+       \text{???  } i > k 
+     \end{cases}
+   .\] 
+   Realize,
+   \[
+     P[S_k | B_i] = \begin{cases}
+       0, \text{ if i $\leq k$ i.e. the best candidate was eliminated for coming within first k candidates} \\
+       P[\text{ Best candidate among first $\{B_1,\ldots,B_{i-1}\}$ shows up in 1st k candidates}], i > k 
+     \end{cases}
+   .\]
+   Conditional on $B_i$, all possible orderings of the remaining candidates are equally likely. In particular
+   all  $(i-1)!$ orderings of the best candidate among  $\{1,\ldots,i-1\}$ are equally likely.
+    \[
+    P[\text{ Best candidate among first $\{B_1,\ldots,B_{i-1}\}$ shows up in 1st k candidates}] = \frac{k}{i-1}
+   .\]
+   Then,
+   \begin{align*}
+     P[S_x] &= \sum_{i=1}^{n} P[S_x | B_i] \cdot P[B_i] \\
+            &= \frac{1}{n} \sum_{i=k+1}^{n} \frac{k}{i-1} \\
+            &= \frac{k}{n} \left( \sum_{i=2}^n \frac{1}{i-1} 
+            - \sum_{i=2}^{k} \frac{1}{i-1} \right) 
+   .\end{align*}
+   For $n,k$ large, 
+    \[
+      P[S_x] \approx \frac{k}{n} \cdot \log\left( \frac{n}{k} \right) 
+   .\]
+   If I set $k = c \cdot n$, then  $P[S_x] = c \cdot \ln(\frac{1}{c)}$ when $c \in [0,1]$ what value of
+   c should be chosen to maximize the probability?
+    \begin{align*}
+      & f(c) = c \ln(\frac{1}{c}) \\
+      & f'(c) = \ln(\frac{1}{c}) - 1 = 0 \\
+      & \ln(\frac{1}{2}) = 1 \\
+      & c = \frac{1}{e} \\
+      & k = \frac{n}{e} 
+   .\end{align*}
+   and $P[S_x] = \frac{1}{e} \cdot \ln(\frac{1}{\frac{1}{e}}) =\frac{1}{e}$.
+ \end{proof}
+
 \end{document}

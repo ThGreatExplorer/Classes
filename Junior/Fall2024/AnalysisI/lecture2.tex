@@ -142,7 +142,7 @@ Complement Rules -- Metric Space is $(X, S)$
         $\to$ Assume that $E$ is closed. Take a point in $x \in X \setminus E$. By definition, $x$ is not a limit point 
         of $E$ because all the limit points of $E$ are in $E$ since $E$ is closed. Thus, $\exists r > 0$ such that
         $B_{r}^0 (x) \cap E = \emptyset$ and $B_{r} (x) \cap E = \emptyset$ (the center $x$ also not in $E$). Then, 
-        the ball $B_r(x) \subseteq X \setminus E$. As this is true for any x, then by def. $U$ is open. \\ \\
+        the ball $B_r(x) \subseteq X \setminus E$. As this is true for any x, then by def. $X \setminus E$ is open. \\ \\
         $\leftarrow$ Assume $X \setminus E$ is open, then use forward direction of (1) that the complement of the open set is closed!  
       \end{proof}
   \end{enumerate}
@@ -153,7 +153,7 @@ Complement Rules -- Metric Space is $(X, S)$
   \begin{enumerate}
     \item If $U_1 \subseteq X$, $U_2 \subseteq X$ are open, then $U_1 \cup U_2$ and $U_1 \cap U_2$ are open.
       \begin{proof}
-        Assume $U_1, U_2 \subseteq X$ and are open. Consider $U_1 \cup U_2$, take $x \in U_1 \cup U_2$. Then $x \in
+        Assume $U_1, U_2 \subseteq X$ and are open. Consider $U_1 \cup U_2$, take $x \in U_1 \cup U_2$. Then WLOG, assume $x \in
         U_1$. Since they are open, by definition, $\exists r > 0$ such that $B_r (x) \subseteq U_1$ for example and 
         $B_r (x) \subseteq U_1 \cup U_2$. The same argument follows for $x \in U_2$. Since this is for any $x$, then $U_1 \cup U_2$ is open. \\ \\
         Consider $U_1 \cap U_2$, take $x \in U_1 \cap U_2$ so $x \in U_1$ and $x \in U_2$, then by definition $\exists r_1,r_2 > 0$ such that $B_{r_1}(x) \subseteq U_1$

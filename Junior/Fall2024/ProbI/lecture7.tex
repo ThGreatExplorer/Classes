@@ -1,0 +1,237 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\usepackage{unicode-math}
+\title{\Huge{Some Class}}
+\author{\huge{Daniel Yu}}
+\date{}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+\section{Interpretations of Probability}
+\subsection{Frequentist Perspective}
+Adherents believe that probability is simply a measurement of the outcomes over repeated experiments. For example,
+
+\begin{note}
+  Let $\{X_1, \ldots, X_n\} $ be iid discrete random variables. Denote $range(X_i) = \{x_1,x_2,\ldots,x_m\} $ and ket $k_i(n)= \{\text{number of times $x_i$ appeared in the sequence}\}$. Then let $\frac{k_i(n)}{n}$ be the relative frequency of $x_i$. However  $\frac{k_i(n)}{n}$ is itself a random variable!
+\end{note}
+
+\begin{remark}{Example}\\
+  Toss a fiar $4$-sided die  $n$ times. Say $n=2$.  Let  $\frac{k_1(2)}{2}$ be a random variable. 
+  \begin{align*}
+    \frac{k_1(2)}{2} \in \{0,\frac{1}{2},2\} 
+  .\end{align*}
+  Then,
+  \begin{align*}
+    & P[\frac{k_1(2)}{2}] = (\frac{3}{4})^{2} \\
+    & P[\frac{k_1(2)}{2}] = 2 \cdot \frac{1}{4} \cdot \frac{3}{4} = \frac{3}{8} \\
+    & P[\frac{k_1(2)}{2}] = \frac{1}{16}
+  .\end{align*}
+
+  This is scaled binomial distribution (ex consider $bin(2,\frac{1}{4})$ ). A binomial distribution is random variable. 
+\end{remark}
+
+\subsubsection{Law of Large Numbers}
+Can be thought of as a consequence of the frequentist perspective of probability. Not unique to it though.
+\begin{theorem}
+  Let $X_1$ be a discrete random variable with outcomes  $\{y_1, y_2, \ldots, y_m\} $, and let $k_i(n) = \{\text{number of times that $y_i$ appears in $n$ trials }\} $. Then, as $n \to \infty$
+  \[
+    \{\frac{k_1(n)}{n}\}_{n}  \to P[X_i = y_i] \text{  in probability} 
+  .\] 
+\end{theorem}
+
+\begin{corollary}{\textbf{Law of Large Numbers}\\
+  If $X_1$ is a dsicrete random variables with outcomes  $\{y_1, \ldots,y_m\} $ with $X_i$ are iid (so we are sampling from the same random distribution). And let  
+  \[
+  E_n = \frac{1}{n} (X_1 + X_2 + \ldots + X_n)
+  .\] 
+  Then, $E_n \to E[X_1]$ in probability as $n \to \infy$. 
+  The time average (average of experiment throughout time) = space average (space of possiblities, multiverse perspective)
+  \begin{proof}
+    \begin{align*}
+      E_n &= \frac{1}{n} \cdot \sum_{i=1}^{m} y_i \cdot \text{ number of times $y_i$ appears} \\
+          &=  \frac{1}{n} \sum_{i=1}^{m} y_i \cdot \frac{k_i(n)}{n} \\
+          & \text{ take n $\to \infty$, use the theorem} \\
+          &= \frac{1}{n} \sum_{i=1}^{m} y_i \cdot P[X_i = y_i] \\
+          &= E[X]
+    .\end{align*}
+  \end{proof}
+\end{corollary}
+
+\subsubsection{Probability Ineqaulities}
+Note true in general but we are only going to deal with the discrete case
+\begin{theorem}{Markov's Theorem}\\
+  Let $X$ be a non-negative random variable. Then,  $\forall a >0$,
+   \[
+     P[X\geq a] \leq \frac{E[X]}{a}
+  .\]
+ In other words the probability that a random variable is greater than or equal to some value is always less than or equal to the expected value (mean) of the random variable divided by the value. 
+ \begin{proof}
+   \begin{align*}
+     E[X] &= \sum_{y \in range(x)} y \cdot P[X=y] \\
+          &\geq \sum_{y \in range(x) \cap y \geq a} y \cdot P[X=y] \\
+          &\geq \sum_{y \in range(x) \cap y \geq a} a \cdot P[X=y] \\
+          &= a \cdot P[X \geq a] \\
+     \frac{E[X]}{a} &\geq  P[X \geq a]  
+   .\end{align*}
+ \end{proof}
+\end{theorem}
+
+\begin{note}{Example}\\
+  Consider tossing fair 4 sided dice. $K_1(n)$ are the numbers of 1s. What is probability  $P[\frac{k_1(n)}{n} \gqe \frac{1}{3}]$ 
+
+  \begin{proof}
+    \begin{align*}
+      E[\frac{k_1(n)}{n}] n&= E[\frac{1}{n} \sum_{i=1}^{n} 1_{x_i =1}] \\
+                          &= \frac{1}{n} \sum_{i=1}^{n}E[1_{x_i =1}] \\
+                          &= \frac{1}{n} \cdot n \cdot \frac{1}{4} \\
+                          &= \frac{1}{4}
+    .\end{align*}
+    By markov's inequality:
+    \[
+      P[\frac{k_1(n)}{n} \geq \frac{1}{3}] \leq \frac{E[\frac{k_1(n)}{n}]}{\frac{1}{3}} = \frac{3}{4} 
+    .\] 
+    Obvious tbh, so kinda useluess and doesn't tell us anything. We want a tighter bound!
+  \end{proof}
+\end{note}
+
+\begin{prop}
+  Let $\{Y_n\} $ be a sequence of non-negative R.V. If,
+   \[
+     E[Y_n] \to 0
+  .\] 
+  then, 
+  \[
+  Y_n \to 0
+  .\] 
+  in probability. 
+  \begin{proof}{Rough sketch}\\
+    Shiow $\forall \epsilon$,
+     \[
+       \lim_{n \to \infty} P[|Y_n| > \epsilon] = 0
+    .\] 
+    Since $Y_n \geq 0$,  $|Y_n| = Y_n$.
+     \[
+       \lim_{n \to \infty} P[Y_n > \epsilon] \leq \lim_{n \to \infty} \frac{E[Y_n]}{\epsilon} = 0
+    .\] 
+  \end{proof}
+\end{prop}
+
+\begin{note}{Clique Problem (NP-hard)}\\
+ $n$ people in a room, each pair of people are friends with probability  $\frac{1}{n}$ independent of every other pair. Let $Q_n$ = number of cliques of size 4 (i.e 4 participants that are mutually friends) i.e $\begin{pmatrix} 4\\ 2 \end{pmatrix} = 6$  pairs are friends.
+ \begin{proof}
+   Understanding this is very hard because as $n$ increases, the number of cliques increases but the probability of each pair being friends decreases  ($\frac{1}{n}$ ). However, using prop, even thought $P[Q_n=0]$ is difficult to compute,  $E[Q_n]$ is not.
+   \begin{align*}
+     E[Q_n] &= E[\sum_{\text{quadruplets}} 1_{\text{quadruplet are mutual friends}}] \\
+            &= \sum_{\text{quadruplets}} E[1_{\text{quadruplet are mutual friends}}] \\
+            &= \frac{n!}{(n-4)!4!} \left( \frac{1}{n} \right)^{6} \\
+            &= \frac{n(n-1)(n-2)(n-3)}{4!} \cdot (\frac{1}{n})^{6} \\
+            &\leq \frac{1}{24n^{2}} \\
+            &\to 0
+   .\end{align*}
+   Therefore, $P[Q_n \geq 1] \leq \frac{E[Q_n]}{1} \leq \frac{1}{24n^{2}} \to 0$.
+ \end{proof}
+\end{note}
+\begin{remark}
+   Note that if the clique was size 3, then this would converge\ldots (let $K_n$ = number of size 3 cliques)
+   \begin{align*}
+     E[K_n] &= \begin{pmatrix} n\\ 3 \end{pmatrix} \frac{1}{n}^{3} \\
+            &= \frac{n(n-1)(n-2)}{3!}\frac{1}{n}^{3}\\
+            &= \frac{n^{3} -3n^{2} + 2n }{6} \frac{1}{n}^{3} \\
+            &\to \frac{1}{6}
+   .\end{align*}
+\end{remark}
+
+\begin{theorem}{Chebyslev's Inequality} \\
+  Let $X$ be a random variable with finite variance. Then,
+   \[
+     P[|X - E[X]| \geq a] \leq \frac{Var(x)}{a^{2}} 
+  .\] 
+  If we set $\sigma = \sqrt{Var(x)} $ (standard deviation). Then,
+  \[
+    P[|X - E[X]| > r \sigma] \leq \frac{1}{r^{2}} 
+  .\]
+
+  \begin{proof}
+    \begin{align*}
+      P[|X - E[X]| \geq a] &= P[(|X- E[X]|)^{2} \geq a^{2}] \\
+                           &\leq \frac{1}{a^{2}} E[(X - E[X])^{2}] \\
+                           &=\frac{Var(x)}{a}
+    .\end{align*}
+  \end{proof}
+\end{theorem}
+
+\begin{note}{Example}\\
+  Back to $\frac{k_1(n)}{n}$. $E[\frac{k_1(n)}{n} = \frac{1}{4}]$. What is $var(\frac{k_1(n)}{n}$?
+  \begin{proof}
+    \begin{align*}
+      Var(\frac{k_1(n)}{n}) &= \frac{1}{n}^{2} Var(k_1(n)) \\
+                            &= \frac{1}{n}^{2} Var(\sum_{i=1}^{n} 1_{x_i = 1}) \\
+                            &\text{remember each roll $X_i$ is iid} \\
+                            &= \frac{1}{n}^{2} \sum_{i=1}^{n} Var(1_{x_i=1}) \\
+                            &= \frac{1}{n}^{2} \sum_{i=1}^{n} [E[1_{x_i=1}^{2}] - E[1_{x_i=1}]^{2}] \\
+                            &=`\frac{1}{n}^{2} \sum_{i=1}^{n} [\frac{1}{4} - \frac{1}{16}] \\
+                            &= \frac{3}{16n}
+    .\end{align*}
+  \end{proof}
+\end{note}
+
+\subsubsection{Proof of law of large numbers}
+Recall that the law of large number states:
+  Let $X_1$ be a discrete random variable with outcomes  $\{y_1, y_2, \ldots, y_m\} $, and let $k_i(n) = \{\text{number of times that $y_i$ appears in $n$ trials }\} $. Then, as $n \to \infty$
+  \[
+    \{\frac{k_1(n)}{n}\}_{n}  \to P[X_i = y_i] \text{  in probability} 
+  .\] 
+
+  \begin{proof}
+    Let $\frac{k_i(n)}{n}$ = $\frac{1}{n} \cdot \text{ number of times $y_i$ shows up}$. Then, we can think of it as being equivalent to saying the following
+    \begin{align*}
+      E[\frac{k_i(n)}{n}] &= \frac{1}{n} E[\sum_{i=1}^{n} 1_{x_j = y_j}] \\
+                          &= P[X_i = Y_i] 
+    .\end{align*}
+
+    So if the probability goes to 0, then the expected value goes to 0 as well. So all we need to show as $n \to \infty$
+    \[
+      P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| < \epsilon] \to 0 
+    .\] 
+
+    By chebyslev's inequality,
+    \begin{align*}
+      P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| > \epsilon] &\leq \frac{1}{\epsilon^{2}} Var(\frac{k_i(n)}{n} \\
+                                                             &\leq \frac{1}{\epsilon^{2}n^{2}} Var(\frac{k_i(n)}{n}\\
+      var(k_i(n)) &= n \cdot Var(1_{x_i = y_i} \\
+                  &\leq \frac{n}{4} \\
+      P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| > \epsilon] &\leq \frac{1}{4\epsilon^{2}n} 
+    .\end{align*}
+    This goes to $0$ as  $n \to \infty$
+  \end{proof}
+
+  \begin{note}{Random Walk Mistake}\\
+    Consider a random walk $s_1 = 1, -1$ with probability  $\frac{1}{2}$ and $\{s_i\}_{i=1}^{n} $ be iid sequence. Clearly, $E[S_i] = 0$. Now, denote  $W_n = \sum_{i=1}^{n} S_i$. Does the weak law of large numbers imply that $W_n \to 0$?
+
+    \begin{proof}
+      Lets compute $P[W_n = 0]$. realize that if $n$ odd, then  $W_n \neq 0$. So consider  $P[W_{2n} = 0]$.
+       \begin{align*}
+         \{W_{2n}\} &\iff \text{steps with +1 = steps with -1} \\
+          P[W_{2n} = 0] &= \begin{pmatrix} 2n \\ n \end{pmatrix} \cdot \frac{1}{2^{2n}} \\
+                        &= \frac{(2n)!}{(n!)^{2} 4^{n}} \\
+                        &\text{ using sterling's approximation $n! \approx \left( \frac{n}{\epsilon} \right)^{n} \cdot \sqrt{2\pi n}  $} \\
+                        &\approx \frac{\left( \frac{2n}{\epsilon} \right)^{2n} \sqrt{4 \pi n}  }{\left( (\frac{n}{\epsilon})^{n} \sqrt{2 \pi n}  \right)^{2} 4^{n} } \\
+                        &= \frac{\sqrt{4 \pi n} }{2 \pi n} \\
+                        &= \frac{1}{\sqrt{\pi} n  } \\
+                        &\to 0 (n \to \infty)
+       .\end{align*}
+       However, $W_n \not\to 0$ in probability (consider the random walks of stocks, they don't converge to 0)!!!! This is not a contradiction because the weak law of large numbers states that $\frac{W_n}{n} \to$ in probability not $W_n$!. In truth,
+       \begin{align*}
+         & P[|\frac{W_n}{n}| \geq \epsilon] \to 0 \\
+         & P[|W_n| \geq \epsilon n] \to 0  
+       .\end{align*}
+    \end{proof}
+\end{note}
+\end{document}

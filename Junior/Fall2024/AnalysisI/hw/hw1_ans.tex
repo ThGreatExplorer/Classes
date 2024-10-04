@@ -15,18 +15,124 @@
 
 \section{Problem 1}
 Let $(X,\rho)$ be a metric space and  $E$, a non-empty subset in $X$. Consider the new metric space,
-$(E,\rho)$. Prove that a set $U \subseteq E$ is open in $E$ $\iff$ $\exists $ an open set $\tilda{U}$ in $X$ 
-such that  $U = \tilda{U} \cap E$. Similarly, prove this for closed sets.
+$(E,\rho)$. Prove that a set $U \subseteq E$ is open in $E$ $\iff$ $\exists $ an open set $\tilde{U}$ in $X$ 
+such that  $U = \tilde{U} \cap E$. Similarly, prove this for closed sets.
 
 \begin{proof}
-  
+  $\to$ Assume that a set $U \subseteq E$ is open in $E \subseteq X$ with $(X,\rho), (E,\rho)$ being the respective
+  metric spaces. This means that $\forall x \in U$  $\exists r > 0$ such that 
+\[
+B_r(x) = \{y \in E \mid \rho(x,y) < r \}  \subseteq U
+.\]
+If $U$ is also open in $X$ i.e.  $U = \tilde{U}$ then we are done. Assume that  $U$ is not also open in $X$. This means now that, $\exists x \in U$,  $\forall r_i >0$,
+\[
+B_{r_i}'(x) = \{y \in X \mid \rho(x,y) < r\}  \not\subseteq U
+.\] 
+This is only possible because for any $B_{r_i}(x)' \setminus B_{r}(x) \subseteq X$ and $B_{r_i}(x)' \setminus B_r(x) \not\subseteq U$. 
+\[
+  B_{r_i}(x)' \setminus B_r(x) \subseteq X \setminus U 
+.\]
+and,
+\[
+B_{r_i}(x)' \setminus B_r(x) \subseteq X \setminus E
+.\] 
+so,
+\[
+B_{r_i}(x)' \cap E = B_r(x)
+.\] 
+Now, choose $r \in \{r_1, r_2, \ldots\}$ where $r_i > 0$. Then,
+\[
+  \tilde{U} = B_{r}(x)' \cup U = B_{r}(x)' \cup (U \setminus B_r(x))
+.\] 
+is open. This can be seen because for any point $y \in B_r(x)'$, we can generate:
+\[
+  B_{r'}(y) = \{z \in \tilde{U} \mid \rho(y,z) > r' = \rho(x,z) -r \} 
+.\] 
+We know by the triangle inequality that 
+\begin{align*}
+  \rho(x,z) &\leq \rho(x,y) + \rho(y,z) \\
+            &< r + \rho(y,z) \\
+  \rho(y,z) &>  p(x,z) -r  
+.\end{align*}
+So, for any point in  $y \in B_r(x)'$ we can generate a new ball $B_{r'}(y)$ so that:
+\[
+  B_{r'}(y) \subseteq B_r(x)' \subseteq \tilde{U}
+.\] 
+Since we can do this for any $x_j \in X$ such that  $\forall r_i > 0$,  $B_{r_i}'(x_j) = \{y \in X \mid \rho(x,y) < r \} \not\subseteq U$. We will refine our construction to select $\hat{r}_j \in \{r_1, \ldots\}$ for each of the balls above. Denote this set as $B' = \{B_{\hat{r}_j}(x_j)'\} $
+\[
+\tilde{U} = \cup_{\alpha \in B'} B_{\hat{r}_j}(x_j)' \cup U = \cup_{\alpha \in B'} B_{\hat{r}_j}(x_j)' \cup (U \setminus \cup_{x_j \in X} B_r(x_j)) 
+.\]
+Since each of the balls $B_{\hat{r}_j}(x_j)$ is open and the same argument follows that for any point we can take a ball of a small enough radius and since we know  $U \setminus B_r(x)$ contains only points with open balls, then
+the whole set $\tilde{U}$ must be open. We know that each of the  $B_r(x)' \setminus B_r(x) \in X \setminus E$, 
+so:
+\[
+  \tilde{U} \cap E = B_r(x) \cup U \setminus B_r(x) = U
+.\] 
+
+$\leftarrow$ Assume that  $\exists $ an open set $\tilde{U} \subseteq X$ such that $U = \tilde{U} \cap E$. 
+By set theory, $U \subseteq E$. We know that $\tilde{U}$ is open, so 
+\[
+  \forall x \in \tilde{U}, \exists r > 0, \text{ such that } B_r(x) \subseteq \tilde{U} 
+.\] 
+Consider the ball  $B_r(x) \cap E$, the intersection of the ball  $B_r(x) \subseteq X$ with $E$. We know that 
+this intersection must be open in $E$ because we are taking an open set in $X$ and intersecting it with
+$E$ which is open with respect to itself. Since $B_r(x) \subseteq \tilde{U}$, then 
+$B_r(x) \cap E \subseteq \tilde{U} \cap E = U$.  So for every $x \in U$, $\exists  r > 0$
+such that an open set is formed in $E$:
+ \[
+   B_r(x) \cap E \subseteq U
+.\] 
+$U \subseteq E$ is open
 \end{proof}
- 
+
+\begin{note}{Intuition}\\
+\textit{Consider $U \subseteq E$ an open set. This means that $\forall x \in U$  $\exists r > 0$ such that 
+\[
+B_r(x) \subseteq U
+.\] 
+If we consider $U$ in  $X \supseteq E$, then  $U$ may not be necessarily be open in  $X$ because there may
+ $x' \in X$ but  $x' \not\in E$ such that $\exists B_r(x)$ $\forall r > 0$ such that $x' \in B_r(x)$. Since $B_r(x) \subseteq U \subseteq E$,
+ if $x' \in B_r(x)$, then:
+ \[
+  B_r(x) \not\subseteq U
+ .\] 
+ For example, let $X = \R$, the closed interval $[0,1)$ would not be open because there is no ball centered at
+ $B_r(0)$ of any radius greater than 0 that is a subset of $[0,1)$. However, if we restrict $X = [0,1)$, then
+$[0,1)$ becomes open since $B_r(0)=[0,r) \subseteq [0,1)$ when  $r < 1$ (now the  $x < 0$ don't exist). 
+The idea is that we can find an open set $\tilde{U}$ in X that is an analogue of  $U$ in  $E$.}
+\end{note}
+
 \section{Problem 2}
-$K \subseteq E$ then $K$ is compact in $E$ $\iff$ $K$ is compact in $X$. 
+Given $K \subseteq E$, then prove $K$ is compact in $E$ $\iff$ $K$ is compact in $X$. 
 
 \begin{proof}
+  $\to$ If $K$ is compact in  $E \subseteq X$, then for any open cover $\{U_{\alpha}\}_{\alpha \in I}$ in $E$ such that
+  $K \subseteq \cup_{\alpha \in I} U_{\alpha}$ 
+  that covers $K$ and there is some finite subcover $\{U_{\alpha_1}, U_{\alpha_2}, \ldots, U_{\alpha_n}\} \subseteq E$ that
+   covers $K$. Since $E \subseteq X$, we can use the statement from problem 1. For each open subset $U_{\alpha_i} \subseteq E$, there exists open subset $U_{\beta_i} \subseteq X$ such that $U_{\alpha_i} = U_{\beta_i} \cap E \to U_{\alpha_i} \subseteq U_{\beta_i}$. So,
+\[
+K \subseteq \cup_{\alpha_i \in I_1} U_{\alpha_i} \subseteq \cup_{\beta_i \in I_1} U_{\beta_i}
+.\] 
+Thus, we can construct a finite subcover $\{U_{\beta_1}, U_{\beta_2}, \ldots, U_{\beta_n}\}$ of $K$ in $X$. As any open cover of $K$ in  $X$ can be restricted $\{U_{\beta} \cap E\}_{\beta \in I}$ to be an open cover of $K$ in  $E$ and any open cover of  $K$ in  $E$ can be augmented to be an open  cover of  $K$ in  $X$,  $\{\{U_{\alpha}\}_{\alpha \in I}, X \setminus E\}$, then any open cover in $X$ can be mapped to some open cover in $E$ such that we can follow the construction above to create a finite subcover of $K$ in  $X$. So, $K$ is compact in  $X$. \\
   
+  $\leftarrow$ Assume that $K$ is compact in $X$ and  $K \subseteq E$. This means for any open cover of $K$ in $X$:
+  \[
+  \{U_{\alpha}\}_{\alpha \in I} 
+  .\]
+  there exists a finite subcover $\{U_{\alpha_1}, \ldots, U_{\alpha_n}\} $ such that 
+  \[
+  K \subseteq \cup_{\alpha \in I_1} U_{\alpha} \subseteq X
+  .\] 
+  Then since $E \subseteq X$, we can use the statement from problem 1. For each open subset $U_{\alpha_i} \subseteq X$, there exists open subset $U_{\beta_i} \subseteq E$ such that $U_{\beta_i} = U_{\alpha_i} \cap E \to U_{\beta_i} \subseteq E$. And since, $K \subseteq E$, 
+  \[
+  U_{\alpha_i} \cap K \subseteq U_{\alpha_i} \cap E = U_{\beta_i}
+  .\] 
+  so,
+  \[
+    (\cup_{\alpha \in I_1} U_{\alpha_i}) \cap K = K \subseteq (\cup_{\alpha \in I_1} U_{\beta_i}) \cap E = \cup_{\beta \in I_1} U_{\beta_i}
+  .\]
+  and $\{U_{\beta_1}, \ldots, U_{\beta_n}\}$ is an finite subcover of $K$ in $E$.
+  Then the open cover of $K$ in $E$ would just be $\{U_{\beta}\}_{\beta \in I}$. As any open cover of $K$ in  $X$ can be restricted $\{U_{\alpha} \cap E\}_{\alpha \in I}$ to be an open cover of $K$ in  $E$ and any open cover of  $K$ in  $E$ can be augmented to be an open  cover of  $K$ in  $X$,  $\{\{U_{\beta}\}_{\beta \in I}, X \setminus E\}$, then for any open cover in $E$ which can be mapped to some open cover in $X$, we can follow the construction above to create a finite subcover of $K$ in $E$ and $K$ is compact. 
 \end{proof}
 
 \Huge{Due October 2nd}

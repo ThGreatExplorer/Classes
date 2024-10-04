@@ -1,0 +1,172 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Intro to Probability Models, Ross}\\Chapter 1 Problems}
+\author{\huge{Daniel Yu}}
+\date{September 25,2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{enumerate}
+  \item Drawing marbles with replacement
+    \begin{note}
+      There are three marbles $R,G,B$. The experiment is to draw a marble from the box and then 
+      replace it and draw a second marble. The sample space  $\Omega = \{R,G,B\}^2$. The probability
+      of each point in the sample space given each marble is equally likely to be drawn (i.e.
+      uniform probability measure) is $\frac{1}{|\Omega|}=\frac{1}{9}$.
+    \end{note}
+  \item If the marble is drawn without replacement the second time.
+    \begin{note}
+      If the marble is drawn without replacement, then $\Omega = \{\left( R,G \right), \left( R,B \right), 
+      \left( G,B \right), (G,R), (B,R), (B,G) \}$. The porbability given each marble is equally likely to
+      be drawn is $\frac{1}{\Omega}= \frac{1}{6}$
+    \end{note}
+  \item Problem 5
+    \begin{note}
+      The probability that the man is a winner is $P[\text{wins}] = P[\text{wins first time}] + P[\text{wins second time}] 
+      = P[\text{wins first time}] + P[\text{loses the first time and wins second time}]$:
+       \[
+      = \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{2} = \frac{3}{4}
+      .\]
+      While this has a greater than $\frac{1}{2}$ chance of winning, let $X$ be the random variable  denoting 
+      the money won or lost:
+      $E[X] = 1 \cdot \frac{1}{2} + 1 \cdot \frac{1}{4} - 3 \cdot \frac{1}{4} = 0$
+      So while this strategy gives a greater than fair chance of winning, because you will either make  $1$ or 
+      lose $3$ with no edge, the strategy isn't for everyone.
+    \end{note}
+  \item Problem 17
+    \begin{note}
+      If the coins are fair, then the probability that the game ends in the first round:
+      \[
+        P[\text{ends in 1}] = 1 - P[\text{all heads}] - P[\text{all tails}] = 1 - (\frac{1}{2}^{3} + \frac{1}{2}^{3}]
+        = \frac{3}{4}
+      .\] 
+      Alternatively,
+      \[
+        P[\text{ends in 1}] = P[\text{2H 1T}] + P[\text{1H 2T}] = \begin{pmatrix} 3 \\ 2 \end{pmatrix} \cdot
+        \frac{1}{2}^{3} + \begin{pmatrix} 3 \\ 2 \end{pmatrix} \cdot \frac{1}{2}^{3} = \frac{6}{8} = \frac{3}{4}
+      .\]
+      The reason we use combinatorics is because we know each outcome is equally likely (uniform) so we count all the 
+      different combinations of $2H,1T$ and vice versa that are possible. \\
+
+      Now consider if all 3 coins are biased with  $P[H] = \frac{1}{4}$. Then,
+      \[
+        P[\text{ends in 1} = 1 - \frac{1}{4}^{3} - \frac{3}{4}^{3} = \frac{36}{64} = \frac{9}{16}
+      .\] 
+    \end{note}
+  \item Problem 19: What is $P(\text{ > 1 dice is 6})$? What is  $P(\text{ 1 > dice is 6} | \text{2 dice face diff})$?
+    \begin{note}
+      $\Omega = \{1,2,3,4,5,6\}^{2}$. Fair dice. Then,
+      \[
+        P[\text{at least 1 6}] = \frac{\mid \{\text{at least 1 6} \}\mid }{|\Omega|} = \frac{11}{36}
+      .\] 
+      and,
+      \[
+        P[\text{at least 1 6} | \text{2 dice face diff}] = \frac{P[\text{at least 1 6} \cap \text{2 dice face diff}]}{
+        P[\text{2 dice face diff}]} = \frac{\frac{10}{36}}{\frac{30}{36}} = \frac{1}{3}
+      .\] 
+    \end{note}
+  \item Problem 25: 2 cards are randomly selected from a deck of 52 playing cards:
+    \begin{enumerate}
+      \item What is the probability they form a pair?
+        \begin{note}
+          This can be thought of no. ways to choose valid pairs / no. ways to choose 2 cards. We know there 
+          are $4$ cards of the same denomination :
+          \[
+            P[\text{valid pair}] = \frac{52 \cdot 3}{52 \cdot 51} = \frac{3}{51}
+          .\] 
+        \end{note}
+      \item What is the conditional probability that they constitute a pair given different suits?
+        \begin{note}
+          Given from different suits,
+          \[
+            P[\text{valid pair} | \text{diff suits}] = \frac{P[\text{valid pair and diff suits}]}{P[\text{diff suits}]} 
+            = \frac{\frac{3}{51}}{\frac{52 \cdot 39}{52 \cdot 51}} = \frac{\frac{3}{51}}{\frac{39}{51}} = \frac{3}{39} = \frac{1}{13}
+          .\] 
+        \end{note}
+    \end{enumerate}
+  \item Problem 27:
+    \begin{note}
+      We know from the previous question:
+      \[
+        P[E_1 E_2 E_3 E_4] = P[E_1] P[E_2|E_1] P[E_3|E_1 E_2] P[E_4 | E_1 E_2 E_3]
+      .\] 
+      $P[E_1]=1$ because the ace of spades has to be in one of the four piles.  
+       \[
+         P[E_2|E_1] = P[E_2] = \frac{52 \cdot 39 \cdot 50!}{52!} = \frac{39}{51} 
+      .\] 
+      since there are 52 options for where the ace of spaces can be placed, whichever place the ace is placed down at,
+      the ace of hearts to be in a different pile, can't occupy the 12 cards in that pile. This works because
+      the number of cards in each pile are fixed and the cards are not indistinguishable (so stars and bars 
+      does not apply). 
+      \[
+        P[E_3 | E_1 \cap E_2] = \frac{P[E_3 \cap \left( E_1 \cap E_2 \right)] }{P[E_1 \cap E_2]} 
+        = \frac{P[E_3 \cap E_2]}{P[E_2]} = \frac{P[E_3]}{P[E_2]} = \frac{\frac{52 \cdot 39 \cdot 26 \cdot 49!}{52!}}{\frac{39}{51}}
+        = \frac{\frac{39 \cdot 26}{51 \cdot 50}}{\frac{39}{51}} = \frac{26}{50}
+      .\] 
+      and from definition of $E_1,E_2,E_3,E_4$:
+      \[
+        P[E_4 | E_1 \cap E_2 \cap E_3] = P[E_4 | E_2 \cap E_3] = P[E_4 | E_3] =
+        \frac{P[E_4 \cap E_3]}{P[E_3]} = \frac{P[E_4]}{P[E_3]} = \frac{\frac{52 \cdot 39 \cdot 26 \cdot 13 \cdot 48!}{52!}}{
+        \frac{39 \cdot 26}{51 \cdot 50}} =  \frac{\frac{39 \cdot 26 \cdot 13}{51 \cdot 50 \cdot 49}}{\frac{39 \cdot 26}{51 \cdot 50}}
+        = \frac{13}{49} 
+      .\]
+      This ends up giving us:
+      \[
+        P[E_1 E_2 E_3 E_4] = 1 \cdot \frac{39}{51} \cdot \frac{26}{50} \cdot \frac{13}{49} 
+      .\]
+      This is equivalent to asking what the probability that each pile has an ace is!!!
+    \end{note}
+  \item Problem 30:
+    \begin{enumerate}
+      \item Given, one shot hit target what was probability it was George?
+        \begin{note}
+          Let $X_1$ be random variable representing if George hit target and  $X_2$ be random variable representing
+          if Bill hit the target.  $P[X_1 = 1] = .4$ and  $P[X_2=1]=.7$. We know that $X_1$ is independent of  $X_2$
+          since George and Bill fire independently.
+          \[
+            P[X_1 = 1| \text{only 1 shot hit}] = \frac{P[X_1 = 1 \cap \text{only one shot hit}]}{P[\text{only 1 shot hit}]}
+            = \frac{P[X_1=1 \cap X_2 =0]}{P[X_1=1 \cap X_2=0] + P[X_1 =0 \cap X_2 =1]}
+          .\] 
+          This gives,
+          \[
+          = \frac{.4 \cdot .3}{.4 \cdot .3 + .6 \cdot .7} = \frac{2}{9}
+          .\] 
+        \end{note}
+      \item Give the target is hit, what is the probability George hit it?
+        The difference here is that both George and Bill could have hit, i.e. $X_1 =1 \cap X_2=1$
+        \[
+          P[X_1 = 1 | \text{target hit}] = \frac{P[X_1 = 1 \cap \text{target hi}]}{P[\text{target hit}]} = 
+          \frac{P[X_1 = 1 \cap X_2 = 0] + P[X_1 = 1 \cap X_2 = 1]}{P[X_1 =1 \cap X_2 = 0] + P[X_1 = 1 \cap X_2 = 1] 
+          + P[X_1 = 0 \cap X_2 = 1]}
+        .\]
+        \[
+        = \frac{.4}{.4 + .6 \cdot .7} = \frac{20}{41}
+        .\] 
+    \end{enumerate}
+  \item Problem 32
+    \begin{note}
+      Let's quickly verify that this makes sense. Let $X_1$ be the random variable representing if each person
+      selected their hat or not. For $n=2$:
+       \[
+         P[X_1 = 0 \cap X_2 = 0] = \frac{1}{2} \cdot \frac{1}{1} = \frac{1}{2} = \frac{1}{2!} 
+      .\] 
+      For $n=3$:
+       \[
+         P[X_1 = 0 \cap X_2 = 0 \cap X_3=0] = \frac{2}{3} \cdot \frac{1}{2} \cdot 1 = \frac{1}{3} =
+         \frac{1}{2} - \frac{1}{3!} 
+      .\] 
+      For $n=4$:
+       \[
+         P[X_1 = 0 \cap X_2 = 0 \cap X_3=0 \cap X_4 = 0] = \frac{3}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} = \frac{1}{4}
+         = 
+      .\] 
+    \end{note}
+\end{enumerate}
+
+\end{document}

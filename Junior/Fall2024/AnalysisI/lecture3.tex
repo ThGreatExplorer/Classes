@@ -49,7 +49,7 @@
 \begin{prop}
   If $E \subseteq X$ is \textbf{compact} then E is \textbf{bounded}
   \begin{proof}{By Contradiction}\\
-    Assume that $E$ is compact but not bounded.  Take $x_0 \in X$ and consider the open cover of $E$,  $U_n = B_n(x_0)$ 
+    Assume that $E$ is compact but not bounded.  Take $x_0 \in X$ and consider the open cover of $E$,  $U_n = \{ B_n(x_0) \}$ 
     for $n=1,\ldots,n$. We know that each of these balls $B_n(x_0)$ is open by definition. Then $E \subseteq \cup_{n \geq 1} B_n(x_0)$.
     Since $E$ is compact, then there exists finite subcover, so $\cup_{n \geq 1} B_n(x_0)$ is composed of finitely many balls.
     Then, $\exists 1 \leq n_1 < n_< \ldots < n_k$ such that $E \subseteq \cup_{j=1}^k B_{n_j}(x_0) = B_{n_k} (x_0)$ 
@@ -62,7 +62,7 @@
 
 \begin{definition}
   The \textbf{haussdorff property} is defined as follows. For any $x \neq y$ in  $\left( X, \rho \right) $ metric space.
-  Then $\exists r>0$ such that $B_{r_1}(x) \cap B_{r_2}(y) = \emptyset$. This \textbf{Haussdorff space} is also known
+  Then $\exists r_1,r_2>0$ such that $B_{r_1}(x) \cap B_{r_2}(y) = \emptyset$. This \textbf{Haussdorff space} is also known
   as the \textbf{T2 axiom}.
 \end{definition}
 \begin{note}
@@ -83,15 +83,15 @@
 \end{note}
 
 \begin{prop}
-  If $E \subseteq X$ is compact then is a closed set in $X$. 
+  If $E \subseteq X$ is compact then it is a closed set in $X$. 
 
   \begin{proof}
     Assume that $E$ is compact. We will use the fact that we already proved if a set $U$ is open, then it's complement
     $U^c$ is closed. So we will show $X \setminus E$ is an open set. If $E = X$ then  $E$ is closed since it is 
     the whole metric space and metric spaces are closed sets. Assume $E \neq X$. Then, take  $x \in X \setminus E$.
     For any $y \in E$,  $\exists r_y > 0$ such that $B_{r_y}(x) \cap B_{r_y}(y) = \emptyset$. Then,
-    $\{B_{r_y} (Y)\}_{y \in E} $ is an open cover of $E$ (in fact, even the centers would cover $E$). Since
-    $E$ is compact  $\exists y_1, \ldots, y_N \in E$ such that $E \subseteq \cup_{j=1}^N B_{r_{y_j}}$, a finite
+    $\{B_{r_y} (y)\}_{y \in E} $ is an open cover of $E$ (in fact, even the centers would cover $E$). Since
+    $E$ is compact  $\exists y_1, \ldots, y_N \in E$ such that $E \subseteq \cup_{j=1}^N B_{r_{y_j}} (y_j)$, a finite
     subcover.  Take $r = min \{r_{y_i}, r_{y_2}, \ldots, r_{y_N}\} > 0$. This means $\forall 1 \leq j \leq N$:
      \[
     B_r(x) \cap B_{y_j}(y_j) \subseteq B_{r_j} (x) \cap B_{r_j}(y_j) = \emptyset
@@ -100,7 +100,7 @@
     \[
       B_r(x) \cap (\cup_{j=1}^N B_{r_j}(y_j)) = \emptyset
     .\] Then,
-  $B_r(x) \cap E = \emptyset$ and  $B_r(x) \in X \setminus E$. Since we can make this argument for any
+  $B_r(x) \cap E = \emptyset$ and  $B_r(x) \subseteq X \setminus E$. Since we can make this argument for any
   $x \in X \setminus E$, then $X \setminus E$ is open. And $E$ must be closed set in $X$.
   \end{proof}
 \end{prop}
@@ -109,7 +109,7 @@
   Let $E \subseteq X$ compact and  $A \subseteq E$ and $A$ closed in  $X$. Then, $A$ is compact in $X$. 
   \begin{proof}
   Let $\{ U_\alpha\}_{\alpha \in I}$ be an open cover of $A$. We will prove that it has a finite subcover. 
-    Since $A$ is closed, then  $X \setminus A$ is open and we get $\{\{U_{\alpha}_{\alpha \in I} , X \setminus A \} \}$
+Since $A$ is closed, then  $X \setminus A$ is open and we get $\{\{U_{\alpha} \}_{\alpha \in I} , X \setminus A \}$
     which is an open cover of $E$. Since  $E$ is compact,  $\exists $ a finite subcover of $E$, 
     $\{U_{\alpha_1}, U_{\alpha_2}, \ldots, U_{\alpha_N}, X\setminus A\}$. Then, $\{U_{\alpha_1}, \ldots, U_{\alpha_N} \}
      \subseteq \{U_{\alpha_1}, U_{\alpha_2}, \ldots, U_{\alpha_N}, X\setminus A\}$ and is a finite subcover of
@@ -121,7 +121,7 @@
   Let $E$ be a compact set and let  $S \subseteq E$ compact that has infinitely many element. Then  $\exists $
   a limit point of $S$ inside $E$. (will be used later on when talking about convergence).
   \begin{proof}{By Contradiction}\\
-    Assume $E$ is compact and  $S \subsete E$ and  $S$ has infinitely many points and  $S$ does not have a 
+    Assume $E$ is compact and  $S \subseteq E$ and  $S$ has infinitely many points and $S$ does not have a 
     limit point in  $E$. This means that since $S \subseteq E$, if there is no limit point in $E$,
     then $S$ does not have a limit point in general. Then for $\forall y \in E$ we have that  $y$ is not
     a limit point of  $S$ meaning, 

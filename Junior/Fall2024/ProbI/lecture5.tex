@@ -1,0 +1,222 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Probability 1}}
+\author{\huge{Daniel Yu}}
+\date{September 24,2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+  
+\section{Conditional Expectation}
+\begin{definition}
+  Let $X,Y$ be random variables on the same space.
+   \[
+     E[X|Y=y] = \sum_{k \in range(x)} k \cdot P[X=k|Y=y]
+  .\]
+  We can think of conditional expectations as random variables.
+\end{definition}
+\begin{note}{Example}\\
+  Toss two four sided fair dice, and let $X$= 1st toss and  $M$ =maximum. 
+
+  \begin{enumerate}
+    \item What $E[X|M=1]$?  
+      $E[X|M=1] = 1 \cdot P[X=1 | M=1]= 1 \cdot \frac{P[X=1 \cap M=1]}{P[M=1]} = 
+      1 \cdot \frac{\{(1,1)\}}{\{(1,1)\} } =1$
+    \item What about $E[X|M=2]$? 
+      \begin{align*}
+        &= 1 \cdot P[X=1 | M =2] + 2 \cdot P[X=2|M=2] \\
+        &= 1 \cdot \frac{P[X=1 \cap M=2]}{P[M=1]} + 2 \cdot \frac{P[X=2 \cap M=2]}{P[M=2]} \\
+        &= 1 \cdot \frac{P[\{(1,2)\}]}{P[\{(1,2),(2,2),(2,1)\}} + 2 \cdot \frac{P[\{(2,1),(2,2)\}}{P[\text{same}]} \\
+        &= \frac{\frac{1}{16}}{\frac{3}{16}} + 2 \cdot \frac{\frac{2}{16}}{\frac{3}{16}} \\
+        &= \frac{5}{3}
+      .\end{align*}
+    \item What about $E[M | X=2]$?
+      \begin{align*}
+        E[M|X=2] &= 2 \cdot \frac{P[M =2 \cap X =2]}{P[X=2]} + 3 \cdot \frac{P[M=3 \cap X=2]}{P[X=2]} + 4 \cdot \frac{P[M=4 \cap X=2]}{P[X=2]} \\
+                 &= \frac{11}{4}
+      .\end{align*}
+  \end{enumerate}
+ \end{note}
+
+ \begin{definition}
+   The \textbf{law of total expectation}, when $X,Y$ are random variables on the same space:
+    \[
+      E[X] = \sum_{r \in range(x)} E[X|Y=r] \cdot P[Y=r]
+   .\] 
+   \begin{proof}
+     By writing it out:
+     \begin{align*}
+       E[X] &= \sum_{r \in range(x)} E[X|Y=r] \cdot P[Y=r] \\
+            &= \sum_{r \in range(x)} \sum_{k \in range(x)} k \cdot P[X=k|Y=r] \cdot P[Y=r]  \\
+            &= \sum_{k \in range(x)} k \sum_{r \in range(x)}  P[X=k|Y=r] \cdot P[Y=r] \\
+            &= \sum_{k \in range(x)} k \cdot P[X=k] \\
+            &= E[X]
+     .\end{align*}
+   \end{proof}
+ \end{definition}
+
+ \begin{lemma}
+   Another way of writing the previous example is as follows and is known as \textbf{law of iterated expectations}:
+   \[
+     E[X] = E_Y[E_X[X|Y]]
+   .\] 
+ \end{lemma}
+ \begin{remark}
+   The use of these two expectation laws is to be able to now "condition" on a random variable. 
+ \end{remark}
+ \begin{note}{Example}\\
+   Consider a rat in a maze with three intial paths to choose. Let $T$ be the amount of time required for the
+   mouse to leave. What is  $E[T]$?
+
+  \begin{proof}
+     Let $C$ = 1st choice of the mouse. 
+      \[
+        E[T] = E[T | C=1] \cdot P[C=1] + E[T|C=2] \cdot P[C=2] + E[T|C=3] \cdot P[C=3] 
+      .\]
+      Since we don't know anything about the maze other than there are 3 options (this is blc the values
+      are not relevant and just for plugging in). Let's just assume that the following values hold (but
+      really they could be any values). For choices 2,3 the mouse goes around in a circle and 
+      arrives back assume the mouse is dumb and again independently makes a decision, i.e. the experiment 
+      resets and T' has the same distribution as T.
+      \[
+      \begin{cases}
+        & c=1, T=3, E[T | C=1] = 3 \\
+        & c=2, T=4 + T' \\
+        & E[T|c=2] = 4 + E[T] \\
+        & c=3, T = 5 + t' \\
+        & E[T|c=3] = 5+E[T] 
+      \end{cases}
+      .\] 
+      Substituting these values in,
+      \begin{align*}
+        E[T] &= 3 \cdot \frac{1}{3} + (4+E[T]) \cdot \frac{1}{3} + (5 + E[T]) \cdot \frac{1}{3} \\
+             &= 4 + \frac{2}{3} E[T] \\
+        E[T] &= 12
+      .\end{align*}
+  \end{proof}  
+ \end{note}
+
+ \begin{note}{Example}\\
+   Consider a similar experiment design. We flip a coin, with $P[H] = p$, each  toss independent. Let
+    $G =$ first time we get a $H$. Let $X_1$ be the result of the first coin toss:
+
+    \begin{proof}
+      Recall that $G$ is a geometric random variable. So as expected:
+       \begin{align*}
+         E[G] &= E[G | X_1 = H] \cdot P[X_1=H] + E[G|X_1 = T] \cdot P[X_1 = T] \\
+              &= 1 \cdot p + (1+E[G])(1-p) \\
+          E[G] &= p + (1-p) -p E[G] \\
+               &= \frac{1}{p}
+      .\end{align*}
+    \end{proof}
+\end{note}
+
+\begin{remark}
+  What if the above was modified to find $E[D]$ where  $D$ = first time we see two H's in a row. 
+
+  \begin{proof}
+    Recall: $E[D] = E_G[E_D[D|G]]$. The \textbf{key to reasoning} about this is to consider what happens
+    when you know $G$. Consider the $X_{G+1}$ the result of the coin after $G$. We condition  $E[D|G]$ 
+    now on  $X_{G+1}$
+     \[
+       E[D|G, X_{G+1} =H] = G + 1 \text{ conditional probability reached heads then next roll heads}
+    .\] 
+    \[
+      E[D|G, X_{G+1} = T] = G + 1 + E[D] \text{ full reset of the experiment}
+    .\] 
+    Then, we substituting into the law of iterated expectations gives us:
+    \begin{align*}
+      E[D|G] &= E[D|G, X_{G+1} = H] \cdot P[X_{G+1} = H] + E[D|G, X_{G+1}=T] \cdot P[X_{G+1} =T] \\
+             &= (G+1) \cdot p + (G+1+E[D]) (1-p) \\
+      E[D|G] &= G+1 + (1-p)E[D]
+    .\end{align*}
+    Now we substitute back for $E[D]$:
+     \begin{align*}
+       E_{G}[E[D|G]] &= E_G[G+1 + (1+p)E[D]] \\
+       E[D] &= \left( \frac{1}{p} + 1 \right) + (1-p)E[D] \\
+       E[D] &= \frac{1}{p^2} + \frac{1}{p}
+    .\end{align*}
+  \end{proof}
+\end{remark}
+
+\begin{remark}
+  What if now we consider $S$ = first time we see  $HT$, what is  $E[S]$?
+
+  \begin{proof}
+    $E[S] = E_G[E_S[S|G]]$. We can keep the same definitions of  $G$ and  $X_{G+1}$ as before. But
+    think very carefully about the pattern:
+    \[
+    \begin{cases}
+      & E[S|G, X_{G+1} = T] = G+1 \\
+      & E[S|G, X_{G+1} = H] = G + 1 + E[Geo(1-p)] 
+    \end{cases}
+    .\]  
+    This changes becasue now the pattern is $T \ldots T H H$ and we \textbf{don't} restart because $H$ is
+     the beginning of a  $HT$ pattern. So what we are really now searching for is the first time we 
+     get a tails $H H \ldots H T$! This is $Geo(1-p)$.
+    \begin{align*}
+      E[S|G] &= (G+1) \cdot (1-p) + (G+1+\frac{1}{1-p}) \cdot p \\ 
+             &= G+1 + \frac{p}{1-p}
+    .\end{align*}
+    Then, 
+    \[
+      E[S] = \frac{1}{p} + 1 + \frac{p}{1-p} = \frac{1}{p(1-p)}
+    .\] 
+  \end{proof} 
+\end{remark}
+
+\begin{note}{Example} \\
+  Suppose $N$ is the number of customers that walk into a bank on thursday. Each customer deposits 2 or withdraws
+  1, independently at random. Let  $Y$ = total cashflow on Thursday. What is $E[Y]$
+  
+  \begin{proof}
+    Let $X_i \in \{2,-1\} $ represent the random variable of the customers behavior. Note that we can break up
+    the expected value in this way because we are implicitly assuming (based one the problem) that the number of 
+    people $N$ doesn't affect each customer's decision  $X_i$
+    \begin{align*}
+      E[Y|N=k] &= E[\sum_{i=1}^{k} X_i] = k \cdot E[X_1] = k \cdot \left( \frac{1}{2} \cdot 2 - \frac{1}{2} \cdot 1 \right) = \frac{k}{2} \\
+      E[Y] &= \sum_{k=1}^{\infty} E[Y|N=k] \cdot P[n=k] \\
+           &= \sum_{k=1}^{\infty} \frac{k}{2} \cdot P[N=k] \\
+           &= \frac{1}{2}\sum_{k=1}^{\infty} k \cdot P[N=k] \\
+           &= \frac{1}{2} E[N]
+    .\end{align*}
+    completely expected! 
+  \end{proof}
+
+  What is the variance of $Y$?
+  \begin{proof}
+    First compute, $E[Y^2]$
+    \begin{align*}
+      E[Y^2] &= \sum_{k=1}^{\infty} E[Y^2 | N=k] \cdot P[N=k] \\
+             &= \sum_{k=1}^{\infty} E[\left( \sum_{i=1}^{k} X_i \right)^{2} | N=k] \cdot P[N\cdot k] \\
+             &= \sum_{k=1}^{\infty} E[\sum_{i=1}^{k} X_i^{2} + \sum_{i \neq j} X_i X_j | N=k] \cdit P[N \cdot k] \\
+             &= \sum_{k=1}^{\infty} [\sum_{i=1}^{k} E[X_i^{2}| N=k] + \sum_{i\neq j} E[X_i X_j | N=k]] \cdot P[N=k] \\
+             &= \sum_{k=1}^{\infty} [\sum_{i=1}^{k} E[X_i^{2}] + \sum_{i\neq j} E[X_i X_j]] \cdot P[N=k] 
+    .\end{align*}
+    We know that $X_i, X_j$ are independent, so $E[X_i X_j] = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4}$. Now
+    let's analyze $X_i^{2}$ (since all $X_i$ have the same distribution):
+    \[
+    X_i = \begin{cases}
+      4, P[X_2 = 4] = \frac{1}{2} \\
+      1, P[X_2 = 1] = \frac{1}{2}
+    \end{cases}
+    .\] 
+    Then, $E[X_i]^{2}=\frac{5}{2}$ :
+    \begin{align*}
+      E[Y^2] &= \sum_{k=1}^{\infty} [\sum_{i=1}^{k} \frac{5}{2} + \sum_{i\neq j} \frac{1}{4}] \cdot P[N=k] \\
+             &= \sum_{k=1}^{\infty} [k \cdot \frac{5}{2} + k \cdot (k-1) \frac{1}{4}] \cdot P[N=k] \\
+             &= \sum_{k=1}^{\infty} (k \cdot \frac{1}{4}) \cdot P[N=k] + \sum_{k=1}^{\infty} k \cdot (\frac{5}{2}-\frac{1}{4}) \cdot P[N=k] \\
+             &= E[X_i]^{2} \cdot E[N^{2} + Var(X_1) + E[N] \\
+    .\end{align*}
+    and the $Var(Y) = $
+  \end{proof}
+\end{note}
+
+\end{document}
