@@ -1,0 +1,50 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Hw 4}}
+\author{\huge{Daniel Yu}}
+\date{October 6, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{enumerate}
+  \item Let $X\sim \exp(\lambda)$.
+    \begin{proof}
+      Using the memorylessness property of the exponential distribution, which asserts that the amount of time since the previous event has no effect on the future time until the next event occurs. I computed it directly lol!
+      \begin{align*}
+        E[X^{2} | X > 1] &= \int_{1}^{\infty} x \cdot xe^{-x} dx \\
+                         &= \int_{1}^{\infty}  x^{2} e^{-x} dx \\
+                         &\text{ let $u = x^{2}, du = 2xdx, dv = e^{-x}dx, v = -e^{-x}$}\\
+                         &= x^{2} \cdot -e^{-x} + \int_{1}^{\infty} -e^{-x} 2xdx \\
+                         &= x^{2} \cdot -e^{-x} -2  \int_{1}^{\infty} xe^{-x} dx \\
+                         &\text{ let $u = x, du = dx, dv = e^{-x}dx, v = -e^{-x}$}\\ 
+                         &=  x^{2} \cdot -e^{-x} -2\left( -xe^{-x} - \int_{1}^{\infty} e^{-x} dx \right)   \\
+                         &= -x^{2}e^{-x} -2(-xe^{-x} + [e^{-x}]_{1}^{\infty}) \\
+                         &=
+      .\end{align*}
+    \end{proof}
+  \item Let $X \sim Poisson(\lambda)$ and  $Y \sim Poisson(\mu)$ such that  $X,Y$ independent. Show that  $X+Y$ has the distribution  $Poisson(\lambda + \mu)$. 
+     \begin{proof}
+       We know that the sums of random variables have a distribution described as follows:
+       \[
+         P[X + Y = k]=\sum_{a \in range(X), b \in range(Y), a + b = k} P[X=a \cap Y = b] 
+       .\] 
+       Since in our case, $X,Y$ are independent, then
+        \begin{align*}
+          P[X+Y = k] &= \sum_{a;b;a+b=k} P[X = a] \cdot P[Y = k-a]\\
+                     &= \sum_{a;b;a+b=k} \frac{e^{-\lambda} \lambda^{a}}{a!} \cdot \frac{e^{-\mu}\mu^{k-a}}{(k-a)!} \\
+                     &=  e^{-(\lambda+\mu)} \sum_{a;b;a+b=k} \frac{1}{a!(k-a)!} \cdot \lambda^{a} \mu^{k-a} \\
+                     &= \frac{e^{-\left( \lambda + \mu \right) }}{k!} \sum_{a;b;a+b=k}  \frac{k!}{a!(k-a)!}\lambda^{a} \mu^{k-a} \\
+                     &\text{ by the binomial idenity $(x + a)^{n} = \sum_{k=0}^{n} \begin{pmatrix} n\\ k\end{pmatrix} x^{k} a^{n-k}$ } \\
+                     &=  \frac{e^{-\left( \lambda + \mu \right)} (\lambda + \mu)^{k} }{k!}\\
+                     &\sim Poisson(\lambda + \mu) 
+       .\end{align*}
+    \end{proof}
+  \item 
+\end{enumerate}
+\end{document}

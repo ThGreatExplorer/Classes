@@ -1,0 +1,54 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Hw 5}\\Probability 1}
+\author{\huge{Daniel Yu}}
+\date{October 15, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{enumerate}
+  \item Skip
+  \item Uniform distribution across 9 outcomes (4 red, 4 blue, 1 green). You bet one dollar on red, if the ball lands on red, you get two dollars back. If you land on non-red, you get nothing (and thus lose one dollar). You play this with the same strategy 100 times. Use central limit theorem to estimate the probability of coming out ahead i.e. winning more money than you lost. 
+    \begin{proof}
+      Notice that this is essentially a random walk denote as $W_n$ which sums up each timesteps gain/loss denoted as $X_i$ :
+      \[
+      X_i = \begin{cases}
+        1, P(X_1 = 1) = \frac{4}{9} \\
+        -1, P(X_1 = -1) = \frac{5}{9}
+      \end{cases}
+      .\]
+      We want the probability that $P(W_{100} > 0)$. We can use the central limit theorem which states that
+      \[
+        P[a \leq \frac{\sum_{i=1}^{100} X_i - n \cdot \mu}{\sigma \sqrt{n}} \leq b] \to P[a \leq N(0,1) \leq b] 
+      .\] 
+      In this case,
+      \[
+        \mu = E[X_i] = \frac{4}{9} - \frac{5}{9} = -\frac{1}{9}
+      .\]
+      and 
+      \begin{align*}
+        Var(X_i) &= E[X_i^{2}] - E[X_i]^{2} \\
+                 &= 1 - (-\frac{1}{9})^{2} \\
+                 &= \frac{8}{9}
+      .\end{align*}
+      with
+      \begin{align*}
+        \sigma = \sqrt{\frac{8}{9}} = \frac{2\sqrt{2} }{3}  
+      .\end{align*}
+      So,
+      \begin{align*}
+        P(W_{100} > 0) &= P[W_{100} + 100 \cdot \frac{1}{9} > \frac{100}{9}] \\
+                       &= P[\frac{w_{100}+\frac{100}{9}}{\frac{2\sqrt{2} }{3} \sqrt{100}} > \frac{100}{9 \frac{2\sqrt{2}}{3} \sqrt{100}}] \\
+                       &= P[N(0,1) > \frac{10}{2 \sqrt{2} 3}] \\
+                       &\approx .1192 
+      .\end{align*}
+    \end{proof}
+  \item  
+\end{enumerate} 
+\end{document}

@@ -47,30 +47,34 @@
     \end{proof}
   \item Let $N$ be the number of rolls required for a fair six sided die to have the same number show up twice in a row. Find expected value of $N$
     \begin{proof}
-      Denote $G_i$ as the random variable  representing the number of rolls until the first $i$th value shows up. Since  $G_i \sim Geo(\frac{1}{6})$, so $E[G_i] = \frac{1}{6}$. By the law of iterated expectations, we know that 
+      Denote $G_i$ as the random variable  representing the number of rolls until the first $i$th value shows up. Since  $G_i \sim Geo(\frac{1}{6})$, so $E[G_i] = 6$. Let $N_i$ represent the number of rolls until there are back to back rolls of  value $i$. By the law of iterated expectations, we know that 
 \[
-  E[N] = E_{G_i}[E_N[N|G_i]]      
+  E[N_i] = E_{G_i}[E_{N_i}[N_i|G_i]]      
 .\] 
-Now, consider $X_{G+1}$ the result of the roll after $G_i$. Condition $E[N|G_i]$ on  $X_{G+1}$.
+Now, consider $X_{G+1}$ the result of the roll after $G_i$. Condition $E[N_i|G_i]$ on  $X_{G+1}$.
 \begin{align*}
-  & E[N|G_i, X_{G+1} = i] = G + 1 \\
-  & E[N|G_i, X_{G+1} \neq 1] = G + 1 + E[N] \text{ ,we reset the experiment with $X_{G+1}$ as the new $X_1$} \\
+  & E[N_i|G_i, X_{G+1} = i] = G + 1 \\
+  & E[N_i|G_i, X_{G+1} \neq i] = G + 1 + E[N_i] \text{ ,we reset the experiment}\\
 .\end{align*}
 This gives,
 \begin{align*}
-  E[N|G_i] &= E[N|G_i, X_{G+1} = i] \cdot P[X_{G+1} = i] + E[N|G_i, X_{G+1} \neq i] \cdot P[X_{G+1} \neq i] \\
-           &= (G+1) \cdot \frac{1}{6} + (G+1 + E[N]) \cdot \frac{5}{6} \\
-           &= G+1 + \frac{5}{6}E[N]
+  E[N_i|G_i] &= E[N_i|G_i, X_{G+1} = i] \cdot P[X_{G+1} = i] + E[N_i|G_i, X_{G+1} \neq i] \cdot P[X_{G+1} \neq i] \\
+           &= (G+1) \cdot \frac{1}{6} + (G+1 + E[N_i]) \cdot \frac{5}{6} \\
+           &= G+1 + \frac{5}{6}E[N_i]
 .\end{align*}
-Backsubsituting for $E[N]$:
+Backsubsituting for $E[N_i]$:
  \begin{align*}
-   E[N] = E_{G_i}[E_N[N | G_i]] &= E_{G_i}[G+1 + \frac{5}{6}E[N]] \\
-                                &= 1 + 1 + \frac{5}{6} E[N] \\
-                                &= 2 + \frac{5}{6}E[N] \\
-   \frac{1}{6}E[N] &= 2 \\
-                   &= 12
+   E[N_i] = E_{G_i}[E_{N_i}[N_i | G_i]] &= E_{G_i}[G+1 + \frac{5}{6}E[N_i]] \\
+                                &= 6 + 1 + \frac{5}{6} E[N_i] \\
+                                &= 7 + \frac{5}{6}E[N_i] \\
+   \frac{1}{6}E[N_i] &= 7 \\
+                   &= 42
 .\end{align*}
-The expected value of $N$ is 12.
+The expected value of $N_i$ is 42. However, note that this is the expected value of finding two back to back dice roll for  a specific value $i$. If we want to find the expected number of dice roll until any two rolls show up twice in a row, we know that $P(N) = P(N_1 + N_2 + N_3 + N_4 + N_5 + N_6) = P(N_1) + P(N_2) + P(N_3) + P(N_4) + P(N_5) + P(N_6) = \sum_{i=1}^{6} P(N_1)$ and $\frac{1}{6} P(N) = P(N_1)$, so:
+\[
+  E[N] = E[\frac{1}{6} N_i] = \frac{1}{6} E[N_i] = 7
+.\] 
+Thus, the expected value of two rolls in a row is $7$.
     \end{proof}
   \item For a variant of the Monty Hall problem, should the contestant switch screens?
     \begin{proof}

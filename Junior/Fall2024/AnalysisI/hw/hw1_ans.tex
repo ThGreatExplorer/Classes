@@ -19,55 +19,11 @@ $(E,\rho)$. Prove that a set $U \subseteq E$ is open in $E$ $\iff$ $\exists $ an
 such that  $U = \tilde{U} \cap E$. Similarly, prove this for closed sets.
 
 \begin{proof}
-  $\to$ Assume that a set $U \subseteq E$ is open in $E \subseteq X$ with $(X,\rho), (E,\rho)$ being the respective
-  metric spaces. This means that $\forall x \in U$  $\exists r > 0$ such that 
-\[
-B_r(x) = \{y \in E \mid \rho(x,y) < r \}  \subseteq U
-.\]
-If $U$ is also open in $X$ i.e.  $U = \tilde{U}$ then we are done. Assume that  $U$ is not also open in $X$. This means now that, $\exists x \in U$,  $\forall r_i >0$,
-\[
-B_{r_i}'(x) = \{y \in X \mid \rho(x,y) < r\}  \not\subseteq U
-.\] 
-This is only possible because for any $B_{r_i}(x)' \setminus B_{r}(x) \subseteq X$ and $B_{r_i}(x)' \setminus B_r(x) \not\subseteq U$. 
-\[
-  B_{r_i}(x)' \setminus B_r(x) \subseteq X \setminus U 
-.\]
-and,
-\[
-B_{r_i}(x)' \setminus B_r(x) \subseteq X \setminus E
-.\] 
-so,
-\[
-B_{r_i}(x)' \cap E = B_r(x)
-.\] 
-Now, choose $r \in \{r_1, r_2, \ldots\}$ where $r_i > 0$. Then,
-\[
-  \tilde{U} = B_{r}(x)' \cup U = B_{r}(x)' \cup (U \setminus B_r(x))
-.\] 
-is open. This can be seen because for any point $y \in B_r(x)'$, we can generate:
-\[
-  B_{r'}(y) = \{z \in \tilde{U} \mid \rho(y,z) > r' = \rho(x,z) -r \} 
-.\] 
-We know by the triangle inequality that 
-\begin{align*}
-  \rho(x,z) &\leq \rho(x,y) + \rho(y,z) \\
-            &< r + \rho(y,z) \\
-  \rho(y,z) &>  p(x,z) -r  
-.\end{align*}
-So, for any point in  $y \in B_r(x)'$ we can generate a new ball $B_{r'}(y)$ so that:
-\[
-  B_{r'}(y) \subseteq B_r(x)' \subseteq \tilde{U}
-.\] 
-Since we can do this for any $x_j \in X$ such that  $\forall r_i > 0$,  $B_{r_i}'(x_j) = \{y \in X \mid \rho(x,y) < r \} \not\subseteq U$. We will refine our construction to select $\hat{r}_j \in \{r_1, \ldots\}$ for each of the balls above. Denote this set as $B' = \{B_{\hat{r}_j}(x_j)'\} $
-\[
-\tilde{U} = \cup_{\alpha \in B'} B_{\hat{r}_j}(x_j)' \cup U = \cup_{\alpha \in B'} B_{\hat{r}_j}(x_j)' \cup (U \setminus \cup_{x_j \in X} B_r(x_j)) 
-.\]
-Since each of the balls $B_{\hat{r}_j}(x_j)$ is open and the same argument follows that for any point we can take a ball of a small enough radius and since we know  $U \setminus B_r(x)$ contains only points with open balls, then
-the whole set $\tilde{U}$ must be open. We know that each of the  $B_r(x)' \setminus B_r(x) \in X \setminus E$, 
-so:
-\[
-  \tilde{U} \cap E = B_r(x) \cup U \setminus B_r(x) = U
-.\] 
+  $\to$ Assume that there is a set $U \subseteq E$ that is open in  $(E, \rho)$ and  $E \subseteq X$  where  $X$ forms a metric space  $(X, \rho)$. If the open set  $U$ is also open in  $(X, \rho)$ then $\tilde{U} = U$ and we are done, so assume that  $U$ is not open in  $(X, \rho)$. We can construct an open set $\tilde{U}$ in $(X, \rho)$ by taking the ball  $B_r(x)' \subseteq X$ that contains  $B_r(x) \subseteq U$. $B_r(x)' \supseteq B_r(x)$ since $U \subseteq X$. We can do this $\forall x \in U$ with some $r > 0$. By this construction,  $\tilde{U}$ is an open set because for all  $x \in U$,  $\exists r > 0$ such that $B_r(x)' \subseteq X$. Then, $B_r(x)' \cap E = B_r(x)$ since $B_r(x)'$ contains $B_r(x) \subseteq U \subseteq E$ and points in $B_r(x)' \setminus E$ i.e. $B_r(x)' = B_r(x) \cup B_r(x)' \setminus E$. So, 
+   \[
+     (\cup_{x \in U} B_r(x)') \cap E = \cup_{x \in U} B_r(x)  
+   .\] 
+ and every $x \in U$ has an open set  $B_r(x)\subseteq E$, which is precisely the definition of the open set $U$ in $E$! 
 
 $\leftarrow$ Assume that  $\exists $ an open set $\tilde{U} \subseteq X$ such that $U = \tilde{U} \cap E$. 
 By set theory, $U \subseteq E$. We know that $\tilde{U}$ is open, so 
@@ -82,7 +38,14 @@ such that an open set is formed in $E$:
  \[
    B_r(x) \cap E \subseteq U
 .\] 
-$U \subseteq E$ is open
+$U \subseteq E$ is open in $E$. \\
+
+
+Now to prove the same for closed sets. We just proved that a set $U \subseteq E$ is open in $E$ $\iff $ $\exists $ an open set $\tilde{U}$ in  $X$ such that $U = \tilde{U} \cap E$. We know that the complement of an open set is a closed set. Thus, taking the complement, we know that there is a set  $C = E \setminus U$ where $C \subseteq E$ that is closed in  $E$. It follows that the open set $\tilde{U}$ in  $X$ has a complement $\tilde{C} = X \setminus \tilde{U}$ that is closed in $X$. Then 
+ \[
+   \tilde{C} \cap E = (X \setminus \tilde{U}) \cap E = (X \cap E) \setminus (\tilde{U} \cap E) = X \setminus U = C
+.\] 
+Thus, there exists a closed set $C \subseteq E$ $\iff$ $\exists $ a closed set $\tilde{C}$ in  $X$ such that  $C = \tilde{C} \cap E$.  
 \end{proof}
 
 \begin{note}{Intuition}\\

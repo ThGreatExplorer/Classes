@@ -1,0 +1,190 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Homework 6}}
+\author{\huge{Daniel Yu}}
+\date{October 19,2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+
+\begin{enumerate}
+  \item There are two jars in front of you and a total $n$ balls divided among them. Every minute, you pick a ball uniformly at random, and move it to another jar. Let $X_n$ denote the number of balls in the first jar. Argue that  $\{X_n\} $ is a markov chain and calculate its transition probabilities. 
+    \begin{proof}
+    Consider the markov chain with states $\{S_0, S_1, \ldots, S_n \}$. The different states represent the differen t numbers of balls that could belong in the first jar at each timestep $X_n$. Thus, for state  $S_i$, the transition probability to  $S_{i+1}$ would be $\frac{n-i}{n}$ the probability a ball is chosen from the second jar and moved to the first jar. Similarly, the transition probability from  $S_i$ to  $S_{i-1}$ would be $\frac{i}{n}$ the probability a ball is moved from the first jar to the second jar. This would be for all states $S_1, \ldots, S_n$ and then for  $S_0$, the transition probability would be $1$ to $S_1$ and  $S_n$ the transition probability would be $1$ to  $S_{n-1}$. \\
+
+    $\{X_n\} $ is a markov chain because at every time $X_n$,  
+    \begin{align*}
+      P[X_n = S_j \mid X_{n-1} = S_{j_{n-1}}, \ldots, X_{0} = S_{j_{0}}] &= P[X_n = S_j \mid X_{n-1} = S_{j_{n-1}}]\\ &= \begin{cases}
+      \frac{n-j_{n-1}}{n}, S_{j} = S_{j_{n-1}} + 1 \\
+      \frac{j_{n-1}}{n}, S_{j} = S_{j_{n-1}} - 1 \\
+      0, \text{ otherwise}
+    \end{cases}
+    .\end{align*} By construction, the probability of the next state is only dependent on the previous state. Thus, since it's a stochastic process (since $X_k$ are timesteps) with the above property, then  $\{X_n\} $ is a markov chain. 
+  \end{proof}
+\item  Let $Y_n$ be a time homogenous markov chain with states  $\{1,2,3\}$. The transition probabilities for $Y_n$ are summarized in the matrix below where  $P_{i,j} = P[Y_1 = j \mid  Y_0 = i]$. 
+  \[
+    P = \begin{pmatrix}
+\frac{1}{2} & \frac{1}{3} & \frac{1}{6} \\
+\frac{1}{3} & 0 & \frac{2}{3} \\
+\frac{1}{2} & \frac{1}{2} & 0
+\end{pmatrix}
+  .\] 
+  If $P[Y_0=1] = P[Y_0 =3] = \frac{1}{2}$, compute $E[Y_3]$. 
+  \begin{proof}
+   \[
+   P^3 = \begin{pmatrix}
+0.4583 & 0.3009 & 0.2407 \\
+0.4259 & 0.1944 & 0.3796 \\
+0.4722 & 0.3472 & 0.1806
+\end{pmatrix}, V_0 = \begin{pmatrix} 
+\frac{1}{2}\\
+0 \\
+\frac{1}{2}
+\end{pmatrix} 
+   .\] 
+   We know that:
+   \begin{align*}
+     E[Y_3] &= \sum_{k=1}^{3} k \cdot P[Y_3 = k] \\
+            &= \sum_{k=1}^{3} k (\sum_{i=1}^{3} P[Y_0=i] \cdot P[Y_3=k\mid Y_0 = i])\\
+            &= \sum_{k=1}^{3} k \left( P^{3} \cdot v_0 \right)_{k}  \\
+            &=  \sum_{k=1}^{3} k  \begin{pmatrix}
+0.3495 \\
+0.4027 \\
+0.3264
+\end{pmatrix}_{k} \\
+            &=  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}^{T} \cdot \begin{pmatrix}
+0.3495 \\
+0.4027 \\
+0.3264
+\end{pmatrix} \\
+                                      &= 2.1341 
+   .\end{align*}
+  \end{proof}
+  \item Suppose that P is transition matrix for some finite-state Markov chain. Suppose that there
+exists an integer $r \geq 1$ such that every entry in $P^{r}$ is strictly positive. Argue that, for any $n \geq r$,
+every entry of P n is also strictly positive.
+
+\begin{proof}
+ Since $P$ is a transition matrix, then we know that every entry is non-negative. Furthermore,  $\forall i, \sum_{j} P_{i,j} = 1$, the matrix must be row stochastic. If there exists an integer $r \geq 1$ such that every matrix entry in  $P^{r}$ is also strictly positive, then this means that:
+ \[
+ P^{r} = P \times P \times P \ldots \times P
+ .\] 
+ is strictly positive as well. Suppose that $P$ had a column of all zeros. Let this column be the  $i$th column. Then, since whatever row multipled by that column results in 0,  $\forall j, P^{2}_{i,j} = 0$.
+\[
+\begin{pmatrix}
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\end{pmatrix} \times 
+\begin{pmatrix}
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\end{pmatrix}
+= 
+\begin{pmatrix}
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\cdot & \cdot & 0 & \cdot & \cdot & \cdot \\
+\end{pmatrix}
+.\]  
+Thus, $\forall j, P^{r}_{i,j} = P\times P \times P \ldots \times P = 0$. This violates our assumption that $P^{r}$ has strictly positive entries. So there, can't be a column of all zeros. Now let's use induction, we assume that $P^{r}$ is strictly positive, then $P^{r+1} = P^{r} \cdot P$ must also be strictly positive, because every row of $P^{r}$ has every value as non-zero and $P$ must have every column containing at least one non-zero value. So, $P^{r+1}_{i,j} > 0$.  By induction, this hold for $n \geq r$!
+\end{proof}
+\item We have a Markov chain on five states, numbered 1, 2, 3, 4, 5. At each state, the Markov chain
+is equally likely to go to any state whose number is greater than or equal to itself. The state 5 is
+an absorbing state. Let T be the first time of absorption — that is, $T = \min\{t ∶ X_t = 5\}$. Find the
+expected value of T , if $X_0 = 1$. 
+
+\begin{proof}
+  We first must calculate $N = (I-Q)^{-1}$. Since $5$ is the only absorbing state, then $Q$ consists of the states  $1,2,3,4$ and the connections between them and  $I$ is just  $1$.
+ 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/markov_chain_absorption.png}
+  \caption{Problem 4 Markov Chain}
+  \label{fig:markov_chain_absorption}
+\end{figure}
+Thus, we have the following matrix
+\[
+\begin{pmatrix}
+0.20 & 0.20 & 0.20 & 0.20 & 0.20 \\
+0.00 & 0.25 & 0.25 & 0.25 & 0.25 \\
+0.00 & 0.00 & 0.33 & 0.33 & 0.33 \\
+0.00 & 0.00 & 0.00 & 0.50 & 0.50 \\
+0.00 & 0.00 & 0.00 & 0.00 & 1.00 \\
+\end{pmatrix}
+.\]
+Then,
+\[
+N =  (\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 
+\end{pmatrix}  - \begin{pmatrix}
+0.20 & 0.20 & 0.20 & 0.20 \\
+0.00 & 0.25 & 0.25 & 0.25 \\
+0.00 & 0.00 & 0.33 & 0.33 \\
+0.00 & 0.00 & 0.00 & 0.50 
+\end{pmatrix})^{-1} =  \begin{pmatrix}
+1.25 & 0.3333 & 0.4975 & 0.9950 \\
+0.00 & 1.3333 & 0.4975 & 0.9950 \\
+0.00 & 0.00 & 1.4925 & 0.9851 \\
+0.00 & 0.00 & 0.00 & 2.00 \\
+\end{pmatrix}
+.\] 
+We know that 
+\[
+  E[T \mid X_0 = 1] = \sum_{j=1}^{n} (N)_{1,j} = (N \cdot \vec{1})_{1} = 3.076
+.\] 
+\end{proof}
+  \item In tennis, a player must win by at least two points. If the players are tied (and both have won at
+least three points), deuce is reached. If one player is leading by one, they have advantage. Assume
+that player one has advantage, but has a probability of 2/5 of winning any given point; further
+assume that the outcomes of different points are independent. What is the probability that player
+one wins the game?
+\begin{proof}
+We are given a game of tennis where Player 1 has the advantage, i.e. player 1 and 2 have score both at least  $3$ points and Player 1 is one point ahead. The probability of Player 1 winning a point is $\frac{2}{5}$ and the probability of Player  losing a point is $\frac{3}{5}$. Naturally, if either player has a lead of 2 points, then they win the game. Thus, we can construct the following markov chain which represents the point differential between player 1 and 2. Since we are given that Player 1 has advantage, we don't have to consider the previous points, only that the intial state is player  $1$ has 1 point ahead.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/markov_chain_tennis_problem.png}
+  \caption{Problem 5 Graph}
+  \label{fig:markov_chain_tennis_problem}
+\end{figure}
+Denote the probability that Player 1 then wins from advantage as $W_A$ and wins from Deuce as  $W_D$ and wins from down 1 as $W_L$
+\begin{align}
+  W_A &= \frac{2}{5} + \frac{3}{5} W_D \\
+  W_D &= \frac{2}{5} W_A + \frac{3}{5}W_L \\
+  W_L &= \frac{2}{5} W_D + \frac{3}{5} \cdot 0 
+.\end{align}
+Substitute $W_L$ into  $W_D$
+ \begin{align*}
+  W_D &= \frac{2}{5} W_A + \frac{3}{5}W_L \\
+      &= \frac{2}{5} W_A + \frac{3}{5}\left( \frac{2}{5} W_D  \right) \\
+  \frac{19}{25} W_D  &= \frac{2}{5}W_A  \\
+  W_D &= \frac{10}{19}W_A
+.\end{align*}
+Substitute into $W_A$:
+\begin{align*}
+  W_A &= \frac{2}{5} + \frac{3}{5} W_D \\
+      &= \frac{2}{5} + \frac{3}{5} \left( \frac{10}{19} W_A \right) \\
+      &= \frac{2}{5} + \frac{6}{19} W_A \\
+      &= \frac{38}{95} + \frac{30}{95} W_A\\
+   \frac{65}{95} W_A &= \frac{38}{95} \\
+                     &= \frac{38}{65}
+.\end{align*}
+\end{proof}
+\end{enumerate}
+\end{document}

@@ -165,15 +165,25 @@ $R^{n}$ is a vector space (prove axioms easily).
 \end{proof}
 
 \begin{definition}
-  The \textbf{euclidean norm} in $\R^n$ is defined as $$|x| = \sqrt{\left<x,x \right>} = \sqrt{\sum_{k=1}^n x_k^2}$$ \\
-  The euclidean norm satisfies the cauchy swhartz inequality! \\
-  Properties: 
+  The \textbf{norm} in general is defined as follows. Let $X$ be a real-vector space and let us have a map:
+  \begin{align*}
+       \mid \mid  \cdot  \mid \mid  : X &\longrightarrow \R \\
+    x &\longmapsto  \mid \mid  x  \mid \mid  
+  .\end{align*}
+  which satisfies the following properties. Properties: 
   \begin{itemize}
     \item $\forall x \in \R^n$, $|x| \geq 0$ and  $|x| = 0 \iff x = 0$
     \item $\forall \alpha \in \R, \forall x \in \R^n$, $|\alpha x|= |\alpha| |x|$
     \item \textbf{Triangle inequality}:  $\forall x,y \in \R^n$, $|x + y| \leq |x| + |y|$. 
   \end{itemize}
+
+  Correspondingly, $\left( X,  \mid  \mid \cdot  \mid  \mid  \right)$ is called a \textbf{normed space}.
 \end{definition}
+
+\begin{definition}
+  The \textbf{euclidean norm} in $\R^n$ is defined as $$|x| = \sqrt{\left<x,x \right>} = \sqrt{\sum_{k=1}^n x_k^2}$$ \\
+  The euclidean norm satisfies the cauchy swhartz inequality and all 3  properties above!
+ \end{definition}
 
 \begin{proof}{Proof of Triangle Inequality}
   \begin{align*}
@@ -185,21 +195,12 @@ $R^{n}$ is a vector space (prove axioms easily).
   Thus, $|x+y| \leq |x| + |y|$
 \end{proof}
 
-\begin{definition}
-  The \textbf{norm} in general is defined as follows. Let $X$ be a real-vector space and let us have a map:
-  \begin{align*}
-       \mid \mid  \cdot  \mid \mid  : X &\longrightarrow \R \\
-    x &\longmapsto  \mid \mid  x  \mid \mid  
-  .\end{align*}
-  which also satisfies the 3 properties of the euclidean norm. Correspondingly, $\left( X,  \mid  \mid \cdot  \mid  \mid  \right)$ 
-  is called a \textbf{normed space}.
-\end{definition}
 
 \begin{remark}{Example}
 \[
   \text{Let} X = \R^n
 .\] 
-Examples of defined norms include:
+Other Examples of defined norms include:
 \[
   \mid  \mid x \mid  \mid _p = \left(\sum_{k=1}^n x_k^p  \right) ^{\frac{n}{p}}
 .\] 

@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Men with no Hats Problem}}
+\author{\huge{Daniel Yu}}
+\date{October 6, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\textbf{Ross, Intro to Probability Models Chapter 1. Problem 32}
+\begin{theorem}
+  Suppose that all $n$ men at a party throw their hats in the center of the room. Each man then randomly selects a hat. Show that the probability that none of the $n$ men selects his own hats is 
+   \[
+  \frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \ldots + \frac{(-1)^{n}}{n!}
+  .\]  
+\end{theorem}
+\begin{proof}
+  \begin{enumerate}
+    \item $n=1$, the probability that the one person doesn't select his own hat is  $0$
+    \item  $n=2$,  $P=\frac{1}{2}$ 
+    \item $n=3$,  $P=\frac{3! \cdot 2 \cdot 1}{3! \cdot 3!} = \frac{1}{3} $, there are $3!$ ways to choose and  $3!$ ways to order a group of $3$ but only $2!$ ways to not select your own hat for any group of 3. 
+    \item $n_4$, $P=\frac{}{}$
+  \end{enumerate}
+\end{proof}
+
+\end{document}

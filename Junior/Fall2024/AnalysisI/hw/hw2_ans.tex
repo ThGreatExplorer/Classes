@@ -1,0 +1,38 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis I}\\ Homework 2}
+\author{\huge{Daniel Yu}}
+\date{October 21, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{definition}
+  Let $V$ be a vector sapce with two norms  $\mid \mid \cdot \mid \mid_{1}$ and $\mid \mid \cdot \mid \mid_{2}$.  Two norms  $\mid \mid \cdot \mid \mid_{1}$ and $\mid \mid \cdot \mid \mid_{2}$ are \textbf{equivalent} $\iff$ $\exists 0 < c < C < \infty$ such that 
+  \[
+  c \|v\|_{1} \leq \|v\|_{2} \leq C \|v\|_{1}, \forall v \in V 
+  .\]Then we obtain the two metric spaces $\left( V, \rho_1 \right) $ and $\left( V, \rho_{2} \right) $ where
+  \begin{align*}
+    \rho_{1} \left( x,y \right) = \|x-y\|_{1} \\
+    \rho_{2} \left( x,y \right) = \|x-y\|_{2}
+  .\end{align*}
+\end{definition}
+\section{Problems}
+  \begin{enumerate}
+    \item Let $V$ be a vector sapce with two norms  $\mid \mid \cdot \mid \mid_{1}$ and $\mid \mid \cdot \mid \mid_{2}$. Prove that any open set in $\left( V, \rho_{1} \right) $ is an open set in $(V,\rho_{2})$ and vice versa when $\|\cdot\|_{1}$ is equivalent to $\|\cdot\|_{2}$.
+      \begin{proof}
+        
+      \end{proof}
+    \item Prove that any two norms in $\R^{n}$ are equivalent. (Note that $\R^{n}$ is finite dimensional i.e. $n \neq \infty$)
+       \begin{proof}
+       Idea: Use that the unit sphere $S^{n-1} = \{x \in \R^{n} \mid \|x\| =1\}$ is compact where $\|\cdot\|$ is the euclidean norm. Can fix the euclidean norm and pick any other norm. Then prove that they are equivalent. This will lead to all norms being equivalent to euclidean norm and thus are all equivalent to each other. \\
+
+       What we will prove is that for any norm, $\|\cdot\|: S^{n+1} \to \R$ is a continuous map in $\|\cdot\|$ euclidean. Then we can use compactness theorems\ldots
+      \end{proof}
+  \end{enumerate}
+\end{document}

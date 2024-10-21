@@ -186,7 +186,7 @@
   \end{proof}
 \end{theorem}
 
-\subsection{Cauchy Sequence}
+\subsection{Diameter}
 
 \begin{definition}
  Let $(X, \rho)$ a metric space.  $E \neq \emptyset \subseteq X$ and  $E$ bounded. The we can defined
@@ -230,6 +230,8 @@ diam \overline{E} = diam E
 \begin{note}
   For $diam(\overline{E})$ to even be a valid question, $\overline{E}$ must be bounded so we use the fact that the closure of a bounded set is always bounded.
 \end{note}
+
+\subsection{Cauchy Sequence}
 \begin{lemma}
   Let $K_1 \supseteq K_2 \supseteq \ldots \supseteq K_j \supseteq \ldots$ where $K_j \neq \emptyset$ are compact sets in $X$. Then,  $\cap_{j \geq 1} K_j \neq \emptyset$
   \begin{proof}
@@ -252,15 +254,22 @@ Let $\left( X, \rho \right) $ a metric space, $\{x_n\}_{n \geq 1} $ is a sequenc
   \[
     \forall n,m \geq N, \rho(x_n,x_m) < \epsilon
   .\] 
-  An example would be an asymptote that doesn't go to infinity. A cauchy sequence must be a \textbf{bounded set} 
+  An example would be an asymptote that doesn't go to infinity. A cauchy sequence must be a \textbf{bounded set}, or more precisely the range of the cauchy sequence must be \textbf{bounded} 
 \end{definition}
 
 \begin{note}
   Notice that the difference in defintion between cauchy and limit is that cauchy doesn't assume the existence of $x$ such that  $x_n \to x$. Usually, a cauchy is used to find $x$ and show it exists. So cauchy sequence  $\supseteq$ convergent sequence 
 \end{note}
 
+\begin{note}{CounterExample}\\
+  A cauchy sequence in a metric space that does not converge (i.e. the metric space is not complete).\\
+
+
+  Consider $X = [0,1) \subseteq \R$ with standard $\rho$. Take  $x_n = 1 - \frac{1}{n}, n \geq 1$. Then this sequence is a cauchy sequence in $\R$ and since distance is inherited by $X$, then  the sequence is also cauchy in  $X$. However, while the $\{x_n\}_{n \geq 1} $ converges in  $\R$, it does not converge in $X$.   
+\end{note}
+
 \begin{definition}
-  A metric space $\left( X,\rho \right)  $ is \textbf{complete} if any cauchy sequence in  $X$ converges to some point  $x \in X$.  
+  A metric space $\left( X,\rho \right)  $ is \textbf{complete} $\iff$ any cauchy sequence in  $X$ converges to some point  $x \in X$.  
 \end{definition}
 
 \begin{prop}
@@ -295,21 +304,58 @@ Let $\left( X, \rho \right) $ a metric space, $\{x_n\}_{n \geq 1} $ is a sequenc
   \end{proof}
 \end{prop}
 
-\begin{note}{CounterExample}\\
-  A cauchy sequence in a metric space that does not converge (i.e. the metric space is not complete).\\
-
-
-  Consider $X = [0,1) \subseteq \R$ with standard $\rho$. Take  $x_n = 1 - \frac{1}{n}, n \geq 1$. Then this sequence is a cauchy sequence in $\R$ and since distance is inherited by $X$, then  the sequence is also cauchy in  $X$. However, while the $\{x_n\}_{n \geq 1} $ converges in  $\R$, it does not converge in $X$.   
-\end{note}
-
-
 \begin{theorem}
   If $X$ is compact  $\to$  $X$ is complete. (but not the other way around)
+
+  \begin{proof}
+    Assume that $X$ is compact. Take a cauchy sequence  $\{x_n\}_{n \geq 1} $ in $X$. Consider the tail of this sequence, 
+    \[
+    E_N = \{x_n\}_{n \geq N}, N = 1,2,3,\ldots 
+    .\] 
+Then, 
+\begin{enumerate}
+  \item $E_1 \supseteq E_2 \supseteq \ldots \supseteq E_N \supseteq \ldots$
+  \item For any $N \geq 1$,  $E_N$ is a bounded set and  $diam(E_N) \to 0$ as  $N \to \infty$ since  $E_N$ is a subsequence (relative order maintained) of  $\{x_n\}_{n \geq 1} $ then it is also cauchy and we can apply the proposition.
+\end{enumerate}
+Hence, by taking the closure,
+\[
+X \supseteq \overline{E_1} \supseteq \overline{E_2} \supseteq \ldots \supseteq \overline{E_N} \supseteq \ldots 
+.\] 
+and each $\overline{E_i}$ is closed and we proved that closed subsets of compact sets are also compact, so  $\overline{E_i}$ are also compact in  $X$. On the other side, we have
+\[
+  diam(\overline{E_N}) \leftarrow 0 \text{ as } N \leftarrow \infty
+.\] 
+by lemma 1 (since we know $diam(\overline{E}) = diam(E)$). It follows from before that $\cap_{j \geq 1} K_j \neq \emptyset \to  \exists x \in X,$ such that $x \in \overline{E_N}$, $\forall N \geq 1$ (it is in the intersection). This means $\forall \epsilon > 0$,  $\exists N_0 \geq 1$ such that $\forall N \geq N_0$, 
+\[
+diam(\overline{E_N}) < \epsilon \to diam(\overline{E_{N_0}}) < \epsilon \to \rho(x, x_n) < \epsilon,  \forall n \geq N_0
+.\] 
+Hence, $\forall \epsilon > 0, \exists  N_0 \geq 1$ such taht $\forall n > N_0$,
+ \[
+\rho(x,x_n) < \epsilon \iff x_n \in B_{\epsilon} (x), \forall n \geq N_0
+.\] 
+Thus,
+\[
+  x_n \to x \text{ as } n \to \infty 
+.\] 
+  \end{proof}
 \end{theorem}
 
 \begin{theorem}
-  $\R^{n}$ is complete (observe that it is not compact so we can't use the theorem above)
+  $\R^{n}$ is complete (observe that $\R^{n}$ is not compact so we can't use the theorem above). Note that this proof does not hold for infinite dimensional spaces.
+
+  \begin{proof}
+    Take a cauchy sequence in $\R^{n}$, $\{x_n\}_{n \geq 1} $. Let $S = range(\{x_n\}_{n \geq 1})$. Thus, $S \neq \emptset$ and  $S$ is bounded. Consider $\overline{S}$. Then, $\overline{S}$ is closed and bounded subset of $\R^{n}$ so $\overline{S}$ is compact in $\R^{n}$ (Note we only proved this for $\R^{n}$ ). Then, $\{x_{n}\}_{n \geq 1} $ is a cauchy sequence in $(\overline{S}, \rho)$ (as $\overline{S}$ contains all of $\{x_n\}_{n \geq 1} $). Now we have a compact metric space and a cauchy sequence, so by theorem 1, $\exists  x \in \overline{S}$ such that in $\overline{S}$ 
+    \[
+      x_n \to x \text{ as } n \to \infty 
+    .\] 
+    this implies
+    \[
+      x_n \to x \text{ as } n \to \infty
+    .\] 
+    in $X$!
+  \end{proof}
 \end{theorem}
+
 \end{document}
 
 

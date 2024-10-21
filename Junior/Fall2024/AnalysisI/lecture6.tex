@@ -1,0 +1,101 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis I}\\Lecture 6}
+\author{\huge{Daniel Yu}}
+\date{October 16, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Uniformly Continuous Maps}
+
+\begin{definition}
+  Let $(X, \rho_X), (Y, \rho_Y)$ metric spaces and  $f:X \to Y$ is \textbf{uniformly continous} if $\forall \epsilon > 0, \exists \delta > 0$ such that $\forall x,y \in X, \rho_X(x,y) < \delta$ then  $\rho_{Y}(f(x), f(y)) < \epsilon$.  
+
+  \begin{enumerate}
+    \item imposing a stronger constraint than continuous because this is saying some $\delta$ works across the entire domain for  $x,y \in X$ 
+    \item stating that  $f$ behaves "similarly" across the whole domain
+    \item a function that is continuous at every point $\not\iff$ the function is uniformly continuous
+    \item consider behavior of functions with asymptotes, what can you say about them?
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  Recall that the definition of a continuous map is as follows. $f \in C(X,Y) \iff \forall x \in X, \forall \epsilon > 0$ $\exists \delta > 0$ such that $\forall y \in X$, $\rho(y,x) < \delta$ we have $\rho (f(x),f(y)) < \epsilon$
+\end{remark}
+
+\begin{lemma}
+  If $f:X \to Y$ is uniformly continuous then  $f \in C(X,Y)$ i.e. it is continuous.
+\end{lemma}
+
+\begin{note}
+  This is not true the other way around. A map that is continuous but not uniformly continuous. $f : [0,1]  
+  \to \R$. $x_n = \frac{1}{n}, n \geq 1$. Consider
+  \[
+    \rho(x_n, x_{n+1}) = \mid x_n + x_{n+1} \mid  = \frac{1}{n} - \frac{1}{n+1} = \frac{1}{n(n+1)} \to 0 \text{ as $n \to \infty$}
+  .\] 
+  and,
+  \[
+  \rho(f(x_n), f(x_{n+1})) = \mid f(x_n) - f(x_{n+1}) \mid  = \mid n-(n+1) \mid = 1
+  .\] 
+  Hence this map is continuous but not uniformly continuous (the same $\delta $ won't work across all $x_n, x_{n+1}$ pairs).   
+\end{note}
+
+\begin{definition}
+  f is not uniformly continuous $\iff$ $\exists \epsilon > 0$ $\forall \delta > 0$  $\exists x,y \in X$ $\rho_X (x,y) < \delta$ such that  $\delta_Y (f(x), f(y)) \geq \epsilon$
+\end{definition}
+
+\begin{theorem}
+  Assume that $f:X \to Y$ is continuous and  $X$ is compact. Then,  $f$ is uniformly continuous.
+
+   \begin{proof}
+    By contradition. Assume that $f:X \to Y$ is continuous and  $X$ is comapct but  $f$ is not uniformly continuous. Then, $\exists $ $\epsilon_0 > 0$ such that  $\forall \delta > 0$  $\exists x,y \in X$, $\rho_X(x,y) < \delta$ and  $\rho_{Y} (f(x), f(y)) \geq \epsilon_0$. We can choose a construction like so
+    \begin{enumerate}
+      \item $x_1,y_1 \in X$ such that $\rho_X (x_1,y_1) < 1$ and  $\rho_Y(f(x_1),f(y_1)) \geq \epsilon_0$
+      \item  $x_2,y_2 \in X$ such that $\rho_X (x_2,y_2) < \frac{1}{2}$ and  $\rho_Y(f(x_2),f(y_2)) \geq \epsilon_0$.
+      \item $\ldots$
+      \item  $x_n,y_n \in X$ such that $\rho_X (x_n,y_n) < \frac{1}{n}$ and  $\rho_Y(f(x_n),f(y_n)) \geq \epsilon_0$
+    \end{enumerate}
+    Since $X$ is compact, then  $\exists $ a subsequence $\{x_{n_j}\} $ such that $x_{n_j} \to x^{*}$ as $j \to \infty$. Then $f \in C(x^{*}) \Rightarrow \delta_0 > 0$ such that
+    \[
+    f(B_{\delta_0}^{X} (x^*)) \subseteq B_{\frac{\epsilon_0}{2}}^{Y}(f(x^*))
+    .\]
+    Since $x_{n_j} \to x^{*}$ in $X$ as  $j \to \infty$ then  $\exists j_0 \geq 1$ such that $x_{n_j} \in B_{\frac{\delta_0}{2}}\left( x^{*} \right) , \forall j \geq j_0$. Now choose $j_0 \geq 1$ larger if necessary so that 
+     \[
+    \frac{1}{n_j} \leq \frac{\delta}{2}, \forall j \geq j_0
+    .\] 
+  Then by triangle inequality
+  \begin{align*}
+    \rho_X (y_{n_j}, x^{*}) &\leq \rho_X (x^{*}, x_{n_j}) + \rho_X(x_{n_j}, y_{n_j})\\
+                            &< \frac{\delta_0}{2} + \frac{1}{n_j} \\
+                            &< \frac{\delta_0}{2} + \frac{\delta_0}{2} \\
+                            &= \delta_0
+  .\end{align*}
+  $\Rightarrow$ 
+   \[
+  x_{n_j}, y_{n_j} \in B_{\frac{\delta_0}{2}}^{X} (x^{*}), \forall j \geq j_0
+  .\]
+  $\Rightarrow$
+   \[
+  f(x_{n_j}), f(y_{n_j}) \in B_{\frac{\epsilon_0}{2}}^{Y} (y^{*}) 
+  .\] 
+  $\Rightarrow$
+   \[
+  \rho_{Y} (f(x_{n_j}), f(y_{n_j})) < \epsilon_0 \forall j \geq j_0
+  .\] 
+  This is a contradiction to the construction of $x_n,y_n, n \geq 1$ since  $\rho_Y (f(x_n), f(y_n)) \geq \epsilon_0 \forall n \geq 1$.
+\end{proof}
+
+\begin{remark}
+  What we essentially did in the proof above is that we took two sequences $x_i$'s and  $y_i$'s that both converge to some point  $x^{*}$ and as they converge the distance $\rho_{X}(x_n,y_n) \to 0$ as $n \to \infty$. So in $Y$, bothe sequences in  $Y$ must converge to  $f(x^{*})$ and similarily the distances in $Y$ of  $\rho_Y (f(x_n), f(y_n)) \to 0$.  
+\end{remark}
+\end{theorem}
+
+\end{document}

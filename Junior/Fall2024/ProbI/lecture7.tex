@@ -2,9 +2,9 @@
 \usepackage[a4paper, margin=1in]{geometry}
 \input{preamble}
 \usepackage{unicode-math}
-\title{\Huge{Some Class}}
+\title{\Huge{Probability I}\\Law of Large Numbers}
 \author{\huge{Daniel Yu}}
-\date{}
+\date{October 8, 2024}
 
 \pdfsuppresswarningpagegroup=1
 
@@ -19,22 +19,22 @@
 Adherents believe that probability is simply a measurement of the outcomes over repeated experiments. For example,
 
 \begin{note}
-  Let $\{X_1, \ldots, X_n\} $ be iid discrete random variables. Denote $range(X_i) = \{x_1,x_2,\ldots,x_m\} $ and ket $k_i(n)= \{\text{number of times $x_i$ appeared in the sequence}\}$. Then let $\frac{k_i(n)}{n}$ be the relative frequency of $x_i$. However  $\frac{k_i(n)}{n}$ is itself a random variable!
+  Let $\{X_1, \ldots, X_n\} $ be iid discrete random variables. Denote $range(X_i) = \{x_1,x_2,\ldots,x_m\} $ and let $k_i(n)= \{\text{number of times $x_i$ appeared in the sequence}\}$. Then let $\frac{k_i(n)}{n}$ be the relative frequency of $x_i$. However  $\frac{k_i(n)}{n}$ is itself a random variable!
 \end{note}
 
 \begin{remark}{Example}\\
-  Toss a fiar $4$-sided die  $n$ times. Say $n=2$.  Let  $\frac{k_1(2)}{2}$ be a random variable. 
+  Toss a fair $4$-sided die  $n$ times. Say $n=2$.  Let  $\frac{k_1(2)}{2}$ be a random variable. 
   \begin{align*}
     \frac{k_1(2)}{2} \in \{0,\frac{1}{2},2\} 
   .\end{align*}
   Then,
   \begin{align*}
-    & P[\frac{k_1(2)}{2}] = (\frac{3}{4})^{2} \\
+    & P[\frac{k_1(2)}{2}] = (\frac{3}{4})^{2} = \frac{9}{16} \\
     & P[\frac{k_1(2)}{2}] = 2 \cdot \frac{1}{4} \cdot \frac{3}{4} = \frac{3}{8} \\
     & P[\frac{k_1(2)}{2}] = \frac{1}{16}
   .\end{align*}
 
-  This is scaled binomial distribution (ex consider $bin(2,\frac{1}{4})$ ). A binomial distribution is random variable. 
+  This is scaled binomial distribution (ex consider $bin(2,\frac{1}{4}), P(X=k)=\begin{pmatrix} 2\\ k \end{pmatrix}\frac{1}{4}^{k}(\frac{3}{4})^{2-k}$ ). A binomial distribution is random variable. 
 \end{remark}
 
 \subsubsection{Law of Large Numbers}
@@ -51,8 +51,8 @@ Can be thought of as a consequence of the frequentist perspective of probability
   \[
   E_n = \frac{1}{n} (X_1 + X_2 + \ldots + X_n)
   .\] 
-  Then, $E_n \to E[X_1]$ in probability as $n \to \infy$. 
-  The time average (average of experiment throughout time) = space average (space of possiblities, multiverse perspective)
+  Then, $E_n \to E[X_1]$ as $n \to \infty$ ($X_i$ are iid). 
+  The time average (average of experiment throughout time, $E_n$) = space average (space of possiblities, multiverse perspective, $E[X_1]$)
   \begin{proof}
     \begin{align*}
       E_n &= \frac{1}{n} \cdot \sum_{i=1}^{m} y_i \cdot \text{ number of times $y_i$ appears} \\
@@ -84,7 +84,7 @@ Note true in general but we are only going to deal with the discrete case
 \end{theorem}
 
 \begin{note}{Example}\\
-  Consider tossing fair 4 sided dice. $K_1(n)$ are the numbers of 1s. What is probability  $P[\frac{k_1(n)}{n} \gqe \frac{1}{3}]$ 
+  Consider tossing fair 4 sided dice. $K_1(n)$ are the numbers of 1s. What is probability  $P[\frac{k_1(n)}{n} \geq \frac{1}{3}]$ 
 
   \begin{proof}
     \begin{align*}
@@ -152,7 +152,8 @@ Note true in general but we are only going to deal with the discrete case
   Let $X$ be a random variable with finite variance. Then,
    \[
      P[|X - E[X]| \geq a] \leq \frac{Var(x)}{a^{2}} 
-  .\] 
+   .\]
+
   If we set $\sigma = \sqrt{Var(x)} $ (standard deviation). Then,
   \[
     P[|X - E[X]| > r \sigma] \leq \frac{1}{r^{2}} 
@@ -168,7 +169,7 @@ Note true in general but we are only going to deal with the discrete case
 \end{theorem}
 
 \begin{note}{Example}\\
-  Back to $\frac{k_1(n)}{n}$. $E[\frac{k_1(n)}{n} = \frac{1}{4}]$. What is $var(\frac{k_1(n)}{n}$?
+  Back to $\frac{k_1(n)}{n}$. $E[\frac{k_1(n)}{n} = \frac{1}{4}]$. What is $var(\frac{k_1(n)}{n})$?
   \begin{proof}
     \begin{align*}
       Var(\frac{k_1(n)}{n}) &= \frac{1}{n}^{2} Var(k_1(n)) \\
@@ -176,7 +177,7 @@ Note true in general but we are only going to deal with the discrete case
                             &\text{remember each roll $X_i$ is iid} \\
                             &= \frac{1}{n}^{2} \sum_{i=1}^{n} Var(1_{x_i=1}) \\
                             &= \frac{1}{n}^{2} \sum_{i=1}^{n} [E[1_{x_i=1}^{2}] - E[1_{x_i=1}]^{2}] \\
-                            &=`\frac{1}{n}^{2} \sum_{i=1}^{n} [\frac{1}{4} - \frac{1}{16}] \\
+                            &= \frac{1}{n}^{2} \sum_{i=1}^{n} [\frac{1}{4} - \frac{1}{16}] \\
                             &= \frac{3}{16n}
     .\end{align*}
   \end{proof}
@@ -190,7 +191,7 @@ Recall that the law of large number states:
   .\] 
 
   \begin{proof}
-    Let $\frac{k_i(n)}{n}$ = $\frac{1}{n} \cdot \text{ number of times $y_i$ shows up}$. Then, we can think of it as being equivalent to saying the following
+    Let $\frac{k_i(n)}{n}$ = $\frac{1}{n} \times \text{ number of times $y_i$ shows up}$. Then, we can think of it as being equivalent to saying the following
     \begin{align*}
       E[\frac{k_i(n)}{n}] &= \frac{1}{n} E[\sum_{i=1}^{n} 1_{x_j = y_j}] \\
                           &= P[X_i = Y_i] 
@@ -203,9 +204,9 @@ Recall that the law of large number states:
 
     By chebyslev's inequality,
     \begin{align*}
-      P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| > \epsilon] &\leq \frac{1}{\epsilon^{2}} Var(\frac{k_i(n)}{n} \\
-                                                             &\leq \frac{1}{\epsilon^{2}n^{2}} Var(\frac{k_i(n)}{n}\\
-      var(k_i(n)) &= n \cdot Var(1_{x_i = y_i} \\
+      P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| > \epsilon] &\leq \frac{1}{\epsilon^{2}} Var(\frac{k_i(n)}{n}) \\
+                                                             &\leq \frac{1}{\epsilon^{2}n^{2}} Var(\frac{k_i(n)}{n})\\
+      var(k_i(n)) &= n \cdot Var(1_{x_i = y_i}) \\
                   &\leq \frac{n}{4} \\
       P[|\frac{k_i(n)}{n} - E[\frac{k_i(n)}{n}]| > \epsilon] &\leq \frac{1}{4\epsilon^{2}n} 
     .\end{align*}
@@ -227,7 +228,7 @@ Recall that the law of large number states:
                         &= \frac{1}{\sqrt{\pi} n  } \\
                         &\to 0 (n \to \infty)
        .\end{align*}
-       However, $W_n \not\to 0$ in probability (consider the random walks of stocks, they don't converge to 0)!!!! This is not a contradiction because the weak law of large numbers states that $\frac{W_n}{n} \to$ in probability not $W_n$!. In truth,
+       However, $W_n \not\to 0$ in probability (consider the random walks of stocks, they don't converge to 0)!!!! This is not a contradiction because the weak law of large numbers states that $\frac{W_n}{n} \to 0$ in probability not $W_n$!. In truth,
        \begin{align*}
          & P[|\frac{W_n}{n}| \geq \epsilon] \to 0 \\
          & P[|W_n| \geq \epsilon n] \to 0  
