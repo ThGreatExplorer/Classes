@@ -22,17 +22,98 @@
     \rho_{2} \left( x,y \right) = \|x-y\|_{2}
   .\end{align*}
 \end{definition}
+
+\begin{remark}
+  It can easily be checked that the above definition is an equivalence relation and that equivalent norms form an equivalence class hence the name.
+\end{remark}
+
 \section{Problems}
   \begin{enumerate}
     \item Let $V$ be a vector sapce with two norms  $\mid \mid \cdot \mid \mid_{1}$ and $\mid \mid \cdot \mid \mid_{2}$. Prove that any open set in $\left( V, \rho_{1} \right) $ is an open set in $(V,\rho_{2})$ and vice versa when $\|\cdot\|_{1}$ is equivalent to $\|\cdot\|_{2}$.
       \begin{proof}
-        
-      \end{proof}
+        We are given that $\|\cdot\|_{1} \equiv \| \cdot \|_{2}$, meaning $\exists 0 < c < C < \infty$ such that
+        \[
+          c \|v\|_{1} \leq \|v\|_{2} \leq C \|v\|_{1}, \forall v \in V 
+        .\]
+        $\left( \to \right) $. Take an open set $U_{1} \in (V,\rho_1)$. This means that $\forall x \in U_1, \exists r_1 > 0$ such that:
+        \[
+        B_{r_1}(x) = \{y \in V \mid \| x -y \|_{1} < r_1 \} \subseteq U_1 
+        .\]
+        By the definition of equivalence, there must be two constants $c,C$ such that
+         \[
+        c \| x-y\|_{1} \leq \|x-y\|_{2} \leq C \|x-y\|_{1}, \forall x-y \in V
+        .\] 
+        So if we take $U_1$ in $(V, \rho_2)$, then  we know that $\forall x \in U_1, \exists r_2 > 0$ such that:
+        \begin{align*}
+          B_{r_2}(x) = \{y \in V \mid \| x -y \|_{2} < r_2 \} &\iff B_{r_2}(x) = \{ y \in V \mid \|x-y\|_{2} \leq C \|x-y\|_{1} < C r_1\} \\
+                                                          &\iff B_{r_2}(x) = \{y \in V \mid \frac{\|x-y\|_{2}}{C} \leq \|x-y\|_{1} < r_1  \} \\
+                                                          &\text{ preserved under scaling so $y \in B_{r_1}(x)$}\\
+                                                          &\subseteq B_{r_1}(x) \\
+                                                          &\subseteq U_1
+        .\end{align*}
+        This means that $U_1$ must also be an open set in  $\left( V, \rho_2 \right) $ when $\|\cdot \|_{1} \equiv \|\cdot \|_{2}$ (the norms are equivalent).\\
+
+
+        $\left( \leftarrow \right) $. Take an open set $U_2 \in (V, \rho_{2})$. This means that $\forall x \in U_2, \exists r_2 > 0$ such that:
+        \[
+        B_{r_2}(x) = \{y \in V \mid  \|x-y\|_{2} < r_2\} \subseteq U_2 
+        .\] 
+        Using equivalence of the norms, when we take $U_2$ in $\left( V, \rho_1 \right) $, we know that $\forall x \in U_2, \exists r_1 > 0$ such that:
+        \begin{align*}
+          B_{r_1}(x) = \{y \in V \mid \|x-y\|_{1} < r_1\} &\iff B_{r_1}(x) = \{y \in V \mid \|x-y\|_{1} \leq \frac{\|x-y\|_{2}}{c} < \frac{r_2}{c} \} \\ 
+                                                          &\subseteq B_{r_2}(x) \\
+                                                      &\subseteq U_2
+        .\end{align*}
+        So similarly, $U_2$ must also be an open set in $\left( V, \rho_1 \right) $ when the norms are equivalent.
+      \end{proof} 
     \item Prove that any two norms in $\R^{n}$ are equivalent. (Note that $\R^{n}$ is finite dimensional i.e. $n \neq \infty$)
        \begin{proof}
-       Idea: Use that the unit sphere $S^{n-1} = \{x \in \R^{n} \mid \|x\| =1\}$ is compact where $\|\cdot\|$ is the euclidean norm. Can fix the euclidean norm and pick any other norm. Then prove that they are equivalent. This will lead to all norms being equivalent to euclidean norm and thus are all equivalent to each other. \\
+         Take $\|\cdot \|_{e}$ to be the euclidean norm. Consider the unit sphere $S^{n-1} = \{x \in \R^{n} \mid \|x \|_{e} = 1 \} $. We know that $S^{n-1}$ is closed and bounded since all the limit points of $S^{n-1}$ are contained in $S^{n-1}$ and it is bounded by construction. We can use a result from class which states that subsets of $\R^{n}$ are compact $\iff$ they are closed and bounded. Thus, we know that $S^{n-1}$ is compact. \\
 
-       What we will prove is that for any norm, $\|\cdot\|: S^{n+1} \to \R$ is a continuous map in $\|\cdot\|$ euclidean. Then we can use compactness theorems\ldots
+         Consider any other norm $\| \cdot \|$. We can construct the continuous map 
+         \[
+         \begin{align*}
+           f: S^{n-1} &\longrightarrow \R \\
+           x &\longmapsto \|x\| 
+         .\end{align*}
+         .\]
+         under any other norm. Since we know that $S^{n-1}$ is compact and $f$ is continuous map from $S^{n-1} \to \R$, then $\exists x_m, x_M \in S^{n-1}$ such that $f(x_m) = inf_{S^{n-1}} f$ and $f(x_M) = sup_{S^{n-1}} f$. Note that $f(x_m), f(x_M)$ must be  $>0$ since norms are strictly positive when $x$ is non-zero and  they must be  $< \infty$ because  $\R^{n}$ is finite dimensional. Thus, we have that $\forall x \in S^{n-1}$, 
+         \[
+         f(x_m) \leq f(x) \leq f(x_M)
+         .\] 
+Since under  $\| \cdot \|_{e}$, $S^{n-1} \to \{1\} $, then let $c = f(x_m)$ and  $C= f(x_M)$ such that $\forall x \in S^{n-1}$:
+\begin{align*}
+& c \|x\|_{e} \leq \|x\| \leq C \|x\|_{e}  \\
+& \iff f(x_m) \|x\|_{e} \leq \|x\| \leq f(x_M) \|x\|_{e} \\
+ &\iff f(x_m) \leq f(x) \leq f(x_M)
+.\end{align*}
+Thus, $\| \cdot \|_{e},$ and $\|\|$ are equivalent for the space $S^{n-1}$. \\
+
+Furthermore, by the rescaling property of norms, for some norm $\|\cdot \|$, the vector $v \in \R^{n}$, $\|v\| =  \|d x\| = d  \|x\|$. Thus, consider $v$ under  $\| \cdot \|$ :
+\[
+  \|v\| = d \|x\| 
+.\] 
+Then obviously, since vectors are preserved under scaling, the inequality would hold.
+\begin{align*}
+ d( f(x_m) \|x \|_{e} \leq \|x\| \leq f(x_M) \|x\|_{e} )\\
+ d f(x_m) \|x \|_{e} \leq d \|x\| \leq d f(x_M) \|x\|_{e} \\
+f(x_m) \|x \|_{e} \leq \|x\| \leq f(x_M) \|x\|_{e} 
+.\end{align*}
+which we know is true, so thus for any vector $v \in \R^{n}$, $\exists 0 < c=f(x_m) < C=f(x_M) < \infty$ such that 
+\[
+c \|x \|_{e} \leq \|x\| \leq C \|x\|_{e} 
+.\] 
+and $\| \cdot \|_{e}, \| \cdot \|$ are equivalent in $\R^{n}$. \\
+
+Since the above construction is for any other norm $\|\cdot \|$, then any other norm is equivalent to the euclidean norm so since equivalent norms form an equivalence class, then by the transitive property, all norms in $\R^{n}$ must also be equal to each other!
       \end{proof}
   \end{enumerate}
+
+  \begin{note}
+           Idea: Use that the unit sphere $S^{n-1} = \{x \in \R^{n} \mid \|x\| =1\}$ is compact where $\|\cdot\|$ is the euclidean norm. Can fix the euclidean norm and pick any other norm. Then prove that they are equivalent. This will lead to all norms being equivalent to euclidean norm and thus are all equivalent to each other. \\
+
+       What we will prove is that for any norm, $\|\cdot\|: S^{n+1} \to \R$ is a continuous map in $\|\cdot\|$ euclidean. Then we can use compactness theorems\ldots \\
+
+
+  \end{note}
 \end{document}

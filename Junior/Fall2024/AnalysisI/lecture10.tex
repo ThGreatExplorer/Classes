@@ -1,0 +1,150 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis}\\ Taylor's Theorem}
+\author{\huge{Daniel Yu}}
+\date{October 6, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Taylor's Theorem}
+\begin{lemma}
+  Let
+  \[
+  Q(x) = a_{m} x^{m} + a_{m-1}x^{m-1} + \ldots + a_1 x + a_0
+  .\] 
+  a polynomial with real coefficients. Then $Q \in D(\R)$ and $Q'(x) = a_m m x^{m-1} + \ldots + a_1$ ($\Rightarrow Q \in C(\R)$).  
+
+  \noindent\hrulefill
+
+  \begin{proof}.
+    Take $x_0 \in \R$ and $f(x) = x^{m}$. Then, 
+   \begin{align*}
+     (x_0 + h)^{m} &= x_0^{m} + \begin{pmatrix} m\\ 1 \end{pmatrix} x_0^{m-1}h +  \{ \begin{pmatrix} m\\ 2 \end{pmatrix}x_0^{m-2} h^{2} + \ldots + h^{m} \}  \\
+                   &=  x_0^{m} + \begin{pmatrix} m\\ 1 \end{pmatrix} x_0^{m-1}h +  h \{ \begin{pmatrix} m\\ 2 \end{pmatrix}x_0^{m-2} h^{1} + \ldots + h^{m-1} \}   \\
+                   &= x_{0}^{m}  + m x_0^{m-1}h +  h  \cdot r(h) 
+   .\end{align*}
+    Notice that $f'(x_0) = m x_0^{m-1}$, so $x^{m} \in D(x_0)$ and $(x^{m}) \mid_{x = x_0} = m x_0^{m-1}$.  
+      
+  \end{proof}
+\end{lemma}
+
+\begin{definition}
+  Define the Taylor's polynomial of degree $n$ at point  $x_0$ is a polynomial approximation of the function $f(x)$ at the point $x_0$ which matches the functions value and first  $n$ derivatives at that point. It describes the \textit{neighborhood around  $f(x_0)$}
+    \[
+   T_{n}(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0) + \ldots + \frac{f^{n}( x_0)}{(n)!} (x-x_0)^{n}
+   .\] 
+\end{definition}
+
+\begin{definition}
+  \[
+  f \in D^{m}((a,b)) \text{ if $f, f', \ldots, f^{m-1} \in D((a,b))$}
+  .\] 
+  \[
+  f \in C^{m} ((a,b)) \text{ if $f, f', \ldots, f^{m=1}, f^{m} \in C((a,b))$} 
+  .\] 
+\end{definition}
+
+\begin{note}
+  $f \in D((a,b)) \Rightarrow f \in C^{m-1} ((a,b))$
+\end{note}
+
+\begin{theorem}{Taylor's Theorem (Lagrange)}\\
+  Assume that $f:(a,b) \to \R$ and $f \in D^{n} ((a,b))$ where $n \geq 1$,  $x \in (a,b)$. Then,  $\forall x \in (a,b)$ $\exists x_{*} \in (x_0,x)$ [or $x_{*} \in (x, x_0)$ if $x \leq x_0$] such that:
+
+
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2!}(x - x_0)^2 + \dots + \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n + \frac{f^{(n+1)}(x_{*})}{(n+1)!}(x - x_0)^{n+1}.
+\]
+ 
+Note that $\frac{f^{(n+1)}(x_{*})}{(n+1)!}(x - x_0)^{n+1}$ is known as the \textit{Langrangian Error Term} which represents the difference between the taylor polynomial $T_n$ and  $f(x)$
+
+  
+  \noindent\hrulefill
+
+  \begin{proof}
+   Consider the taylor polynomial,  
+   \[
+   T_{n-1}(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0) + \ldots + \frac{f^{n-1}( x_0)}{(n-1)!} (x-x_0)^{n-1}
+   .\] 
+   where $T_{n-1}(x_0) = f(x_0), T^{1}_{n-1} (x_0)= f'(x_0), \ldots, T^{n-1}_{n-1} (x_0) = f^{n-1} (x_0)$
+    We will prove the taylors theorem with  $x$ replaced by  $x_1$. Then, take $x_0,x_1 \in (a,b)$, $x_1 \neq x_0$. First, we find $M \in \R$ such that:
+    \[
+    f(x_1) = T_{n-1} (x_1) + \frac{M}{n!} (x_1 - x_0)^{n}
+    .\]
+    Since $M$ obviously exists since we can solve th elinear equation. Our task now is to show that  $M = f^{n}(x_{*}) $ for some $x_{*} \in (x_0,x_1)$. Consider the function,
+    \[
+    g(x) = f(x) - T_{n-1} (x) - \frac{M}{n!} (x-x_0)^{n}
+    .\] 
+    Then,
+    \begin{enumerate}
+      \item Take $g(x_0) = 0$, $g'(x_0) = 0, \ldots ,g^{n-1} (x_0) = 0$.
+      \item Take $g(x_1) = 0$.
+    \end{enumerate}
+    Then, $g \in D((x_0,x_1)) \cap C([x_0,x_1])$. By the mean-value theorem, $\exists  x_1 \in (a,b)$ such that 
+    \[
+    g'(x_2) = 0
+    .\] 
+    Since by (1),  $g'(x_{0}) = 0$, and $g' \in D((x_0,x_1)) \cap C([x_0, x_1])$ we find $x_3 \in (x_0,x_2)$ such that $g''(x_3) = 0$. (apply the mean value theorem again, this time with endpoints $\{x_0,x_2\} $). \\
+
+  Continuing this process, we find: $\exists  x_{n+1} \in (x_0, x_{n}) $ such that, 
+  \[
+  g^{n} (x_{n+1}) =0
+  .\] 
+  Then we set $x_{*} = x_{n+1}$. Then $g^{n} (x_{*}) = 0$. Clearly, $x_{*} \in (x_0,x_1)$. But $g^{n} (x) = f^{n}(x) - M \Rightarrow 0 = g^{n} (x_{*}) = f^{n} (x_{*}) -M \Rightarrow M = f^{n} (x_{*}) $
+
+  \end{proof}
+\end{theorem}
+
+\begin{lemma}
+For any $a > 0$ we have that 
+\[
+\lim_{n \to \infty} \frac{a^{n}}{n!} = 0
+.\] 
+
+\begin{proof}
+  Take $a > 0$. Then,  \[
+  \frac{a^{n}}{n!} = \frac{a}{1} \cdot \frac{a}{2} \cdot \frac{a}{3}  \cdot \ldots \cdot \frac{a}{n}
+  .\] 
+  choose $n_0 \geq 1$ such that $\frac{a}{n_0} < \frac{1}{2}$. Then, for $n \geq n_0$, 
+  \begin{align*}
+    \frac{a}{n!} &= [\frac{a}{1}\frac{a}{2}\frac{a}{3} \ldots \frac{a}{n_0}] [\frac{a}{n_0+1} \ldots \frac{a}{n}] \\
+                 &\leq [\frac{a}{1}\frac{a}{2}\frac{a}{3} \ldots \frac{a}{n_0}] (\frac{1}{2})^{n-n_0}, n \geq n_0 
+  .\end{align*}
+  This decays to 0 as $n \to \infty$, so $\frac{a^{n}}{n!} \to 0$
+\end{proof}
+\end{lemma}
+
+\begin{lemma}{Stirling Approximation}\\
+  $n! \sim \sqrt{2 \pi n} \left( \frac{n}{e} \right)^{e}  $ (rate of growth)
+\end{lemma}
+
+\section{Series}
+ \begin{definition}
+$(a_{n})_{n \geq 1}, a_n \in \R $ (or $\C$),  $n \geq 1$. We write 
+   \[
+  \sum^{\infty}_{n=1} a_n = A 
+  .\] 
+  and say that that the series converges to $A$ if the partial sums  $S_N = \sum_{n=1}^{N} a_n$ converges to $A$, i.e. $S_N \to A$ ( $N \to \infty$). \\
+
+  Equivalently,  $\mid \sum_{n=1}^{N} a_n - A \mid  \to 0$ as ($N \to \infty$). 
+\end{definition}
+
+\begin{definition}
+  For series, we will often consider the "upper limit",
+  \[
+    \overline{\lim_{n \to \infty}} x_n = \lim_{n \to \infty} (\sup \{x_n \mid n \geq N\}) 
+  .\] 
+  \begin{enumerate}
+    \item $\overline{\lim_{n \to \infty}} \mid a_\frac{n}{a_{n+1}}\mid  < 1$ converges
+    \item $\overline{\lim_{n \to \infty}} \sqrt{\mid a_n\mid }^{n} < 1$ converges
+  \end{enumerate}
+\end{definition}
+\end{document}

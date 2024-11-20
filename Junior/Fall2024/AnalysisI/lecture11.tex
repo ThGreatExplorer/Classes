@@ -1,0 +1,191 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Some Class}}
+\author{\huge{Daniel Yu}}
+\date{November 18, 2024}
+
+\newcommand{\upRint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\loRint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+  \section{Riemann Stieltjes Integral}
+  Take a partition of $[a,b]$ denoted as 
+   \[
+  P =\{a = x_0 \leq x_1 \leq \ldots \leq x_n = b\} 
+.\] and consider $f: [a,b] \to \R$ and $\alpha: \R \to \R$ 
+  Then,
+  \[
+    \overline{S}(P, f, \alpha) = \sum_{k=1}^{n} M_k (\alpha(x_k) - \alpha (x_{k-1})), M_{k} = \sup_{[x_{k-1}, x_k]} f 
+  .\] 
+  \[
+    \underline{S} (P, f, \alpha) = \sum_{k=1}^{n} m_k (\alpha (x_k) - \alpha (x_{k-1})), m_{k} = \inf_{[x_{k-1}, x_{k}]} f
+  .\]
+  And,
+  \[
+    m(\alpha(b) - \alpha(a)) \leq \underline{S} (P, f, \alpha) \leq \overline{S} (P, f, \alpha) \leq M(\alpha(b) - \alpha(a))  
+  .\] 
+
+  One application is in probability when we find the expected value of R.V. $X$:
+   \[
+     E[X] = \int_{-\infty}^{\infty}   x dF(x)
+  .\] 
+  where $\aloha = F(x)$ the cdf of $X$
+
+  \noindent\hrulefill
+
+\begin{definition}
+  Define the Riemann Stieltjes Integral as 
+  \[
+  \upRint{a}{b} f d\alpha = \inf_{P} \overline{S} (P, f, \alpha) 
+  .\],
+  \[
+    \loRint{a}{b} f d \alpha = \sup_{P} \underline{S} (P, f, \alpha)  
+  .\]
+\end{definition}
+
+\begin{definition}
+  $f:[a.b] \to \R$ satisfying the conditions above is called integrable (Riemann-Stieltjes Integrable with respect to alpha) if 
+  \[
+    \loRint{a}{b} f d \alpha = \upRint f d \alpha
+  .\] 
+  In this case we set
+  \[
+    \int_{a}^{b} f d \alpha = \loRint{a}{b} f d \alpha = \upRint{a}{b} f d \alpha 
+  .\]
+  and say that $f \in R(\alpha)$
+\end{definition}
+
+\begin{note}
+  This doesn't always hold. \\
+
+  Consider the example of the dirchlet function. Take,
+  \[
+  F(x) = \begin{cases}
+    1, x \in \Q \\
+    0, x \not\in \Q
+  \end{cases}
+  .\] 
+  and consider $x \in [0,1]$ with  $F: [0,1] \to \R$. Consider the partition $P=\{0 = x_0 \leq x_1 \leq \ldots \leq \ldots \leq x_{n-1} \leq x_n\} $, Then,
+   \[
+     \overline{S}(P, F, \alpha) = \sum_{k=1}^{n} \sup_{[x_{k-1}, x_k] } f (\alpha (x_k) - \alpha (x_{k-1})) = \alpha(b) - \alpha(a) \Rightarrow \upRint{a}{b} F d\alpha = \alpha(b) - \alpha (a) > 0 
+   .\] 
+   But when considering the lower RS integral,
+   \[
+     \loRint{a}{b} F d\alpha = 0
+   .\] 
+   Hence, $F \in R(\alpha) \forall \alpha \neq$ constant.
+\end{note}
+
+Let $P = \{ a = x_0 \leq x_1 \leq \ldots \leq x_{n-1} \leq x_n = b\} $ be a parition over $[a,b]$.
+
+ \begin{definition}
+   A partition $P_1$ of $[a,b]$ is a refinement of  $P$ if  $P_1 \supseteq P$. 
+\end{definition}
+
+\begin{lemma}
+  Let $P_1$ be a refinedment of $P$. Then,
+  \[
+    \loRint{}{}(P_1, F, \alpha) \leq \upRint{}{} (P, F, \alpha)
+  .\] 
+  and,
+  \[
+    \loRint{}{} (P_1, f, \alpha) \geq \loRint{}{} (P, f, \alpha) 
+  .\] 
+
+  \begin{proof}
+    Take $P = \{a = x_0 \leq x_1 \leq \ldots \leq x_p \leq x_{p-1} \leq \ldots \leq x_{n-1} \leq x_n = b\} $ It is enough to prove the folloowing lemm when 
+    \[
+      P_1 = P \cup \{x\}, x \in [X_{p}, x_{p-1}] 
+    .\].
+    \begin{align*}
+          \overline{S} (P_1, f, \alpha)  -M_{p}(\alpha (x_p) + \alpha(\x_k)) + \sup_{x_{p}, x^{k}} f + \inf_{x_p, x^{k}} f 
+        .\end{align*}
+  \end{proof}
+\end{lemma}
+
+
+\begin{corollary}
+  Let $P_1, P_2$ be two partitions of $[a,b]$ Then 
+   \[
+     \underline{S} (P_1, f, \alpha) \leq \overline{S} (P_2, f, \alpha) 
+  .\]
+
+  \begin{proof}
+    Let $P_1, P_2$ be partitions of $[a,b]$. Then consider  $P' = P_1 \cup P_2$ the common refinement. Then by Lemma 1,
+    \[
+      \underline{S} (P_1, f, \alpha) \leq \underline{S} (P', f, \alpha) \leq \overline{S} (P, f, \alpha) \leq \overline{S} (P_2, f, \alpha) 
+    .\] by lemma 1 and we are done.
+  \end{proof}
+\end{corollary}
+
+\begin{corollary}
+  \[
+    \loRint{a}{b} f d \alpha \leq \upRint{a}{b} f d\alpha  
+  .\] 
+
+  \noindent\hrulefill 
+
+  \begin{proof}
+    Using the previous corollary, \[
+      \forall P_1, P_2, \underline{s} (P_1, f, \alpha) \leq \overline{S}(P_2, f, \alpha)
+    .\] 
+    This implies that 
+    \[
+      \loRint{a}{b} = \sup_{P_1} \underline{S} (P_1, f, \alpha) \leq \overline{S} (P_2, f, \alpha) \Rightarrow
+      \loRint{a}{b} f d\alpha \leq \inf_{P_2} \overline{S} (P_2, f, \alpha) = \upRint{a}{b} f d \alpha
+    .\] 
+  \end{proof}
+\end{corollary}
+
+\noindent\hrulefill 
+
+Hence for any paritions, $P_1, P_2$ of $[a,b]$ we have the following inequality:
+ \[
+   m(\alpha (b) - \alpha (a)) \leq \underline{S} (P_1, f, \alpha) \leq \loRint{a}{b} f d \alpha \leq \upRint{a}{b} f d \alpha \leq \overline{S} (P_2, f, \alpha) \leq M(\alpha (b) - \alpha(a))
+.\] 
+
+\noindent\hrulefill
+
+\begin{prop}
+  A \textbf{criteria} for integrability is $f \in R(\alpha) \iff \forall \epsilon > 0 \exists P$ a parition of $[a,b] $ such that
+   \[
+     \overline{S} (P,f, \alpha) - \underline{S} (P, f, \alpha) \leq \epsilon 
+  .\] 
+
+  \noindent\hrulefill
+
+  \begin{proof}
+    $\Rightarrow$ Assume that  $f \in R(\alpha)$. Take  $\epsilon > 0$. Then, $\exists P_1$ a partition
+    \[
+    \int_{a}^{b} \leq \overline{S} (P_1, f, \alpha) \leq \int_{a}^{b} f d \alpha + \frac{\epsilon}{2}   
+    .\] by definition.
+    Similarly, $\exists P_2$
+    \[
+     \int_{a}^{b} \geq \underline{S} (P_2, f, \alpha) \leq \int_{a}^{b} f d \alpha - \frac{\epsilon}{2}   
+    .\] 
+    Let $P = P_1 \cup P_2$ then it follows from lemma 1 that, 
+ \[
+    \int_{a}^{b} \leq \overline{S} (P, f, \alpha) \leq \int_{a}^{b} f d \alpha + \frac{\epsilon}{2}   
+    .\]
+    \[
+     \int_{a}^{b} \geq \underline{S} (P, f, \alpha) \leq \int_{a}^{b} f d \alpha - \frac{\epsilon}{2}   
+    .\]
+    Then,
+    \[
+      \overline{S}(P) - \underline{S} (P) \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+    .\] 
+  \end{proof}
+\end{prop}
+\end{document}

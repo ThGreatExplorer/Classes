@@ -1,0 +1,213 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis I} \\ Lecture 8}
+\author{\huge{Daniel Yu}}
+\date{October 28, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+\section{Limits}
+
+\begin{definition}
+  Let $f: X \to Y$,  $(X, \rho_{x}),(Y, \rho_{y})$ metric spaces $x_0 \in X$. Then,
+   \[
+  f(x) \to y_0 \text{ in $Y$ as $x \to x_0$.}
+  .\] "$f(x)$ converges to  $y_0$ as $x$ converges to  $x_0$". Alternatively, this is written as:
+  \[
+  \lim_{x \to x_0} f(x) = y_0
+  .\] 
+  if and only if $\forall \epsilon > 0, \exists \delta > 0$ such that 
+  \[
+  f(B_{\delta}^{o X} (x_0)) \subseteq B_{\epsilon}^{Y} (y_0)
+  .\] 
+
+  \begin{note}
+    This does not necessarily mean continuity because we are considering the punctured ball  $B_{\delta}^{o X}$ so it is not necessarily true that $f(x_0) = y_0$., Think of a discontinuous jump, this converges to $y_0$ but is not continuous
+  \end{note}
+  \begin{remark}
+    We are interested of the behavior of the function around the point not the point itself. 
+  \end{remark}
+\end{definition}
+ 
+\begin{prop}
+  $f:X\to Y$ is continuous at  $x_0$ $\iff$ $\lim_{x \to x_0} f(x) = f(x_0)$. 
+
+  \begin{proof}
+    $\left( \Rightarrow \right) $ Assume that $f \in C(x_0)$ then $\forall \epsilon > 0, \exists \delta > 0$ such that 
+    \[
+    f(B_{\delta}^{X} (x_0)) \subseteq B_{\epsilon}^{Y} (f(x_0))
+    .\] by definition of continuity. Then trivially, this implies that the image of the punctured ball must also be a subset of  $B_{\epsilon}^{Y} (f(x_0))$. Then the limit of $\lim_{x \to x_0} f(x) = f(x_0)$. \\
+
+
+    $\left( \Leftarrow \right) $. Assume that $\lim_{x\to x_0} = f(x_0) \Rightarrow \forall \epsilon > 0 \exists \delta >0$ such that 
+    \[
+    f(B_{\delta}^{o X}, (x_0) \subseteq B_{\epsilon}_{\epsilon}^{Y} (f(x_0)) \Rightarrow f(B_{\delta}^{X} (x_0)) \subseteq B_{\epsilon}^{Y} (f(x_0))
+    .\] 
+    since $f(x_0) \in B_{\epsilon}^{Y} (f(x_0))$. Thus, $f \in C(x_0)$.  
+  \end{proof}
+\end{prop}
+
+\begin{corollary}]
+  We can extend the definition of $\lim_{x \to x_0} f(x)$ also in the case when $f=X \setminus \{x_0\} \to Y $ is not defined at $x_0$ 
+\end{corollary}
+
+\begin{prop}
+$f: X \to \R$, $g: X \to \R$ $x_0 \in X$. Then
+
+  \begin{enumerate}
+    \item If there exist $\lim_{x \to x_0} f(x)$ and $\lim_{x \to x_0} g(x)$ then $\lim_{x \to x_0} (f(x) + g(x)) = \lim_{x \to x_0} f(x) + \lim_{x \to x_0} g(x)$.
+
+      \begin{proof}
+        Assume that  $\lim_{x \to x_0} f(x) =A$ and $\lim_{x \to x_0} g(x) = B$. Take $\epsilon > 0$, by definition  $\exists B_{\delta_1}^{X} (x_0)$ such that 
+        \[
+        f\left( B_{\delta_1}^{o X} (x_0) \right) \subseteq \left( A - \frac{\epsilon}{2}, A + \frac{\epsilon}{2} \right) \Rightarrow \| f(x) - A \| < \frac{\epsilon}{2} \text{ since } \|x - x_0\| < \delta_1, x \neq x_0
+        .\]
+        Similary, since $\lim_{x \to x_0} g(x) = B \Rightarrow \delta_2 > 0$ such that 
+        \[
+        \| g(x) - B \| < \frac{\epsilon}{2} \text{ since } \| x - x_0\| < \delta_2, x \neq x_0
+        .\]
+        Then take $\delta = \min\left( \delta_1, \delta_2 \right) $. Then, for $\| x- x_0\| < \delta, x \neq x_0$ we have 
+        \begin{align*}
+          \|(f(x) - A) + (g(x) - B)\| &=  \| \left( f(x) + g(x) \right)  - (A + B) \|  \\
+                                      &\leq \|f(x) - A\| + \|g(x) - B\| \\
+                                      &< \frac{\epsilon}{2} + \frac{\epsilon}{2} \\ 
+                                      &= \epsilon
+        .\end{align*}
+        Thus, the limit of $f(x) + g(x)$ is  $A+B$. 
+      \end{proof}
+
+    \item If $\exists $ $\lim_{x \to x_0} f(x) $ and $\lim_{x \to x_0} g(x)$ then $\lim_{x \to x_0} f(x)g(x) = \lim_{x \to x_0} f(x) \cdot \lim_{x \to x_0} g(x)$. 
+    \item If $\exists $ $\lim_{x \to x_0} f(x) $ and $\lim_{x \to x_0} g(x)$ and $\lim_{x \to x_0} g(x) \neq 0 (g(x) \neq 0 \forall x \in X)$. Then,  $\lim_{x \to x_0} \frac{f(x)}{g(x)} = \frac{ \lim_{x \to x_0} f(x)} {\lim_{x \to x_0} g(x)}$.
+  \end{enumerate}
+\end{prop}
+
+\section{Differentiable functions}
+\begin{definition}  
+  Let $f: (a,b) \to \R$ and $x_0 \in (a,b)$. $f$ is differentiable at a point  $x_0$ if $\exists \alpha \in \R, r: (a,b) \setminus \{x_0\}  \to  \R$ such that $r(x) \to 0 $ as  $x \to x_0$ such that  $\forall x \in (a,b), x \neq x_0$, we have:
+  \[
+   f(x) = f(x_0) + \alpha (x-x_0) + f(x) (x-  x_0)
+ .\] 
+  If $f$ is differentiable at  $x_0$. then we set  $f'(x_0) = \alpha$ and call it the derivative of $f$ at  $x_0$.  
+  \begin{note}
+   $\alpha$ is the derivative and $\alpha(x - x_0)$ represents the tangent line at  $x_0$. $r(x)$ is the error term (goes to 0 as $x \to x_0$). 
+  \end{note}
+\end{definition}
+
+\begin{note}
+  If $f$ is differentiable at  $x_0$ then we write that $f \in D(x_0)$
+\end{note}
+
+\begin{remark}
+  The above definition is equivalent to the "usual" (calculus) definition of the limit is:
+  \[
+  f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} 
+  .\]
+  We can rewrite $r(x)$ as:
+   \[
+  r(x) = \frac{f(x) - f(x_0)}{x - x_0} - f'(x_0) \to 0
+  .\]
+  and,
+  \[
+  r(x) (x- x_0) = f(x) - f(x_0) - f'(x_0) (x-x_0)
+  .\] 
+  which after some rearrangment gives us the definition of $f(x)$
+\end{remark}
+
+\begin{remark}
+  If $f \in D(x_0)$ then we can set $r(x_0) = 0$. Then, $f: \left( a,b \right) \to \R $ and $r \in C(x_0)$ and $  f(x) = f(x_0) + \alpha (x-x_0) + f(x) (x-  x_0)$ holds for all $x \in \left( a,b \right) $ 
+\end{remark}
+
+\begin{remark}
+  $f \in D(x_0) \iff  f(x) = f(x_0) + \alpha (x-x_0) + f(x) (x-  x_0)$ holds for $x \in (x_0 - \epsilon, x_0 + \epsilon) \subseteq (a, b)$ for some $\epsilon > 0$
+\end{remark}
+
+\begin{prop}
+  If $f \in D(x_0) \Rightarrow$ $f \in C(x_0)$. (differentialbility is stronger than continuity)
+
+  \begin{proof}
+    If $f \in D(x_0)$ then $\forall x \in (a,b)$, 
+     \[
+    f(x) = f(x_0) + f'(x_0) (x - x_0) + r(x) (x-x_0)
+    .\]
+    where $ r(x_0) = 0$ and $r \in C(x_0) \Rightarrow r(x) \to r(x_0) = 0 $ as $x \to x_0$. Let's consider the limit of $f$:
+    \begin{align*}
+      \lim_{x \to x_0} f(x) &= \lim_{x \to x_0} [f(x_0) + f'(x_0) (x-x_0) + r(x) (x-x_0)] \\
+                            &= \lim_{x \to x_0} f(x_0) + \lim_{x \to x_0} f'(x_0) (x-x_0) + \lim_{x \to x_0} r(x) (x- x_0) \\
+                            &= \lim_{x \to x_0} f(x_0) + \lim_{x \to x_0} f'(x_0) \lim_{x \to x_0}  (x-x_0) + \lim_{x \to x_0} \lim_{x \to x_0}r(x) (x- x_0) \\
+                            &= f(x_0) + f'(x_0) \cdot 0 + 0 \cdot 0 \\
+                            &= f(x_0)
+    .\end{align*}
+    By the proposition since 
+    \[
+    \lim_{x \to x_0} f(x) = f(x_0)
+    .\] 
+    then $f$ is continuous at $x_0$ 
+  \end{proof}
+\end{prop}
+
+\begin{prop}
+  If $f,g: (a,b) \to \R$ and $f,g \in D(x_0)$, then 
+  \begin{enumerate}
+    \item $(\alpha f+ \beta g) \in D(x_0)$ and $(\alpha f + \beta g)' (x_0)= \alpha f' (x_0) + \beta g'(x_0) $ 
+    \item $f \times g \in D(x_0)$ and $(f\cdot g)' \left(x_0 \right) = f'(x_0) g(x_0) + g'(x_0) f(x_0) $ 
+\begin{proof}
+  We need to consider for $x \neq x_0$, the equality $\frac{f(x) g(x) - f(x_0) g(x_0)}{x - x_0} = \frac{f(x) g(x_0) - f(x_0) g(x_0)}{x - x_0} + \frac{f(x) g(x) - f(x) g(x_0)}{x-x_0} 
+$
+  \begin{align*}
+    \lim_{x \to x_0} (f \times g) (x_0) &= \lim_{x \to x_0} \frac{f(x) g(x) - f(x_0) g(x_0)}{x - x_0} \\ 
+                                       &=  \lim_{x \to x_0}  \frac{f(x) g(x_0) - f(x_0) g(x_0)}{x - x_0} +  \lim_{x \to x_0} \frac{f(x) g(x) - f(x) g(x_0)}{x-x_0} \\
+                                       &=  \lim_{x \to x_0}  g(x_0)  \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} +  \lim_{x \to x_0} f(x)  \lim_{x \to x_0} \frac{g(x) - g(x_0)}{x- x_0}    \\
+                                       &= g(x_0) f'(x_0) + f(x_0) g'(x_0) 
+  .\end{align*}
+  and we are done!
+ \end{proof}
+
+    \item If $g(x_0) \neq 0$ then $\frac{f}{g} \in D(x_0)$ and $\left( \frac{f}{g} \right)' (x_0) = \frac{f'(x_0) g(x_0) - f(x_0) g'(x_0)}{g(x_0)^{2}} $ 
+      \begin{note}
+        Since $f \in D(x_0) \Rightarrow f \in C(x_0)$. On the other side, $g(x_0) \neq 0$ and hence by continuity $g(x) \neq 0$ for  $x \in (x_0  - \delta, x_0 + \delta)$ for some $\delta > 0$.  This is so that $\frac{f}{g}$ is defined over some small interval $(x - \epsilon, x + \epsilon)$ which is needed for definition of differentiability at a point. 
+      \end{note}
+  \end{enumerate}
+\end{prop}
+
+\subsection{Chain Rule}
+Consider the compoased functoin: $(g \cdot f) (x) = g(f(x)), x\in (a,b)$ where $f: (a,b) \to \R$ such that $f((a,b)) \subseteq (c,d), g: (c,d) \to \R$
+\begin{theorem}
+  In the situation above, if $f \in D(x_0)$ and $g \in D(f(x_0))$ then $g \cdot f \in D(x_0)$ and 
+  \[
+    (g \cdot f)' (x_0) = g'(f(x_0)) \cdot f'(x_0)
+  .\] 
+
+  \begin{proof}
+    Assume that $f \in D(x_0)$ and $g \in D(f(x_0))$ then $\forall x \in (a,b),$ 
+    \[
+    f(x) = f(x_0) + f'(x_0) (x-x_0) + r_x (x) (x- x_0) 
+    .\]
+    where $r_x \in C(x_0)$ and $r_x(x_0) = 0$. Similarly, $\forall y \in (c,d)$
+     \[
+    g(y) = g(y_0) + g'(y_0) (y - y_0) + r_y (y) (y - y_0)
+    .\] 
+    where $r_y \in C(y_0)$ and $r_y (y_0) = 0 $. Then from here follows:
+    \begin{align*}
+      g(y) = g(f(x)) &= g(f(x_0)) + g'(f(x_0)) (f(x) - f(x_0)) + r_y (f(x)) (f(x) - f(x_0)) \\
+                     &=  g(f(x_0)) + g'(f(x_0)) (f(x_0) + f'(x_0) (x-x_0) + r_x (x) (x- x_0) 
+      - f(x_0)) \\ 
+                     &+ r_y (f(x)) (f(x_0) + f'(x_0) (x-x_0) + r_x (x) (x- x_0) 
+ - f(x_0))  \\
+                     &= g(f(x_0)) + g'(f(x_0)) (f'(x_0) (x-x_0) + r_x (x) (x- x_0)) + r_y (f(x)) (f'(x_0) (x-x_0) + r_x (x) (x- x_0))  \\
+                     &= g(f(x_0)) + g'(f(x_0)) f'(x_0) (x-x_0) \\ 
+                     &+ [g'(f(x_0)) r_x(x)(x-x_0) +r_y(f(x)) f'(x_0) (x-x_0) + r_y(f(x)) r_x\left( x \right) (x-x_0)] \\
+                     &= g(f(x_0)) +[ g'(f(x_0)) f'(x_0)] (x-x_0) + [g'(f(x_0)) r_x(x) +r_y(f(x)) f'(x_0) + r_y(f(x)) r_x\left( x \right)] (x-x_0) \\
+                     &= g(f(x_0)) + \alpha (x-x_0) + r(x) (x-x_0)
+    .\end{align*}
+    Thus, $g'(f(x_0)) r_x(x) +r_y(f(x)) f'(x_0) + r_y(f(x)) r_x\left( x \right) = r(x)$. All we need to do is show that $r(x) \to 0 $ as  $x \to x_0$, then it will follow that $g \cdot f \in D(x_0)$. A quick observation reveals that $r_x (x) \to 0 $ as $x \to x_0$ and since $r_2 \in C(f(x_0))$ and $f \in C(x_0) \Rightarrow r_2 \cdot f \in C(x_0) \Rightarrow r_y (f(x)) \to r_y (f(x_0)) = 0$ since $g(x) \in D(x_0)$ as $x \to x_0$. Thus, $r(x) \to 0$ as $x \to x_0$.     
+  \end{proof}
+\end{theorem}
+
+\end{document}

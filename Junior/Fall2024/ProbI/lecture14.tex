@@ -1,0 +1,220 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Some Class}}
+\author{\huge{Daniel Yu}}
+\date{November 12, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+\section{Random Walk}
+\subsection{1 Dimensional Random Walk}
+Consider the markvo chain of a random walk: \\
+If $X_n$ is a 1-dimensional random walk, then
+ \[
+   P[X_{2n} =0] = \begin{pmatrix} 2n \\ n \end{pmatrix} [p(1-p)^{2}] = \frac{[4 p (1-n)]^{n}}{\sqrt{\pi x} } \text{ from stirlings formula}
+.\]
+(the probability that the markov chain returns to the origin at $X_{2n}$)
+and,
+\[
+  E[V(0) \mid X_0 = 0] = \sum_{n=0}^{\infty} \frac{1}{\sqrt{\pi n} } = \infty \text{ if $p = \frac{1}{2}$}
+.\] 
+(the markov chain vists the origin infinitely many times. Since a random walk is an irreducible markov chain, there can only be one intercommunicating class so if one state is recurrent then all states are recurrent, so every state of a 1-d R.W. is recurrent.
+
+\subsection{2 Dimensional Random Walk}
+envision a grid:
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/2d_random_walk.ong}
+  \caption{Example}
+  \label{fig:2d_random_walk}
+\end{figure}
+
+The 2D random walk can be defined as follows:
+\[
+M_n = \begin{cases}
+  M_{n-1} + (1,0) \text{ with P = $\frac{1}{4}$} \\
+  M_{n-1} + (0,1) \text{ with P = $\frac{1}{4}$} \\
+  M_{n-1} + (-1,0) \text{ with P = $\frac{1}{4}$} \\
+  M_{n-1} + (0,-1) \text{ with P = $\frac{1}{4}$} \\
+\end{cases}
+.\] 
+\begin{note}
+  Is the state $(0,0)$ recurrent?
+\end{note}
+\begin{proof}
+  Rewrite $M_n = (X_n, Y_n)$ where the distribution of  $X_n = \sum_{i=1}^{n} S_i$ where 
+   \[
+  S_i = \begin{cases}
+    0 \text{ with P = $\frac{1}{2}$} \\
+    1 \text{ with P = $\frac{1}{4}$} \\
+    -1 \text{ with P = $\frac{1}{4}$} 
+  \end{cases}
+  .\] 
+  We also know $E[X_n] = 0$. By the law of large numbers  $\frac{X_n}{n } \to 0$ in probability and $\frac{Y_n}{n} \to 0$ in probability.
+\end{proof}
+
+\begin{note}
+  Are $X_n,Y_n$ independent? What can we say about each $X_n,Y_n$
+\end{note}
+No, consider $X_n$ gives information on  $Y_n$. If $X_n$ didn't change then we know that  $Y_n$ must have changed!
+
+\begin{note}
+  Compute $P[X_n = (0,0)] = P[X_n =0 , Y_n = 0]$ using joint distribution of $X_n, Y_n$ 
+\end{note}
+Notice that for the markoov chain to be in state $(0,0)$, then the steps right = steps left, and steps up = steps down. Thus,
+ \[
+\{X_{2n} = 0, Y_{2n} = 0\} = \cup_{r = 0} \{\text{r steps left, right and $n-r$ steps up and down} \}  
+.\] 
+So,
+\[
+  P[X_{2n} =0, Y_{2n} = 0] = \sum_{r=0}^{n} P[\text{r steps left, right and $n-r$ steps up and down}]
+.\] 
+This is a combinatorics problem. We know that the ways to arrange, r's and n-r's, we get
+\[
+= \frac{(2n)!}{(r!)(r!) (n_-r)!(n-r)!}
+.\] 
+then,
+\[
+  P[M_{n} = (0,0)] = P[X_n=0, Y_n=0] = \sum_{r=0}^{n} \left( \frac{(2n)!}{(r!)^{2} (n-r)!^{2}} \right) \cdot \frac{1}{4^{2n}}  = ? 
+.\]
+
+Trick from $d=2$, we can rotate the grid by  $45$ degrees. Then
+ \[
+M_n' = \begin{cases}
+  M'_{n-1} + (\frac{1}{\sqrt{2} }, \frac{q}{\sqrt{2} }) \\
+  M'_{n-1} + (\frac{1}{\sqrt{2} }, -\frac{q}{\sqrt{2} }) \\
+  M'_{n-1} + (-\frac{1}{\sqrt{2} }, -\frac{q}{\sqrt{2} }) \\
+  M'_{n-1} + (-\frac{1}{\sqrt{2} }, \frac{q}{\sqrt{2} }) \\
+\end{cases}
+.\] 
+
+This is useful because in probability, we know that
+\[
+  P[M_{2n} = (0,0) = P[X_{2n}' = 0, Y_{2n}' = 0] 
+.\] 
+Now we only two options for $X', Y'$ either  $\om \frac{1}{\sqrt{2} }$ as opposed to $X_n,Y_n$ which have 3 options  $-1,0,1$. This makes computing the former easier than the later. We now only need to consider the number of diagonal paths ending at  $(0,0)$ after  $2n$ steps. By symmetry this has to be:
+ \[
+\begin{pmatrix} 2n\\ n\end{pmatrix}^{2}
+.\] 
+So,
+\[
+  P[M_{2n}' = (0,0)] = \begin{pmatrix} 2n\\ n\end{pmatrix}^{2} \cdot (\frac{1}{4})^{2n} = [\begin{pmatrix} 2n\\ n\end{pmatrix} \cdot (\frac{1}{2}^{2n})]^{2} \approx [\frac{1}{\sqrt{\pi n} }]^{2} = \frac{1}{\pi n}
+.\] 
+
+\begin{note}
+  So is the random walk in $2$ d recurrent or transient? 
+\end{note}
+\begin{proof}
+  Recurrent,
+  \begin{align*}
+  E[\text{ number of visits to (0,0)} \mid  X_0 = (0,0)] &= E[1_{X_{2n} = (0,0)} \mid X_0 = (0,0)] \\
+                                                         &= \sum_{n=1}^{\infty} P[X_{2n} = (0,0)] \\
+                                                         &= \sum_{n=1}^{\infty} \frac{1}{\pi n} = \infty
+.\end{align*}
+And thus, $P[X_n = (0,0) \text{ for infinitely many n's}] = 1$.  
+\end{proof}
+
+
+\begin{theorem}{Polga}\\
+  $\exists c$ depeneding on $d$ such that:
+   \[
+     P[X_{2n} = \vec{0} \text{ in } \Z^{d}] \approx \frac{C_d}{n^{\frac{d}{2}}} 
+  .\] 
+  In particular on $\Z^{d}, d \geq 3$. This means that for dimensions greater than or equal to 3, the random walk no longer visits the origin an infinite number of times due to the increased "space" allowing the walk to "spread out".
+\end{theorem}
+
+\section{Pandemic Spread}
+Consider modelling the spread of a pandemic.  Let $\epsilon = 0,1,2,3,\ldots$ representing the number of offspring, or infection, distribution. Let $T$ be the timesteps (or generations). 
+Assumptions:
+\begin{enumerate}
+  \item $P[\epsilon =0] > 0$ 
+  \item $P[\epsilon  \geq 2] > 0$
+\end{enumerate}
+
+Let $Z_T = \text{ number people actively infections at the time T}$.
+
+\begin{note}
+Claim: $Z_T$ is an absorbing markov chain on  $\{0,1,2,3,\ldots, \infty\} $. (Note that $Z_T$ is an infinite state markov chain)
+\end{note}
+Notice that $\{Z_T =0 \} $ is an absorbing markov chain.  
+
+\begin{note}
+  What is the probability that $Z_T =0 $ eventually?
+\end{note}
+If $r = E[\epsilon] \leq1$, then $P[Z_T = 0 \text{ eventually}] = 1$. \\
+If $r > 1$ then $P[Z_T = 0 \text{ for all T}] > 0$. 
+
+\begin{lemma}
+  $E[Z_r]=r^{T}$ where $r = E[\epsilon] = \sum_{n=0}^{\infty} n \cdot P[\epsilon = n]$
+\end{lemma}
+
+\begin{proof}
+  Given $Z_T = n_{1}$, then $Z_{T + 1} = \epsilon_{1} + \epsilon_2 + \ldots + \epsilon_{n_1}$ where $\epsilon_i$ are indepedent (representing each infected person's distribution. 
+  \begin{align*}
+    E[Z_{T+1}] &= \sum_{n=0}^{\infty} E[Z_{T+1} \mid Z_T = n]  \cdot P[Z_T = n] \\
+               &=  \sum_{n=0}^{\infty} n \cdot E[\epsilon_i] \cdot P[Z_T = n]  \\
+               &= \sum_{n=0}^{\infty} rn \cdot P[Z_{T} = n]  \\
+               &= r \cdot E[Z_T] 
+  .\end{align*}
+  We get that the ratios of the expected values $E[X_{T+1}] / E[X_T]$ is $r$  and $E[Z_T = 0] = 1$ (assume we start with 1 person). We see that $E[Z_T] =r^{T}$ 
+\end{proof}
+
+\begin{corollary}
+  \[
+    P[Z_T > 0 ] \leq r^{T}
+  .\] 
+  if $r <1$, this says that that the probability of dying out is exponential and the population will go to 0. 
+\end{corollary}
+
+\begin{proof}
+  Idea: Use markov's inequality. \\
+  For $P[Z_T > 0] = P[Z_T \geq 1] = \frac{E[Z_T]}{1} = r^{T}$.
+\end{proof}
+
+Lets assume that $r \geq 1$. Set  $E_n = \{Z_i = 0\} \forall i = 0,1,2,\ldots,n $. Observe that $E_n \subseteq E_{n+1}$,
+\[
+  P[Z_T=0= 0 \text{ eventually}] = P[\cup_{n=1}^{\infty} E_n] = \lim_{n \to \infty} P[E_n]
+.\] 
+Ti understand the probaiblity of extinction eventually, we can look at extintion by time  $n$:
+ \[
+E_{\infty} = \cup_{n=1}^{\infty} E_n = \text{ extinction}
+.\] 
+We can say that:
+\[
+  P[E_{\infty}] = P[E_{\infty} \mid z_1 = k] \cdot P[Z_1 = k] \\
+.\]
+Think of the tree of dsecendants of each $Z_1$ infected. We know that for  $E_{\infty}$ to occur each subtree with roots of  $Z_1$ must go extinct 
+ \[
+   P[E_{\infty} \mid Z_1= k] = P[\text{all subtrees go extinct} \mid Z_1=k]
+ .\]
+ \[
+  = P[\text{ tree 1 is going extinct}] \cdot P[\text{ tree 2 is going extinct}] \cdot \ldots \cdot P[\text{ tree k goes extinct}] 
+ .\] 
+
+ Using the same logic as rat in the maze:
+ \[
+   P[ \text{ tree 1 goes extinct}] = P[E_{\infty}] 
+ .\] 
+ so,
+ \begin{align*}
+   P[E_{\infty}] &= P[E_{\infty} \mid Z_1 = k] \cdot P[Z_1 = k] \\
+                 &= \sum_{k=0}^{\infty} P[E_{\infty}]^{k} \cdot P[\epsilon = k] 
+ .\end{align*}
+
+ \begin{definition}
+   Define $\phi(s) = \sum_{n=0}^{\infty} P[\epsilon = k] = S^{k}$ the generating function of $\epsilon$. Then, we can define $\theta = P[E_m]$ and we can simplify the above as  $\phi(\theta) = \theta$. This means that $\phi(1) = 1$ always exists.
+ \end{definition}
+
+ \begin{note}
+   Other solutions exist if $r > 1$, and if  $r \leq 1$,  $\theta = 1$ is the only solution.
+ \end{note}
+\end{document}
+

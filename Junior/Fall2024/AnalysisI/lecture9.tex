@@ -1,0 +1,160 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Analysis I}\\ Mean Value Theorem}
+\author{\huge{Daniel Yu}}
+\date{November 4, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\tableofcontents
+\pagebreak
+
+\section{Local Max/Min}
+\begin{definition}
+  An open neighborhood of $x_0 \in X$ in a metric space $(X, \rho)$ is an open set  $U(x_0)$ of $X$ such that  $x_0 \in U(x_0)$. 
+\end{definition}
+
+\begin{lemma}
+  $f: (a,b) \to \R$ such that $f \in D(x_0)$ where $x_0 \in (a,b)$. Then, 
+  \begin{enumerate}
+  \item Let $(a,b) \subseteq \R, a < b$. If $f'(x_0) > 0 $ then $\exists $ an open neighborhood $U(x_0) \subseteq (a,b)$ of $x_0$ such that
+    \begin{enumerate}
+      \item $f(x) > f(x_0)$ for $x > x_0 \in U(x_0)$ 
+      \item $f(x) < f(x_0)$ for $x < x_0, x \in U(x_0)$ 
+    \end{enumerate}
+
+     \noindent\hrulefill 
+    \begin{proof}
+      Assume that $f \in D(x_0), f'(x_0) > 0$. Then, 
+      \[
+        f(x) = f(x_0) + f'(x_0) (x-x_{0}) + r(x) (x-x_0)
+      .\] 
+      where $r \in C(x)$ and $r(x_0) = 0$ which implies that  $r(x) \to 0 (x \to x_0)$. Then, we have the following 
+      \[
+        f(x) - f(x_0) = [f'(x_0) + r(x)] (x- x_0)
+      .\] 
+      Since $f'(x_0) > 0$ is positive and fixed, and since $r(x)$ is continuous and $r(x_0) = 0$, then we can find some open neighborhood around  $x_0$ with $x \in U(x_0)$, such that $\mid r(x) \mid < \frac{f'(x_0)}{2}$. Then,
+      $f'(x_0) + r(x) > \frac{f'(x_0)}{2} > 0 \forall x \in U(x_0)$. Then we can say the following:
+      \begin{itemize}
+        \item If $x > x_0$ for $x \in U(x_0)$, then $x-x_0 > 0$, so
+          \[
+          f(x) - f(x_0) > 0 \Rightarrow f(x) > f(x_0)
+          .\] 
+        \item If $x < x_0$ for $x \in U(x_0)$, then $x - x_0 < 0$, so
+          \[
+          f(x) - f(x_0) < 0 \Rightarrow f(x) < f(x_0)
+          .\] 
+      \end{itemize}
+      A similar proof follows for (2) except $f'(x_0) < 0$ and the signs are flipped.
+    \end{proof}
+
+  \noindent\hrulefill
+
+  \item If $f'(x_0) < 0$ then $\exists $ an open neighborhood $U(x_0) \subseteq (a,b)$ of $x_0$ such that 
+    \begin{enumerate}
+      \item $f(x) < f(x_0)$ for $x > x_0 \in U(x_0)$
+      \item $f(x) > f(x_0)$ for $x < x_0, x \in U(x_0)$. 
+    \end{enumerate}
+  \end{enumerate}
+\end{lemma}
+
+\begin{note}
+  The above only shows this in one variable!
+\end{note}
+
+\begin{definition}
+  Assume that $(X, \rho)$ metric space and we have $f:X \to \R$. Then we say that $f $ has a local maximum or minimum at  $x_0$ if $\exists U(x_0)$ open neighborhood in $X$ such that: 
+  \begin{enumerate}
+    \item maximum: $f(x) \leq f(x_0)$ for $x \in U(x_0)$
+    \item minimum: $f(x) \geq f(x_0)$ for $x \in U(x_0)$
+  \end{enumerate}
+\end{definition}
+
+\begin{corollary}
+  If $f: (a,b) \to \R$ that has a local maximum or minimum at $x_0 \in (a,b)$ and $f \in D(X_0)$. Then $f'(x_0) = 0$. 
+
+  \noindent\hrulefill
+
+  \begin{proof}
+    This is an immediate consequence of the lemma. Assume that there is a local max/min at $x_0$ and $f \in D(x_0)$. \\
+
+  Assume that $f'(x_0) > 0$, then we know that $\exists x_1 > x_0$ such that $f(x_1) > f(x_0)$ and there exists another $x_2 < x_0$, such that $f(x_2) < f(x_{0})$ and $x_0$ can't be a local minimum or maximum. Similarly, if $f'(x_0) < 0$  then $x_0$ can't be a local minimum or maximum because $\exists x_1,x_2 \in U(x_0)$ such that $f(x_1) < f(x_0)$ and $f(x_2) > f(x_0)$. \\
+
+  Thus, $f'(x_0) = 0$ when there is a local min/max at $x_0$
+  \end{proof}
+\end{corollary}
+
+
+\section{Mean Value Theorem}
+
+\begin{theorem}{Rolle's Theorem} \\
+  Assume that $f:[a,b] \to \R$ such that $f \in C\left( [a,b] \right), f \in D((a,b)) $ and $f(a) = f(b)$. Then, $\exists x_{*} \in (a,b)$ such that
+   \[
+   f'(x_{*}) = 0
+   .\] 
+
+  \noindent\hrulefill
+  
+  \begin{proof}
+    Since the interval $[a,b] $ is compact in $\R$ and  $f \in C([a,b])$, then $\exists x_m, x_M \in [a,b]$ s.t. $f(x_m) = inf_{[a,b]} f$ and $f(x_M) = sup_{[a,b]} f$. Consider the case when $x_m, x_M \in \{a,b\}$ the min/max are equivalent and $f(x_m) = f(x_M)$ (as  $f(a) = f(b)$ by assumption). Then it's clear that the function  $f$ must be a map from  $[a,b] \to c$, a constant. The derivative of $f$ along any point along  $(a,b)$ is 0. Otherwise, one of the points $x_m \in (a,b)$ or  $x_M \in (a,b)$. Without loss of generality, assume that  $x_m \in (a,b)$ so take  $f'(x_m)$, by the corollary we can say that  $f'(x_m) = 0$ since $f(x_m)$ is a global minima and thus must have a derivative equal to 0. Then, $x_{*} = x_m$. The same logic follows if  $x_M \in (a,b)$. \end{proof}
+\end{theorem}
+
+\begin{theorem}{Mean Value Theorem}\\
+  Assume that $f:[a,b] \to \R$ such that $f \in C([a,b]) \cap D((a,b))$ then $\exists x_{*} \in (a,b)$ such that
+   \[
+   f(b) - f(a) = f'(x_{*}) (b-a) 
+   .\] 
+   also written as
+   \[
+   f'(x_{*}) = \frac{f(b) - f(a)}{b - a}
+   .\] 
+
+   \noindent\hrulefill
+
+   \begin{proof}
+     If $f(b) \neq f(a)$ then 
+      \[
+     F(x) = \frac{f(x) - f(a)}{ f(b) - f(a)} - \frac{x - a}{ b - a}
+     .\]  
+     Then, $F(a) = 0, F(b) = 0$. Note that $F$ is an affine function so differentiable and continuous by construction (continuous functions are additive). Also $F \in C([a,b]) \cap D((a,b))$/ By \textbf{Rolle's Theorem}, $\exists x_{*} \in (a,b)$ such that $F'(x_{*}) = 0$ and the derivative is $F'(x) = \frac{f'(x)}{f(b) - f(a)} \Rightarrow$ $F'(x_0) = \frac{f'(x_{*})}{f(b) - f(a)} - \frac{1}{b-a} = F(x_{*}) = 0$, and
+     \begin{align*}
+       \frac{f'(x_{*})}{f(b)-f(a)} &= \frac{1}{b-a} \\
+       f'(x_{*}) &= \frac{f(b) - f(a)}{ b- a}
+     .\end{align*}
+    When $f(b) = f(a)$, then the mean value theorem follows from Rolles Theorem. 
+    \[
+   f(b) - f(a) = f'(x_{*}) (b-a) \Rightarrow 0 = f'(x^{*}) (b-a) \Rightarrow 0 = 0
+   .\] 
+   \end{proof}
+\end{theorem}
+
+\begin{prop}
+  Assume that $f: (a,b) \to \R$, $f \in D((a,b))$. Then,
+  \begin{enumerate}
+    \item If $f'(x) \geq 0$  $\forall x \in (a,b)$ then we have that  $f(x) \geq f(y)$ for  $x \geq y, x,y \in (a,b)$. This is knon as \textbf{monotonically increasing}.
+    \item If  $f'(x) > 0$ $\forall x \in (a,b)$ then  $f(x) > f(y)$ for  $x > y, x,y \in (a,b)$. This is known as \textbf{strictly monotonically increasing}  
+    \item If $f'(x) \leq 0$  $\forall x \in (a,b)$ then we have that  $f(x) \leq f(y)$ for  $x \leq y, x,y \in (a,b)$. This is knon as \textbf{monotonically decreasing}.
+    \item If  $f'(x) < 0$ $\forall x \in (a,b)$ then  $f(x) < f(y)$ for  $x < y, x,y \in (a,b)$. This is known as \textbf{strictly monotonically decreasing}  
+  \end{enumerate}
+
+  \noindent\hrulefill
+
+  \begin{proof} 
+    The proof follows from the mean value theorem. Consider $x_1,x_2 \in (a,b)$ where $x_1 < x_2$, then by the mean value theorem,
+    \[
+    f(x_2) - f(x_1) = f'(x_{*}) (x_2 - x_1)
+    .\] 
+    and we know that if $f'(x) \geq 0$ then, we can see that  $f(x_2) \geq f(x_1)$. If  $f'(x) > 0$, then  $f(x_2) > f(x_1)$. The same follows for $f'(X) \leq 0, f'(x) < 0$.
+  \end{proof}
+\end{prop}
+
+\begin{remark}
+  It is not the case that if a function is strictly monotonically increasing (or descreasing) then  it is not the case that $f'(x) > 0 ($ or $f'(x) <0)$. Consider  $f(x) = x^{3}$, it is strictly increasing but $f'(0) = 0$.
+\end{remark}
+
+\end{document}

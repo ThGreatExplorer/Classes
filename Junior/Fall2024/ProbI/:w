@@ -361,4 +361,92 @@ Then, we can consider
   .\] 
 \end{theorem}
 
+\section{Stationary Distributions}
+\begin{note}
+  What is the long-term behavior of an absorbing markov chain? It gets absorbed by one of the absorbing states but which one? Thus, the question is: What is the probability that I get absorbed by any particular absorbing state in the markov chain?
+\end{note}
+
+\begin{theorem}
+  $P[\text{ends at a} \mid X_0  = i] = \left( NR \right)_{i,a}  $ for any transient state $i$ and absorbing state  $a$. $N = (Q-I)^{-1}$ from the matrix    
+  \[
+     P = \begin{pmatrix} Q & R \\ 0 & I \end{pmatrix}
+   .\]  
+ 
+
+  \begin{proof}
+   Let $X_n$ be tbe transient state at the  $n$th step before absorption. By the law of total probability,
+     \begin{align*}
+       P[\text{end at a} \mid  X_0 = i] &= \sum_{n = 0}^{\infty} \sum_{j} P[\text{end at a} \mid X_n=j,X_{0}=i] \cdot P[X_n=j \mid X_0 = i] \\
+                                        &\text{ we can "reset" the experiment at state $j$, I know the next step must be  $a$}\\
+                                        &\text{ by time homogenity of time homogenous markov chains} \\
+                                        &= \sum_{n=0}^{\infty} \sum_{j} P[X_1 = a \mid  X_0 = j] \cdot P[X_n=j \mid X_0 = i] \\
+                                        &= \sum_{n=0}^{\infty} \sum_{j} R_{j,a} \cdot P[Y = j \mid X_0 = i] \\
+                                        &= \sum_{j}R_{j,a}  \sum_{n=0}^{\infty}  P[\cup_{n=0}^{\infty} \{X_n = j, X_{n+1} = \text{absorbing state} \} \mid X_0=i]   \\
+                                        &= \sum_{j} R_{j,a} \sum_{n=0}^{\infty} P[X_n=j, X_{n+1} \text{ is absorbing}, X_0 =i] \\
+                                        &=  \sum_{j} R_{j,a} \sum_{n=0}^{\infty} \left( Q^{n} \right)_{i,j} \\
+                                        &= \sum_{j} R_{j,a} \cdot N_{i,j} \\
+                                        &= (NR)_{i,a}
+    .\end{align*}
+  \end{proof}
+\end{theorem}
+
+\begin{note}
+  What is the long-term effect of non-absorbing time-homogenous markov chains?
+\end{note}
+
+\begin{definition}
+  A pair of states $i \neq j$ are intercommunicating. if starting at $i$, I can make it to  $j$ and starting at  $j$, I can make it to  $i$. Formally  $i \equiv j$ (equivalence relation) if :
+   \begin{align*}
+     \exists n \text{ such that} P[X_n=j \mid  X_0 = i] > 0, \text{ i.e.} (P^{n})_{i,j} > 0 \\
+     \exists m \text{ such that} P[X_m=i \mid  X_0 = j] > 0, \text{ i.e.} (P^{m})_{j,i} > 0
+  .\end{align*}
+\end{definition}
+
+\begin{definition}
+  Define $C_i = \{\text{ all states } j: i \equiv j  \} $. Trivially, each vertex (state) is an equivalent to itself, so the equivalence class must be of  $C_i$ must be nonempty.
+\end{definition}
+
+\begin{theorem}
+  We can partition the state space $\Omega$ into \textbf{intercommunicating classes}  $\{C_i\} $ (i.e can partition the vertices of the graph into subgraphs) .  
+\end{theorem}
+
+\begin{definition}
+A markov chain is \textbf{irreducible} if it has precisely one intercommunicating class
+\end{definition}
+
+
+\begin{theorem}
+  if $i \equiv j$ then both are recurrent or both transient then  
+\end{theorem}
+
+
+\begin{prop}
+  If $\mid \Omega \mid  < \infty$ then at least one state is recurrent.
+
+  \begin{proof}) 
+    Assume by contradiction that all states are transient. Then $V(i) < \infty$ $\forall i \in \Omega$. But  $\sum_{i \in \Omega} V(i) = \infty$ since we can continue the markov chain forever. This is a contradiction, so at least one $V(i) = \infty$ and thus recurrent.
+  \end{proof}
+\end{prop}
+
+\begin{corollary}
+  given the theorem and proposition, then all states in a irreducible markov chain are recurrent.
+\end{corollary}
+
+\begin{note}
+\begin{enumerate}
+  \item Given an irreducible Markov chain $\{X_n\} $, what proportion of time is spent in state $i$? Does the answer to the above matter depending on where I start?
+  \item LEt $\{X_n\}_{n =0,1,2,\ldots} $ be the sequence of RV. Does $X_n$ converge in distribution? i.e. 
+     \[
+       \lim_{n \to \infty} P[X_n=j \mid X_0=i] \to c
+    ?\] Does it depend on $X_0=i$?
+\end{enumerate} 
+\begin{definition}
+  A row vector $\pi$ is \textbf{stationary} if  $\pi P = \pi$. Notice that this is equivalent to saying
+  $\pi$ is a row-eigenvector of $P$ with  $\lambda = 1$. 
+\end{definition}
+
+
+\end{note}
+
+
 \end{document}

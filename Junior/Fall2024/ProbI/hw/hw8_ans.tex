@@ -1,0 +1,82 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\input{preamble}
+\title{\Huge{Hw 8}}
+\author{\huge{Daniel Yu}}
+\date{November 6, 2024}
+
+\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pagebreak
+\begin{enumerate}
+  \item Let $X_n$ be an irreducible, aperiodic finite-state Markov chain with transition matrix $P =
+    (p_{i,j})_{i,j}$, and a stationary distribution $\pi = (\pi_1, \pi_2, \ldots, \pi_n)$. Let $Y_n$ keep track of the two previous states — that is, $Y_n = (X_{n - 1}, X_n)$. Show that $Y_n$ is a Markov chain, and compute its stationary distribution (in terms of P and $\pi$). 
+ 
+    \noindent\hrulefill
+
+    \begin{proof}
+      Since $X_n, X_{n - 1}$ are previous states in the Markov Chain, then they will follow the transition matrix $P$ and have the same markov chain dynamics.
+
+      Notice that $Y_n$ is a markov chain because $P[Y_{n} \mid Y_{n-1}, Y_{n-2}, \ldots, Y_{1}] = P[Y_{n} \mid Y_{n-1}]$ because:
+      \begin{align*}
+        P[Y_n \mid Y_{n-1}, Y_{n-2}, \ldots, Y_{1}] &= P[(X_{n-1}, X_n) \mid (X_{n-2}, X_{n-1}), (X_{n-3}, X_{n-2}) \ldots, (X_{2}, X_{1})] \\
+                                                    &= P[(X_{n-1}, X_{n}) \mid (X_{n-2}, X_{n-1})] \\
+                                                    &= P[Y_n \mid Y_{n-1}] 
+                                                  .\end{align*}
+    Now consider, the distribution of $Y_n$.
+      \begin{align*}
+        P(Y_{n} = (c,d) \mid Y_{n-1} =(a,b)) &= P[(X_{n-1}, X_{n}) = (c,d) \mid (X_{n-2}, X_{n-1}) = (a,b)  ]\\ 
+                                                                    &=  P[(X_{n-1}, X_{n}) = (c,d) \mid (X_{n-2},X_{n-1}) = (a,b), X_{n-1} = X_{n-1}] + \\
+                                                                    &P[(X_{n-1}, X_{n}) = (c,d) \mid (X_{n-2},X_{n-1}) = (a,b), X_{n-1} \neq X_{n-1}] \\
+                                                                    &= P[(X_{n-1}, X_{n}) = (b,d) \mid (X_{n-2},X_{n-1}) = (a,b), X_{n-1} = X_{n-1}] + 0\\
+                                                                    &= P[X_{n} = d \cap X_{n-1} = b \cap X_{n-2}=a] \\
+                                                                    &= P[X_{n} = d \mid X_{n-1} = b \cap X_{n-2} = a] \cdot P[X_{n-1} = b \mid X_{n-2} = a] \cdot P[X_{n-2} = a] \\
+                                                                    &= P[X_n =d \mid X_{n-1} =b] \cdot P[X_{n-1} =b \mid X_{n-2}=a] \cdot P[X_{n-2}=a] \\
+                                                                    &= P[X_n =d \mid X_{n-1} =b] \cdot P[X_{n-1} =b \mid X_{n-2}=a] \left( \sum_{i \in \Omega} P[X_{n-2} = a \mid X_0 = i] \right) \\ 
+                                                                    &= P_{b,d} P_{a,b} \left( v \cdot P^{n-2} \right)_{a}  \\
+                                                                    &\text{ as $n \to \infty$}\\
+                                                                    &= P_{b,d} P_{a,b} \pi_{a}  
+                                                                  .\end{align*}
+    The probability matrix $P_{Y_n} ((b,c),(a,b)) = P_{b,c} P_{a,b}$ and the stationary distribution is $\pi = P_{b,d} P_{a,b} \pi_{a}$.
+  \end{proof}
+  \item Let us consider a very simple version of monopoly: there are 4 squares, one marked ‘GO,’ the
+next ’Baltic’, the third ’Free Parking’, and the fourth ’Boardwalk,’ arranged in a circle. At any
+turn, we toss two fair coins; we advance 1 square if both are tails, 2 if exactly one is heads, and
+3 if both are heads. If we start at ’GO’, what is the expected time when we first return to ’GO’ ?
+What is the expected number of visits to ’Boardwalk’ before the first return to ’GO’ ?
+
+\noindent\hrulefill
+
+\begin{proof}
+  The transition matrix would be 
+  \[
+  P = \begin{pmatrix} 
+    0 & \frac{1}{4} & \frac{1}{2} & \frac{1}{4} \\
+    \frac{1}{4} & 0 & \frac{1}{4} & \frac{1}{2} \\ 
+    \frac{1}{2} & \frac{1}{4} & 0 & \frac{1}{4} \\
+    \frac{1}{4} & \frac{1}{2} & \frac{1}{4} & 0 
+  \end{pmatrix} 
+  .\] 
+  The markov chain would be of the form below.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/hw8_problem2.png}
+  \caption{Markov Chain}
+  \label{fig:hw8_problem2}
+\end{figure}
+Notice that $E[\text{ GO} \mid  \text{GO}]$ is just the sojurn time: $E[S_{\text{GO}} \mid X_0 = \text{GO}] = \frac{1}{\pi_{\text{GO}}}$. \\
+
+Since $P$ is doubly stochastic, then $\pi$ is a constant vector, and $\pi = \begin{pmatrix} \frac{1}{4}\\ \frac{1}{4}\\ \frac{1}{4} \\ \frac{1}{4} \end{pmatrix}$. Thus, 
+ \[
+E[S_{\text{GO}} \mid X_0 = \text{GO}] = \frac{1}{.25} = 4 
+.\] 
+
+
+\end{proof}
+\end{enumerate}
+\end{document}
